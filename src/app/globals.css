@@ -1,0 +1,249 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-neon-lime: #CDFF00;
+  --color-hot-pink: #FF2D8A;
+  --color-lavender: #C4B5FD;
+  --color-lilac: #E8E0FF;
+  --color-deep-black: #0A0A0A;
+  --color-off-white: #F5F0EB;
+  --color-soft-pink: #FFB5C8;
+  --color-mint: #A8FFE0;
+  --color-orange: #FF6B35;
+  --font-display: "Big Shoulders Display", sans-serif;
+  --font-mono: "Space Mono", monospace;
+  --font-body: "Outfit", sans-serif;
+}
+
+body {
+  background: var(--color-deep-black);
+  color: var(--color-off-white);
+  font-family: var(--font-body);
+  font-weight: 400;
+  line-height: 1.65;
+  overflow-x: hidden;
+}
+
+/* ===== FILM GRAIN — visible but not distracting ===== */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.06;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+}
+
+/* ===== HALFTONE PATTERNS — actually visible ===== */
+.halftone {
+  background-image: radial-gradient(circle, currentColor 1.2px, transparent 1.2px);
+  background-size: 8px 8px;
+}
+
+.halftone-sm {
+  background-image: radial-gradient(circle, currentColor 0.8px, transparent 0.8px);
+  background-size: 5px 5px;
+}
+
+.halftone-lg {
+  background-image: radial-gradient(circle, currentColor 2px, transparent 2px);
+  background-size: 12px 12px;
+}
+
+.halftone-xl {
+  background-image: radial-gradient(circle, currentColor 3px, transparent 3px);
+  background-size: 16px 16px;
+}
+
+/* Diagonal halftone */
+.halftone-diagonal {
+  background-image: radial-gradient(circle, currentColor 1.5px, transparent 1.5px);
+  background-size: 10px 10px;
+  transform: rotate(15deg) scale(1.2);
+}
+
+/* ===== MARQUEE ===== */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee 15s linear infinite;
+}
+
+@keyframes marquee-slow {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee-slow {
+  animation: marquee-slow 30s linear infinite;
+}
+
+/* ===== TILT CARDS — more aggressive angles ===== */
+.tilt-card {
+  transform: rotate(-3deg);
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.tilt-card:hover {
+  transform: rotate(0deg) scale(1.03) translateY(-4px);
+  box-shadow: 8px 8px 0 var(--color-neon-lime);
+}
+
+.tilt-card-right {
+  transform: rotate(2.5deg);
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.tilt-card-right:hover {
+  transform: rotate(0deg) scale(1.03) translateY(-4px);
+  box-shadow: -8px 8px 0 var(--color-hot-pink);
+}
+
+/* ===== OUTLINE TEXT — thicker, more dramatic ===== */
+.text-outline {
+  -webkit-text-stroke: 3px currentColor;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-outline-thick {
+  -webkit-text-stroke: 4px currentColor;
+  -webkit-text-fill-color: transparent;
+}
+
+@media (min-width: 1024px) {
+  .text-outline {
+    -webkit-text-stroke: 4px currentColor;
+  }
+  .text-outline-thick {
+    -webkit-text-stroke: 6px currentColor;
+  }
+}
+
+/* ===== BRUTALIST BORDER UTILITIES ===== */
+.border-brutal {
+  border: 3px solid var(--color-off-white);
+}
+
+.border-brutal-lime {
+  border: 3px solid var(--color-neon-lime);
+}
+
+.border-brutal-pink {
+  border: 3px solid var(--color-hot-pink);
+}
+
+/* ===== BOX SHADOW — brutalist offset ===== */
+.shadow-brutal-lime {
+  box-shadow: 6px 6px 0 var(--color-neon-lime);
+}
+
+.shadow-brutal-pink {
+  box-shadow: 6px 6px 0 var(--color-hot-pink);
+}
+
+.shadow-brutal-black {
+  box-shadow: 6px 6px 0 var(--color-deep-black);
+}
+
+.shadow-brutal-lime-lg {
+  box-shadow: 10px 10px 0 var(--color-neon-lime);
+}
+
+/* ===== STAGGER ANIMATION ===== */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.6s ease-out forwards;
+}
+
+/* ===== GLITCH HOVER (for headlines) ===== */
+.glitch-hover:hover {
+  animation: glitch 0.3s ease;
+}
+
+@keyframes glitch {
+  0% { transform: translate(0); }
+  20% { transform: translate(-3px, 3px); }
+  40% { transform: translate(3px, -3px); }
+  60% { transform: translate(-2px, -2px); }
+  80% { transform: translate(2px, 2px); }
+  100% { transform: translate(0); }
+}
+
+/* ===== DECORATIVE GRID PATTERN ===== */
+.grid-pattern {
+  background-image:
+    linear-gradient(rgba(205, 255, 0, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(205, 255, 0, 0.06) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* ===== DIAGONAL STRIPES ===== */
+.stripes {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 10px,
+    currentColor 10px,
+    currentColor 11px
+  );
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-deep-black);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-neon-lime);
+  border-radius: 0;
+}
+
+/* ===== SELECTION ===== */
+::selection {
+  background: var(--color-hot-pink);
+  color: var(--color-off-white);
+}
+
+/* ===== NOISE TEXTURE OVERLAY ===== */
+.noise-overlay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.08;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+}
+
+/* ===== TAG / PILL STYLES ===== */
+.tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+  padding: 4px 12px;
+  border: 2px solid;
+  display: inline-block;
+  line-height: 1.4;
+}
