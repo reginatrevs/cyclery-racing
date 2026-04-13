@@ -1,32 +1,13 @@
-import { Marquee } from "@/components/Marquee";
-import { SectionLabel } from "@/components/SectionLabel";
+import { ScrollReveal } from "@/components/ScrollReveal";
+import { SectionHeading } from "@/components/SectionHeading";
 
 const bikes = [
-  {
-    brand: "Cervélo",
-    model: "R5",
-    type: "Road Race",
-    specs: ["Shimano Ultegra Di2", "Carbon Frame", "Disc Brakes", "7.2kg"],
-    color: "border-neon-lime",
-    bgColor: "bg-neon-lime/5",
-  },
-  {
-    brand: "Cervélo",
-    model: "S5",
-    type: "Aero / Crit",
-    specs: ["Shimano Dura-Ace Di2", "Aero Carbon", "Disc Brakes", "7.6kg"],
-    color: "border-hot-pink",
-    bgColor: "bg-hot-pink/5",
-  },
-  {
-    brand: "Cervélo",
-    model: "Caledonia-5",
-    type: "All-Road / Endurance",
-    specs: ["Shimano Ultegra Di2", "Endurance Geometry", "Disc Brakes", "7.8kg"],
-    color: "border-lavender",
-    bgColor: "bg-lavender/5",
-  },
+  { brand: "Cervélo", model: "R5", type: "Road Race", specs: ["Shimano Ultegra Di2", "Carbon Frame", "Disc Brakes", "7.2kg"] },
+  { brand: "Cervélo", model: "S5", type: "Aero / Crit", specs: ["Shimano Dura-Ace Di2", "Aero Carbon", "Disc Brakes", "7.6kg"] },
+  { brand: "Cervélo", model: "Caledonia-5", type: "All-Road / Endurance", specs: ["Shimano Ultegra Di2", "Endurance Geometry", "Disc Brakes", "7.8kg"] },
 ];
+
+const bikeAccents = ["bg-lime", "bg-magenta", "bg-gray-200"];
 
 const equipment = [
   {
@@ -66,135 +47,86 @@ export default function EquipmentPage() {
   return (
     <>
       {/* Hero */}
-      <section className="pt-36 pb-28 px-6 relative overflow-hidden grid-pattern">
-        <div className="absolute inset-0 halftone-lg text-neon-lime/[0.05]" />
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
-          <span className="font-display text-[350px] font-900 uppercase text-off-white/[0.02] leading-none">
-            RIDE
-          </span>
-        </div>
-        <div className="relative z-10 max-w-[1440px] mx-auto">
-          <span className="inline-block bg-hot-pink/10 border-[2px] border-hot-pink/30 px-5 py-1.5 font-mono text-[10px] uppercase tracking-[0.3em] text-hot-pink mb-6">
+      <section className="pt-32 pb-20 px-6">
+        <div className="max-w-[1440px] mx-auto">
+          <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-magenta mb-4">
             What We Ride
-          </span>
-          <h1 className="font-display text-[clamp(64px,10vw,160px)] font-900 uppercase leading-[0.82]">
-            <span className="text-off-white">Our </span>
-            <span className="text-outline-thick">Equipment</span>
-          </h1>
-          <p className="mt-8 font-body text-lg text-off-white/60 max-w-xl">
-            The bikes, gear, and tech that keep Cyclery Racing competitive.
-            Every piece is chosen for performance.
           </p>
+          <h1 className="font-display text-[clamp(48px,10vw,140px)] font-bold uppercase leading-[0.85] text-black">
+            Our Equipment
+          </h1>
         </div>
       </section>
 
-      <Marquee size="large" items={["Performance", "Precision", "Power", "Speed"]} bgColor="bg-mint" textColor="text-deep-black" />
+      {/* Bikes */}
+      <section className="pb-24 lg:pb-32 px-6">
+        <div className="max-w-[1440px] mx-auto">
+          <ScrollReveal>
+            <SectionHeading label="The Fleet" heading="Our Bikes" className="mb-14" />
+          </ScrollReveal>
 
-      {/* Bikes Section */}
-      <section className="py-28 lg:py-36 px-6 relative overflow-hidden">
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
-          <span className="font-display text-[250px] font-900 text-off-white/[0.02] uppercase leading-none">
-            FLEET
-          </span>
-        </div>
-        <div className="relative z-10 max-w-[1440px] mx-auto">
-          <SectionLabel>The Fleet</SectionLabel>
-          <h2 className="mt-4 mb-16 font-display text-[clamp(48px,7vw,96px)] font-900 uppercase leading-[0.82]">
-            <span className="text-off-white">Our </span>
-            <span className="text-outline">Bikes</span>
-          </h2>
-
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
             {bikes.map((bike, i) => (
-              <div
-                key={bike.model}
-                className={`${i % 2 === 0 ? "tilt-card" : "tilt-card-right"}`}
-              >
-                <div className={`border-[3px] ${bike.color} overflow-hidden ${i === 0 ? "shadow-brutal-lime" : i === 1 ? "shadow-brutal-pink" : "shadow-brutal-black"}`}>
-                  {/* Bike image area */}
-                  <div className={`${bike.bgColor} aspect-[4/3] relative`}>
-                    <div className="absolute inset-0 halftone text-deep-black/[0.06]" />
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <span className="font-display text-[80px] font-900 text-off-white/10 uppercase">
-                        {bike.model}
-                      </span>
-                    </div>
-                    <span className="tag absolute top-4 right-4">
-                      {bike.type}
-                    </span>
-                  </div>
-                  {/* Info */}
-                  <div className="p-6 bg-deep-black">
-                    <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-neon-lime">
+              <ScrollReveal key={bike.model} delay={i * 120}>
+                <div className="card-hover rounded overflow-hidden border border-gray-200">
+                  <div className={`aspect-[4/3] ${bikeAccents[i]}`} />
+                  <div className="p-6">
+                    <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-gray-400 mb-2">
                       {bike.brand}
                     </p>
-                    <h3 className="font-display text-4xl font-900 uppercase text-off-white mt-1">
+                    <h3 className="font-display text-3xl font-bold uppercase text-black mb-1">
                       {bike.model}
                     </h3>
-                    <div className="mt-4 flex flex-wrap gap-2">
+                    <p className="font-body text-sm text-magenta font-semibold mb-4">
+                      {bike.type}
+                    </p>
+                    <div className="flex flex-wrap gap-2">
                       {bike.specs.map((spec) => (
-                        <span
-                          key={spec}
-                          className="font-mono text-[9px] uppercase tracking-[0.15em] text-off-white/40 border border-off-white/10 px-2 py-1"
-                        >
+                        <span key={spec} className="font-mono text-[10px] uppercase tracking-[0.1em] px-3 py-1 rounded bg-gray-100 text-gray-600">
                           {spec}
                         </span>
                       ))}
                     </div>
                   </div>
                 </div>
-              </div>
+              </ScrollReveal>
             ))}
           </div>
         </div>
       </section>
 
       {/* Equipment Categories */}
-      <div className="h-3 bg-hot-pink" />
-      <section className="py-28 lg:py-36 px-6 bg-off-white relative overflow-hidden">
-        <div className="absolute inset-0 noise-overlay" />
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
-          <span className="font-display text-[250px] font-900 text-deep-black/[0.02] uppercase leading-none">
-            GEAR
-          </span>
-        </div>
-        <div className="relative z-10 max-w-[1440px] mx-auto">
-          <SectionLabel color="text-hot-pink">Gear &amp; Partners</SectionLabel>
-          <h2 className="mt-4 mb-16 font-display text-[clamp(48px,7vw,96px)] font-900 uppercase leading-[0.82]">
-            <span className="text-deep-black">What we </span>
-            <span className="text-hot-pink">use</span>
-          </h2>
+      <section className="py-20 lg:py-28 px-6 bg-gray-100">
+        <div className="max-w-[1440px] mx-auto">
+          <ScrollReveal>
+            <SectionHeading label="Gear" heading="Equipment & Partners" className="mb-14" />
+          </ScrollReveal>
 
-          <div className="space-y-16">
-            {equipment.map((category) => (
-              <div key={category.category}>
-                <h3 className="font-display text-2xl font-900 uppercase text-deep-black mb-6 pb-3 border-b-[3px] border-deep-black">
-                  {category.category}
-                </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {category.items.map((item) => (
-                    <div
-                      key={item.name}
-                      className="p-6 border-[3px] border-deep-black/10 hover:border-hot-pink transition-colors relative overflow-hidden shadow-brutal-black"
-                    >
-                      <div className="absolute inset-0 halftone text-deep-black/[0.06]" />
-                      <div className="relative z-10">
-                        <h4 className="font-display text-lg font-800 uppercase text-deep-black">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+            {equipment.map((cat, catIdx) => (
+              <ScrollReveal key={cat.category} delay={catIdx * 100}>
+                <div>
+                  <h3 className="font-display text-xl font-bold uppercase text-black mb-6 pb-3 border-b-2 border-magenta">
+                    {cat.category}
+                  </h3>
+                  <div className="space-y-5">
+                    {cat.items.map((item) => (
+                      <div key={item.name}>
+                        <h4 className="font-body text-base font-semibold text-black mb-1">
                           {item.name}
                         </h4>
-                        <p className="mt-3 font-body text-sm text-deep-black/60 leading-relaxed">
+                        <p className="font-body text-sm text-gray-600 leading-relaxed">
                           {item.detail}
                         </p>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
-              </div>
+              </ScrollReveal>
             ))}
           </div>
         </div>
       </section>
-      <div className="h-3 bg-hot-pink" />
     </>
   );
 }
