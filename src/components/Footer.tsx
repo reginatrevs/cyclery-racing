@@ -1,55 +1,78 @@
 import Link from "next/link";
 
+const menu = [
+  { href: "/", label: "Home" },
+  { href: "/about", label: "About" },
+  { href: "/team", label: "Team" },
+  { href: "/races", label: "Races" },
+  { href: "/contact", label: "Contact" },
+];
+
+const extras = [
+  { href: "/sponsors", label: "Sponsors" },
+  { href: "/equipment", label: "Equipment" },
+  { href: "/donations", label: "Support Us" },
+];
+
+const socials = [
+  { label: "Instagram", href: "#" },
+  { label: "Strava", href: "#" },
+  { label: "Facebook", href: "#" },
+];
+
+const fontNM = {
+  fontFamily: '"PP Neue Montreal", "Helvetica Neue", Helvetica, sans-serif',
+};
+
 export function Footer() {
   return (
-    <footer className="bg-deep-black border-t-3 border-neon-lime pt-16 pb-8">
-      <div className="max-w-[1440px] mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
-          {/* Brand */}
+    <footer className="bg-magenta text-white overflow-hidden">
+      {/* Top info grid */}
+      <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16 pt-14 lg:pt-16">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-8">
+          {/* Menu */}
           <div>
-            <div className="mb-4">
-              <span className="font-display text-3xl font-900 uppercase text-neon-lime">
-                Cyclery{" "}
-              </span>
-              <span className="font-display text-3xl font-900 uppercase text-outline text-neon-lime">
-                Racing
-              </span>
-            </div>
-            <p className="font-body text-sm text-off-white/60 leading-relaxed mb-6">
-              A Canadian women&apos;s professional cycling team. Bold, fast, and
-              unstoppable. Pushing the limits of competitive cycling while
-              inspiring the next generation.
+            <p className="text-[10px] uppercase tracking-[0.25em] text-white/40 mb-4" style={fontNM}>
+              Menu
             </p>
-            <div className="flex gap-4">
-              {["Instagram", "Strava", "Twitter"].map((social) => (
-                <a
-                  key={social}
-                  href="#"
-                  className="font-mono text-[10px] uppercase tracking-[0.2em] text-off-white/40 hover:text-neon-lime transition-colors"
-                >
-                  {social}
-                </a>
-              ))}
-            </div>
-          </div>
-
-          {/* Navigation */}
-          <div>
-            <h4 className="font-mono text-[10px] uppercase tracking-[0.3em] text-neon-lime mb-6">
-              Navigate
-            </h4>
-            <div className="flex flex-col gap-3">
-              {[
-                { href: "/about", label: "About" },
-                { href: "/team", label: "Team" },
-                { href: "/races", label: "Races" },
-                { href: "/equipment", label: "Equipment" },
-                { href: "/merch", label: "Merch" },
-              ].map((link) => (
+            <nav className="flex flex-col gap-1">
+              {menu.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="font-body text-sm text-off-white/60 hover:text-off-white transition-colors"
+                  className="text-[13px] text-white/70 hover:text-white transition-colors"
+                  style={fontNM}
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </nav>
+          </div>
+
+          {/* Location */}
+          <div>
+            <p className="text-[10px] uppercase tracking-[0.25em] text-white/40 mb-4" style={fontNM}>
+              Location
+            </p>
+            <div className="flex flex-col gap-1">
+              <span className="text-[13px] text-white/70" style={fontNM}>Cyclery Racing</span>
+              <span className="text-[13px] text-white/70" style={fontNM}>Toronto, Ontario</span>
+              <span className="text-[13px] text-white/70" style={fontNM}>Canada</span>
+            </div>
+          </div>
+
+          {/* Extras */}
+          <div>
+            <p className="text-[10px] uppercase tracking-[0.25em] text-white/40 mb-4" style={fontNM}>
+              Extras
+            </p>
+            <div className="flex flex-col gap-1">
+              {extras.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="text-[13px] text-white/70 hover:text-white transition-colors"
+                  style={fontNM}
                 >
                   {link.label}
                 </Link>
@@ -57,61 +80,56 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Support */}
+          {/* Socials */}
           <div>
-            <h4 className="font-mono text-[10px] uppercase tracking-[0.3em] text-neon-lime mb-6">
-              Support
-            </h4>
-            <div className="flex flex-col gap-3">
-              {[
-                { href: "/donations", label: "Donate" },
-                { href: "/sponsors", label: "Become a Sponsor" },
-                { href: "/merch", label: "Shop Merch" },
-                { href: "/contact", label: "Contact Us" },
-              ].map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="font-body text-sm text-off-white/60 hover:text-off-white transition-colors"
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </div>
-          </div>
-
-          {/* Social */}
-          <div>
-            <h4 className="font-mono text-[10px] uppercase tracking-[0.3em] text-neon-lime mb-6">
-              Follow Us
-            </h4>
-            <div className="flex flex-col gap-3">
-              {[
-                { href: "#", label: "Instagram" },
-                { href: "#", label: "Strava" },
-                { href: "#", label: "Twitter / X" },
-                { href: "#", label: "YouTube" },
-              ].map((link) => (
+            <p className="text-[10px] uppercase tracking-[0.25em] text-white/40 mb-4" style={fontNM}>
+              Socials
+            </p>
+            <div className="flex flex-col gap-1">
+              {socials.map((s) => (
                 <a
-                  key={link.label}
-                  href={link.href}
-                  className="font-body text-sm text-off-white/60 hover:text-off-white transition-colors"
+                  key={s.label}
+                  href={s.href}
+                  className="text-[13px] text-white/70 hover:text-white transition-colors"
+                  style={fontNM}
                 >
-                  {link.label}
+                  {s.label}
                 </a>
               ))}
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Bottom bar */}
-        <div className="border-t border-off-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-off-white/30">
-            &copy; {new Date().getFullYear()} Cyclery Racing. All rights
-            reserved.
-          </p>
-          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-off-white/30">
-            Based in Canada &mdash; Racing worldwide
+      {/* Giant TREVS text */}
+      <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16 mt-8 lg:mt-4">
+        <span
+          className="block font-bold uppercase select-none leading-[0.8]"
+          style={{
+            ...fontNM,
+            fontSize: "clamp(120px, 28vw, 450px)",
+            color: "rgba(255,255,255,0.15)",
+            letterSpacing: "-0.04em",
+          }}
+        >
+          Trevs
+        </span>
+      </div>
+
+      {/* Bottom bar */}
+      <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16 pb-10 pt-6">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-2">
+          <a
+            href="https://trevs.ca"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[11px] uppercase tracking-[0.2em] font-semibold text-white/80 hover:text-white transition-colors"
+            style={fontNM}
+          >
+            Website designed by trevs.ca
+          </a>
+          <p className="text-[11px] uppercase tracking-[0.2em] font-semibold text-white/80" style={fontNM}>
+            &copy;{new Date().getFullYear()}
           </p>
         </div>
       </div>

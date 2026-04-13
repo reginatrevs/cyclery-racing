@@ -1,114 +1,347 @@
-import Link from "next/link";
-import { Marquee } from "@/components/Marquee";
-import { SectionLabel } from "@/components/SectionLabel";
+"use client";
+
+import { useState } from "react";
+import { ScrollReveal } from "@/components/ScrollReveal";
+import { SectionHeading } from "@/components/SectionHeading";
+import { Button } from "@/components/Button";
 
 const riders = [
-  { name: "Sarah Chen", role: "Road Captain", number: "01", specialty: "GC Contender / Tactics", hometown: "Toronto, ON", bio: "Former national junior champion with a mind for race tactics. Sarah reads the peloton like a book and leads from the front.", gradient: "from-neon-lime via-mint to-neon-lime", border: "border-neon-lime", shadow: "shadow-brutal-pink" },
-  { name: "Emma Dubois", role: "Sprinter", number: "02", specialty: "Sprint Finishes / Crits", hometown: "Montreal, QC", bio: "Pure speed. Emma's explosive sprint has earned her podium finishes across the country. The last 200m belong to her.", gradient: "from-hot-pink via-soft-pink to-hot-pink", border: "border-hot-pink", shadow: "shadow-brutal-lime" },
-  { name: "Ava Martinez", role: "Climber", number: "03", specialty: "Mountains / Stage Races", hometown: "Vancouver, BC", bio: "Light, strong, and relentless on the climbs. Ava dances on the pedals where others suffer. Mountains are her playground.", gradient: "from-lavender via-lilac to-lavender", border: "border-lavender", shadow: "shadow-brutal-black" },
-  { name: "Lily Thompson", role: "All-Rounder", number: "04", specialty: "Time Trials / Road Races", hometown: "Calgary, AB", bio: "Versatile, powerful, and incredibly consistent. Lily can hurt you on any terrain and thrives in the hardest conditions.", gradient: "from-orange via-neon-lime to-orange", border: "border-orange", shadow: "shadow-brutal-lime" },
-  { name: "Maya Okafor", role: "Domestique", number: "05", specialty: "Pace Setting / Support", hometown: "Ottawa, ON", bio: "The engine of the team. Maya sets a pace that breaks the opposition and creates opportunities for her teammates to shine.", gradient: "from-mint via-lavender to-mint", border: "border-mint", shadow: "shadow-brutal-pink" },
-  { name: "Chloe Park", role: "Breakaway Specialist", number: "06", specialty: "Attacks / Solo Breaks", hometown: "Edmonton, AB", bio: "Fearless and unpredictable. Chloe thrives in the chaos of racing and has the engine to make solo breakaways stick.", gradient: "from-soft-pink via-hot-pink to-soft-pink", border: "border-soft-pink", shadow: "shadow-brutal-lime" },
+  { name: "Emily Driedger", category: "Elite", disciplines: ["Road", "Track"] },
+  { name: "Sara Everson", category: "Elite", disciplines: ["Road", "Track", "Cyclocross"] },
+  { name: "Skyler Goudswaard", category: "Elite", disciplines: ["Road", "Track"] },
+  { name: "Annie Scott", category: "Elite", disciplines: ["Road", "Track", "Cyclocross"] },
+  { name: "Raylan Stroud", category: "Elite", disciplines: ["Road", "Cyclocross"] },
+  { name: "Dylan Baker", category: "U23", disciplines: ["Road", "Track"] },
+  { name: "Cadie Geertsma", category: "U23", disciplines: ["Road"] },
+  { name: "Kristen Taylor", category: "U23", disciplines: ["Road", "Track", "Cyclocross"] },
+  { name: "Alexandra Fangeat", category: "Junior", disciplines: ["Road", "Track"] },
+  { name: "Elly Moore", category: "Junior", disciplines: ["Road", "Track", "Cyclocross"] },
 ];
 
+const filterItems = ["All", "Elite", "U23", "Junior", "Road", "Track", "Cyclocross"];
+const categories = ["Elite", "U23", "Junior"];
+
+const fontStyle = {
+  fontFamily: '"PP Neue Montreal", "Helvetica Neue", Helvetica, sans-serif',
+  letterSpacing: "-0.03em",
+};
+
 export default function TeamPage() {
+  const [activeFilter, setActiveFilter] = useState("All");
+  const [hoveredFilter, setHoveredFilter] = useState<number | null>(null);
+  const [viewMode, setViewMode] = useState<"gallery" | "list">("gallery");
+  const [hoveredRider, setHoveredRider] = useState<number | null>(null);
+
+  const filtered = riders.filter((rider) => {
+    if (activeFilter === "All") return true;
+    if (categories.includes(activeFilter)) return rider.category === activeFilter;
+    return rider.disciplines.includes(activeFilter);
+  });
+
   return (
     <>
-      {/* Hero */}
-      <section className="pt-36 pb-28 px-6 relative overflow-hidden">
-        <div className="absolute inset-0 grid-pattern" />
-        <div className="absolute inset-0 halftone-lg text-hot-pink/[0.04]" />
-        <div className="absolute -right-20 top-1/3 font-display text-[400px] font-900 leading-none text-off-white/[0.02] hidden xl:block select-none">06</div>
-        <div className="relative z-10 max-w-[1440px] mx-auto">
-          <div className="inline-block bg-hot-pink/10 border-[2px] border-hot-pink/30 px-5 py-1.5 mb-6">
-            <span className="font-mono text-[10px] uppercase tracking-[0.35em] text-hot-pink">2025 Roster</span>
-          </div>
-          <h1 className="font-display text-[clamp(64px,10vw,160px)] font-900 uppercase leading-[0.8] tracking-tight">
-            <span className="text-off-white">The </span>
-            <span className="text-neon-lime">Team</span>
-          </h1>
-          <p className="mt-6 font-body text-lg md:text-xl text-off-white/50 max-w-xl leading-relaxed">
-            Six riders. One mission. Meet the women who make Cyclery Racing one
-            of the most exciting teams in Canadian cycling.
-          </p>
-        </div>
-      </section>
+      {/* Sticky left + scrolling cards right */}
+      <section className="pt-24 lg:pt-28 pb-32 lg:pb-48 px-6 min-h-screen">
+        <div className="max-w-[1440px] mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
 
-      <Marquee items={riders.map((r) => r.name)} bgColor="bg-hot-pink" textColor="text-off-white" size="large" />
+            {/* Left — sticky info */}
+            <div className="lg:col-span-4">
+              <div className="lg:sticky lg:top-24">
+                <h1
+                  className="font-display text-[clamp(36px,5vw,64px)] font-bold uppercase leading-[0.9] text-black mb-4"
+                >
+                  2026 Team
+                </h1>
 
-      {/* Rider Grid */}
-      <section className="py-28 lg:py-36 px-6 relative overflow-hidden">
-        <div className="absolute inset-0 grid-pattern" />
-        <div className="relative z-10 max-w-[1440px] mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
-            {riders.map((rider, i) => (
-              <div key={rider.name} className={`group ${i % 3 === 1 ? "md:mt-12" : ""}`}>
-                <div className={`border-[3px] ${rider.border} overflow-hidden ${i % 2 === 0 ? "tilt-card" : "tilt-card-right"}`}>
-                  {/* Photo area with gradient */}
-                  <div className={`bg-gradient-to-br ${rider.gradient} aspect-[3/4] relative overflow-hidden`}>
-                    {/* Giant number */}
-                    <span className="absolute -top-4 -left-4 font-display text-[180px] font-900 leading-none opacity-[0.1] text-deep-black select-none">
-                      {rider.number}
-                    </span>
-                    {/* Halftone */}
-                    <div className="absolute inset-0 halftone text-deep-black/[0.06]" />
-                    {/* Diagonal accent */}
-                    <div className="absolute top-0 right-0 w-20 h-20 overflow-hidden">
-                      <div className="absolute -top-2 -right-10 w-24 h-10 bg-deep-black/20 rotate-45" />
-                    </div>
-                    {/* Role tag */}
-                    <div className="absolute top-5 right-5 bg-deep-black text-off-white font-mono text-[9px] uppercase tracking-[0.25em] px-3 py-2 border-[2px] border-deep-black shadow-[3px_3px_0_rgba(205,255,0,0.3)]">
-                      {rider.role}
-                    </div>
-                    {/* Bottom info */}
-                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-deep-black/90 via-deep-black/60 to-transparent p-6 pt-24">
-                      <p className="font-mono text-[9px] uppercase tracking-[0.3em] text-neon-lime mb-1">
-                        {rider.hometown}
-                      </p>
-                      <h3 className="font-display text-3xl md:text-4xl font-900 uppercase text-off-white leading-tight">
-                        {rider.name}
-                      </h3>
-                    </div>
-                  </div>
+                <p className="font-body text-sm text-black leading-relaxed mb-4 max-w-xs">
+                  A diverse roster of elite, U23, and junior athletes
+                  competing across road, track, and cyclocross disciplines.
+                </p>
 
-                  {/* Card body */}
-                  <div className="p-6 bg-deep-black relative">
-                    <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-neon-lime via-hot-pink to-lavender" />
-                    <p className="font-mono text-[9px] uppercase tracking-[0.3em] text-neon-lime mb-3">
-                      {rider.specialty}
-                    </p>
-                    <p className="font-body text-sm text-off-white/50 leading-relaxed">
-                      {rider.bio}
-                    </p>
-                  </div>
+                <p
+                  className="uppercase mb-3"
+                  style={{ ...fontStyle, fontSize: "12px", fontWeight: 500, color: "lab(76 0 -0.01)" }}
+                >
+                  Scroll or filter to browse
+                </p>
+
+                {/* View toggle */}
+                <div className="flex gap-4 mb-8">
+                  <button
+                    onClick={() => setViewMode("gallery")}
+                    className="uppercase transition-colors duration-300"
+                    style={{
+                      ...fontStyle,
+                      fontSize: "12px",
+                      fontWeight: viewMode === "gallery" ? 700 : 500,
+                      color: viewMode === "gallery" ? "#ff138c" : "#999",
+                    }}
+                  >
+                    Gallery
+                  </button>
+                  <span style={{ color: "#ddd" }}>|</span>
+                  <button
+                    onClick={() => setViewMode("list")}
+                    className="uppercase transition-colors duration-300"
+                    style={{
+                      ...fontStyle,
+                      fontSize: "12px",
+                      fontWeight: viewMode === "list" ? 700 : 500,
+                      color: viewMode === "list" ? "#ff138c" : "#999",
+                    }}
+                  >
+                    List
+                  </button>
                 </div>
+
+                {/* Filter list */}
+                <div className="pb-2">
+                  <p
+                    className="uppercase"
+                    style={{ ...fontStyle, fontSize: "11px", fontWeight: 600, color: "lab(76 0 -0.01)" }}
+                  >Category</p>
+                </div>
+                <div
+                  className="border-t border-gray-200"
+                  onMouseLeave={() => setHoveredFilter(null)}
+                >
+                  {filterItems.map((item, i) => {
+                    // Add divider between categories and disciplines
+                    const showDivider = item === "Road" && i > 0;
+                    const isActive = activeFilter === item;
+
+                    return (
+                      <div key={item}>
+                        {showDivider && (
+                          <div className="pt-4 pb-2">
+                            <p
+                              className="uppercase"
+                              style={{ ...fontStyle, fontSize: "11px", fontWeight: 600, color: "lab(76 0 -0.01)" }}
+                            >Disciplines</p>
+                          </div>
+                        )}
+                        <div
+                          className="border-b border-gray-200 cursor-pointer"
+                          onMouseEnter={() => setHoveredFilter(i)}
+                          onClick={() => setActiveFilter(item)}
+                        >
+                          <div
+                            className="py-2 flex items-baseline gap-3"
+                          style={{
+                            opacity: hoveredFilter !== null && hoveredFilter !== i ? 0.4 : 1,
+                            transform: hoveredFilter === i ? "translateX(4px)" : "translateX(0)",
+                            transition: "opacity 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
+                          }}
+                        >
+                          {/* Active dot */}
+                          <span
+                            className="w-1.5 h-1.5 rounded-full shrink-0 transition-all duration-300"
+                            style={{
+                              backgroundColor: isActive ? "#ff138c" : "transparent",
+                              transform: isActive ? "scale(1)" : "scale(0)",
+                            }}
+                          />
+                          <span
+                            className="uppercase leading-none"
+                            style={{
+                              ...fontStyle,
+                              fontWeight: isActive ? 700 : 500,
+                              fontSize: "15px",
+                              color: isActive ? "#ff138c" : hoveredFilter === i ? "#111" : "#999",
+                              transition: "color 0.3s ease",
+                            }}
+                          >
+                            {item}
+                          </span>
+                          <span
+                            className="ml-auto tabular-nums"
+                            style={{
+                              ...fontStyle,
+                              fontSize: "12px",
+                              color: isActive ? "#ff138c" : "#999",
+                              transition: "color 0.3s ease",
+                            }}
+                          >
+                            ( {item === "All"
+                              ? riders.length
+                              : categories.includes(item)
+                                ? riders.filter(r => r.category === item).length
+                                : riders.filter(r => r.disciplines.includes(item)).length
+                            } )
+                          </span>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+
               </div>
-            ))}
+            </div>
+
+            {/* Right — rider cards or list */}
+            <div className="lg:col-span-8">
+              {filtered.length > 0 ? (
+                viewMode === "gallery" ? (
+                  /* ---- GALLERY VIEW ---- */
+                  <div className="relative">
+                    {filtered.map((rider, i) => {
+                      const idx = riders.indexOf(rider);
+                      const positions = [
+                        "ml-0",
+                        "ml-[45%] mt-6",
+                        "ml-[10%] mt-4",
+                        "ml-[50%] -mt-8",
+                        "ml-0 mt-6",
+                        "ml-[35%] mt-4",
+                        "ml-[5%] mt-8",
+                        "ml-[48%] -mt-4",
+                        "ml-[15%] mt-6",
+                        "ml-[40%] mt-4",
+                      ];
+                      const position = positions[i % positions.length];
+
+                      return (
+                        <ScrollReveal key={rider.name} delay={i * 100} className={`w-[45%] lg:w-[42%] ${position}`}>
+                          <div className="group">
+                            <div className="border border-gray-200 overflow-hidden transition-colors hover:border-magenta">
+                              <div className="relative aspect-[3/4] bg-gray-100 overflow-hidden">
+                                <div className="absolute inset-0 flex items-center justify-center">
+                                  <span className="font-display text-[60px] lg:text-[80px] font-bold leading-none text-gray-200/40 select-none">
+                                    {String(idx + 1).padStart(2, "0")}
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="pt-2 pb-4">
+                              <p
+                                className="uppercase text-magenta mb-1"
+                                style={{ ...fontStyle, fontSize: "11px", fontWeight: 600 }}
+                              >
+                                {rider.category}
+                              </p>
+                              <h3 className="font-display text-sm lg:text-base font-bold uppercase text-black group-hover:text-magenta transition-colors leading-tight mb-2">
+                                {rider.name}
+                              </h3>
+                              <div className="flex flex-wrap gap-1.5">
+                                {rider.disciplines.map((disc) => (
+                                  <span
+                                    key={disc}
+                                    className="font-body text-[9px] font-semibold uppercase tracking-[0.05em] px-3 py-1 rounded-full border border-black text-black group-hover:border-magenta group-hover:text-magenta transition-colors"
+                                  >
+                                    {disc}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        </ScrollReveal>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  /* ---- LIST VIEW — right-aligned, dimming on hover ---- */
+                  <div
+                    className="text-right ml-auto"
+                    onMouseLeave={() => setHoveredRider(null)}
+                  >
+                    {filtered.map((rider, i) => {
+                      const isHovered = hoveredRider === i;
+                      return (
+                        <ScrollReveal key={rider.name} delay={i * 40}>
+                          <div
+                            className="cursor-default py-[4px]"
+                            onMouseEnter={() => setHoveredRider(i)}
+                            style={{
+                              opacity: hoveredRider !== null && !isHovered ? 0.25 : 1,
+                              transition: "opacity 0.3s ease",
+                            }}
+                          >
+                            <h3
+                              className="uppercase leading-none transition-colors duration-300 text-right"
+                              style={{
+                                ...fontStyle,
+                                fontSize: "clamp(22px, 3vw, 38px)",
+                                fontWeight: 500,
+                                color: isHovered ? "#ff138c" : "#111",
+                              }}
+                            >
+                              {rider.name}
+                            </h3>
+
+                            {/* Subtle fade below name — category + discipline pills */}
+                            <div
+                              className="flex items-center gap-2 justify-end transition-all duration-500 ease-out overflow-hidden"
+                              style={{
+                                opacity: isHovered ? 1 : 0,
+                                transform: isHovered ? "translateY(0)" : "translateY(-4px)",
+                                height: isHovered ? "24px" : "0px",
+                                marginTop: isHovered ? "4px" : "0px",
+                              }}
+                            >
+                              <span
+                                className="uppercase"
+                                style={{ ...fontStyle, fontSize: "10px", fontWeight: 500, color: "#ff138c" }}
+                              >
+                                {rider.category}
+                              </span>
+                              {rider.disciplines.map((disc) => (
+                                <span
+                                  key={disc}
+                                  className="font-body text-[8px] font-semibold uppercase tracking-[0.05em] px-2.5 py-0.5 rounded-full border border-gray-300 text-gray-500"
+                                >
+                                  {disc}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                        </ScrollReveal>
+                      );
+                    })}
+                  </div>
+                )
+              ) : (
+                <div className="py-20 text-center">
+                  <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-gray-400">
+                    No riders match the selected filters.
+                  </p>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Join CTA */}
-      <section className="relative">
-        <div className="h-3 bg-hot-pink" />
-        <div className="py-28 lg:py-36 px-6 bg-neon-lime relative overflow-hidden noise-overlay">
-          <div className="absolute inset-0 halftone-xl text-deep-black/[0.05]" />
-          <div className="absolute -right-10 bottom-0 font-display text-[200px] font-900 leading-none text-deep-black/[0.04] hidden lg:block select-none">JOIN</div>
-          <div className="relative z-10 max-w-3xl mx-auto text-center">
-            <SectionLabel color="text-deep-black">Join the Team</SectionLabel>
-            <h2 className="mt-4 font-display text-[clamp(44px,6vw,96px)] font-900 uppercase leading-[0.82] text-deep-black">
-              Think you&apos;ve got what it takes?
-            </h2>
-            <p className="mt-6 font-body text-lg text-deep-black/60 max-w-xl mx-auto">
-              We&apos;re always looking for talented riders who share our passion
-              and drive. Reach out and let&apos;s talk.
-            </p>
-            <Link
-              href="/contact"
-              className="inline-block mt-10 font-mono text-[11px] uppercase tracking-[0.2em] bg-deep-black text-neon-lime px-10 py-4.5 hover:bg-hot-pink hover:text-off-white transition-all border-[3px] border-deep-black shadow-brutal-black hover:shadow-brutal-pink"
-            >
-              Get in Touch
-            </Link>
+      {/* Staff — horizontal table layout */}
+      <section className="pt-6 pb-20 lg:pt-8 lg:pb-28 px-6 border-t border-gray-200">
+        <div className="max-w-[1440px] mx-auto">
+          <ScrollReveal>
+            <SectionHeading label="Management" heading="Behind the Team" className="mb-12" />
+          </ScrollReveal>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+            {[
+              { role: "Team Owner & Sponsorships", name: "Vince Caceres", description: "Vision, operations, and building the partnerships that keep Cyclery Racing competing at the highest level." },
+              { role: "Directeur Sportif", name: "Chris Reid", description: "Overseeing race strategy, rider development, and on-the-ground team direction across all categories." },
+            ].map((staff, i) => (
+              <ScrollReveal key={staff.role} delay={i * 100}>
+                <div className="border border-gray-200 p-6">
+                  <p
+                    className="uppercase mb-2"
+                    style={{ ...fontStyle, fontSize: "11px", fontWeight: 600, color: "#ff138c" }}
+                  >
+                    {staff.role}
+                  </p>
+                  <h3 className="font-display text-xl font-bold uppercase text-black mb-3">
+                    {staff.name}
+                  </h3>
+                  <p className="font-body text-sm text-gray-500 leading-relaxed">
+                    {staff.description}
+                  </p>
+                </div>
+              </ScrollReveal>
+            ))}
           </div>
         </div>
       </section>
