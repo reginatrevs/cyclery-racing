@@ -27,7 +27,8 @@ export function Navbar() {
   const [showLogo, setShowLogo] = useState(false);
 
   const handleScroll = useCallback(() => {
-    const hero = document.getElementById("hero");
+    // Check for any hero section (homepage or subpage heroes)
+    const hero = document.getElementById("hero") || document.getElementById("about-hero");
     if (!hero) {
       setShowLogo(true);
       return;

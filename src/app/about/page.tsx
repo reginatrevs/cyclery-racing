@@ -1,6 +1,8 @@
 import { ScrollReveal } from "@/components/ScrollReveal";
-import { StickySection } from "@/components/StickySection";
 import { Button } from "@/components/Button";
+import { AboutHero } from "@/components/AboutHero";
+import { AboutText } from "@/components/AboutText";
+import { MissionText } from "@/components/MissionText";
 
 const fontStyle = {
   fontFamily: '"PP Neue Montreal", "Helvetica Neue", Helvetica, sans-serif',
@@ -33,77 +35,24 @@ const values = [
 export default function AboutPage() {
   return (
     <>
-      {/* Hero */}
-      <section className="pt-32 pb-16 px-6">
-        <div className="max-w-[1440px] mx-auto">
-          <p
-            className="uppercase text-gray-400 mb-4"
-            style={{ ...fontStyle, fontSize: "11px", fontWeight: 500 }}
-          >
-            About Us
-          </p>
-          <h1 className="font-display text-[clamp(48px,10vw,140px)] font-bold uppercase leading-[0.85] text-black tracking-tight">
-            Our Story
-          </h1>
-        </div>
-      </section>
+      {/* Hero — BUILT FOR ___ with photo background */}
+      <AboutHero />
 
-      {/* About — paragraph style with sticky heading */}
-      <StickySection
-        label=""
-        heading=""
-        className="border-t border-gray-200"
-      >
-        <div className="max-w-[600px]">
-          <ScrollReveal>
-            <p className="font-body text-lg lg:text-xl text-black leading-relaxed mb-8">
-              The Cyclery Racing is one of Canada&apos;s oldest continually running
-              women&apos;s road programs — and one of its most successful.
-            </p>
-          </ScrollReveal>
+      {/* About — centered justified text with highlighted key phrases */}
+      <AboutText />
 
-          <ScrollReveal delay={100}>
-            <p className="font-body text-base text-gray-500 leading-relaxed mb-6">
-              Over the last decade, the team has won six elite and under-23 road
-              and time trial national championships, seen three riders compete at
-              the Olympic Games, and developed seven riders who turned professional
-              for UCI teams. Over a dozen Cyclery Racing athletes have represented
-              Canada on the international stage.
-            </p>
-          </ScrollReveal>
-
-          <ScrollReveal delay={200}>
-            <p className="font-body text-base text-gray-500 leading-relaxed mb-6">
-              There is no other women&apos;s program in Canada with a history of such
-              continuous success.
-            </p>
-          </ScrollReveal>
-
-          <ScrollReveal delay={300}>
-            <p className="font-body text-base text-gray-500 leading-relaxed">
-              Based out of The Cyclery bike shop in Ottawa, the team is dedicated
-              to supporting up-and-coming female cyclists across all categories —
-              elite, U23, and junior — and is a proud affiliate member of Cycling
-              Canada&apos;s 1882 Collective national fundraising initiative.
-            </p>
-          </ScrollReveal>
-        </div>
-      </StickySection>
-
-      {/* Mission */}
-      <section className="py-20 lg:py-28 px-6 bg-black">
-        <div className="max-w-[900px] mx-auto text-center">
+      {/* Mission — black bg, white text, cursor expands on hover */}
+      <section className="relative py-20 lg:py-28 px-6 bg-black" data-cursor-expand>
+        <div className="max-w-[900px] mx-auto text-center relative z-10">
           <ScrollReveal>
             <p
-              className="uppercase text-white/40 mb-6"
-              style={{ ...fontStyle, fontSize: "11px", fontWeight: 500 }}
+              className="uppercase mb-6"
+              style={{ ...fontStyle, fontSize: "11px", fontWeight: 500, color: "rgba(255,255,255,0.4)" }}
             >
               Our Mission
             </p>
-            <h2 className="font-display text-[clamp(28px,4vw,52px)] font-bold leading-[1.1] text-white">
-              To advance women&apos;s competitive cycling in Canada through elite
-              racing, athlete development, and building a program that opens doors
-              for the next generation.
+            <h2 className="font-display text-[clamp(28px,4vw,52px)] font-bold leading-[1.1] text-white relative z-10">
+              <MissionText text="To advance women's competitive cycling in Canada through elite racing, athlete development, and building a program that opens doors for the next generation." />
             </h2>
           </ScrollReveal>
         </div>
@@ -200,28 +149,60 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Support CTA */}
-      <section className="py-20 lg:py-28 px-6 bg-gray-100">
-        <div className="max-w-[700px] mx-auto text-center">
+      {/* Instagram CTA — personality section */}
+      <section className="py-20 lg:py-28 px-6 overflow-hidden">
+        <div className="max-w-[1440px] mx-auto">
           <ScrollReveal>
-            <p
-              className="uppercase text-gray-400 mb-4"
-              style={{ ...fontStyle, fontSize: "11px", fontWeight: 500 }}
-            >
-              Make a Difference
-            </p>
-            <h2 className="font-display text-[clamp(32px,5vw,64px)] font-bold uppercase leading-[0.9] text-black tracking-tight mb-6">
-              Help Us Ride Further
-            </h2>
-            <p className="font-body text-base text-gray-500 leading-relaxed mb-10">
-              Donations — eligible for a tax receipt via Cycling Canada — help
-              offset race entry costs, team lodging, and ensure riders have the
-              equipment they need to realize their full potential at prestigious
-              events across North America.
-            </p>
-            <Button href="/donations" variant="outline">
-              Donate Now
-            </Button>
+            <div className="relative">
+              {/* Scrolling marquee text behind */}
+              <div className="absolute inset-0 flex items-center overflow-hidden pointer-events-none select-none opacity-[0.04]">
+                <div className="flex whitespace-nowrap animate-[marquee_20s_linear_infinite]">
+                  <span className="font-display text-[clamp(100px,15vw,200px)] font-bold uppercase tracking-tight mx-8">
+                    Follow the ride · Follow the ride · Follow the ride · Follow the ride ·
+                  </span>
+                  <span className="font-display text-[clamp(100px,15vw,200px)] font-bold uppercase tracking-tight mx-8">
+                    Follow the ride · Follow the ride · Follow the ride · Follow the ride ·
+                  </span>
+                </div>
+              </div>
+
+              {/* Content */}
+              <div className="relative z-10 flex flex-col lg:flex-row items-center lg:items-end justify-between gap-10 py-10">
+                <div>
+                  <p
+                    className="uppercase text-gray-400 mb-4"
+                    style={{ ...fontStyle, fontSize: "11px", fontWeight: 500 }}
+                  >
+                    @cycleryracing
+                  </p>
+                  <h2 className="font-display text-[clamp(36px,6vw,80px)] font-bold uppercase leading-[0.9] text-black tracking-tight">
+                    Follow
+                    <br />
+                    <span className="text-magenta">the ride.</span>
+                  </h2>
+                </div>
+
+                <a
+                  href="https://instagram.com/cycleryracing"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-center gap-4 border-2 border-black rounded-full px-8 py-4 hover:bg-magenta hover:border-magenta hover:text-white transition-all"
+                >
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="transition-colors">
+                    <rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" strokeWidth="2"/>
+                    <circle cx="12" cy="12" r="5" stroke="currentColor" strokeWidth="2"/>
+                    <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/>
+                  </svg>
+                  <span
+                    className="uppercase font-bold"
+                    style={{ ...fontStyle, fontSize: "14px" }}
+                  >
+                    Instagram
+                  </span>
+                  <span className="inline-block transition-transform group-hover:translate-x-1">→</span>
+                </a>
+              </div>
+            </div>
           </ScrollReveal>
         </div>
       </section>
