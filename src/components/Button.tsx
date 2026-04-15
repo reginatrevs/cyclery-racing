@@ -9,11 +9,11 @@ interface ButtonProps {
 
 const variants = {
   primary:
-    "bg-black text-white border-2 border-black hover:bg-magenta hover:border-magenta hover:text-white px-7 py-3.5 rounded-full",
+    "bg-black text-white border border-black hover:bg-magenta hover:border-magenta hover:text-white px-5 py-2 rounded-full",
   secondary:
-    "bg-black text-white border-2 border-black hover:bg-magenta hover:border-magenta px-7 py-3.5 rounded-full",
+    "bg-black text-white border border-black hover:bg-magenta hover:border-magenta px-5 py-2 rounded-full",
   outline:
-    "bg-transparent text-black border-2 border-black hover:bg-magenta hover:border-magenta hover:text-white px-7 py-3.5 rounded-full",
+    "bg-transparent text-black border border-black hover:bg-magenta hover:border-magenta hover:text-white px-5 py-2 rounded-full",
   swiss:
     "text-black font-mono text-[11px] uppercase tracking-[0.2em] hover:text-magenta group px-0 py-0",
 };
@@ -29,7 +29,7 @@ export function Button({
   return (
     <Link
       href={href}
-      className={`inline-flex items-center gap-2 font-body text-[12px] font-bold uppercase tracking-[0.1em] transition-all ${variants[variant]} ${className}`}
+      className={`inline-flex items-center gap-2 font-body text-[11px] font-bold uppercase tracking-[0.05em] transition-all ${variants[variant]} ${className}`}
     >
       {children}
       {isSwiss && (

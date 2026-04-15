@@ -47,6 +47,13 @@ body {
   overflow-x: hidden;
 }
 
+/* Hide default cursor on desktop — custom pink dot replaces it */
+@media (hover: hover) and (pointer: fine) {
+  * {
+    cursor: none !important;
+  }
+}
+
 /* ===== SELECTION ===== */
 ::selection {
   background: var(--color-black);
@@ -260,4 +267,24 @@ body {
   50% { background-position: 100% 100%; }
   75% { background-position: 0% 100%; }
   100% { background-position: 0% 50%; }
+}
+
+/* ===== MISSION TEXT — hover individual words ===== */
+.mission-text {
+  position: relative;
+  z-index: 2;
+}
+
+.mission-text span {
+  transition: color 0.3s ease;
+}
+
+.mission-text span:hover {
+  color: #ff138c !important;
+}
+
+/* ===== MARQUEE ===== */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }

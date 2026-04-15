@@ -8,17 +8,18 @@ const navLinks = [
   { href: "/about", label: "About Us" },
   { href: "/team", label: "Team" },
   { href: "/sponsors", label: "Sponsors" },
+  { href: "/races", label: "Races" },
   { href: "/equipment", label: "Equipment" },
   { href: "/contact", label: "Contact" },
 ];
 
 const allLinks = [
+  { href: "/", label: "Home" },
   { href: "/about", label: "About Us" },
   { href: "/team", label: "Team" },
   { href: "/sponsors", label: "Sponsors" },
   { href: "/races", label: "Races" },
   { href: "/equipment", label: "Equipment" },
-  { href: "/merch", label: "Merch" },
   { href: "/contact", label: "Contact" },
 ];
 
@@ -27,7 +28,8 @@ export function Navbar() {
   const [showLogo, setShowLogo] = useState(false);
 
   const handleScroll = useCallback(() => {
-    const hero = document.getElementById("hero");
+    // Check for any hero section (homepage or subpage heroes)
+    const hero = document.getElementById("hero") || document.getElementById("about-hero");
     if (!hero) {
       setShowLogo(true);
       return;
@@ -73,7 +75,7 @@ export function Navbar() {
             }}
           >
             <Image
-              src="/logo-black.png"
+              src="/logo-mobile.svg"
               alt="Cyclery Racing Abacus Data"
               width={160}
               height={32}
@@ -87,14 +89,14 @@ export function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="nav-link font-body text-[12px] font-bold uppercase tracking-[0.1em] text-black hover:text-magenta transition-colors"
+                className="nav-link font-body text-[12px] font-bold uppercase tracking-[0.1em] text-magenta hover:text-magenta transition-colors hover:opacity-70"
               >
                 {link.label}
               </Link>
             ))}
             <Link
               href="/donations"
-              className="font-body text-[12px] font-bold uppercase tracking-[0.1em] bg-black text-white border-2 border-black px-5 py-1.5 rounded-full hover:bg-magenta hover:border-magenta hover:text-white transition-all"
+              className="font-body text-[12px] font-bold uppercase tracking-[0.1em] bg-magenta text-white border-2 border-magenta px-5 py-1.5 rounded-full hover:bg-black hover:border-black hover:text-white transition-all"
             >
               Support Us
             </Link>
@@ -113,7 +115,7 @@ export function Navbar() {
             }}
           >
             <Image
-              src="/logo-black.png"
+              src="/logo-mobile.svg"
               alt="Cyclery Racing Abacus Data"
               width={180}
               height={36}

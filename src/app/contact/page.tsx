@@ -1,172 +1,164 @@
-"use client";
-
-import { useState } from "react";
+import Image from "next/image";
 import { ScrollReveal } from "@/components/ScrollReveal";
-import { SectionHeading } from "@/components/SectionHeading";
-import { Button } from "@/components/Button";
 
-const socials = [
-  { name: "Instagram", handle: "@cycleryracing", href: "#" },
-  { name: "Strava", handle: "Cyclery Racing", href: "#" },
-  { name: "Twitter / X", handle: "@cycleryracing", href: "#" },
-  { name: "YouTube", handle: "Cyclery Racing", href: "#" },
-];
+const fontStyle = {
+  fontFamily: '"PP Neue Montreal", "Helvetica Neue", Helvetica, sans-serif',
+  letterSpacing: "-0.03em",
+};
 
 export default function ContactPage() {
-  const [submitted, setSubmitted] = useState(false);
-
   return (
     <>
-      {/* Hero */}
-      <section className="pt-32 pb-20 px-6">
-        <div className="max-w-[1440px] mx-auto">
-          <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-magenta mb-4">
-            Get in Touch
-          </p>
-          <h1 className="font-display text-[clamp(48px,10vw,140px)] font-bold uppercase leading-[0.85] text-black">
-            Contact Us
-          </h1>
+      {/* Hero — two-column: photo left, title right */}
+      <section className="min-h-screen">
+        <div className="grid grid-cols-1 lg:grid-cols-2 min-h-screen">
+          {/* Left — Photo */}
+          <div className="relative h-[50vh] lg:h-auto">
+            <Image
+              src="/contact-us.jpg"
+              alt="Cyclery Racing team"
+              fill
+              className="object-cover"
+              priority
+              sizes="(max-width: 1024px) 100vw, 50vw"
+            />
+          </div>
+
+          {/* Right — Contact title + all info */}
+          <div className="flex flex-col justify-between p-8 lg:p-16 lg:pl-20">
+            {/* Top — big title */}
+            <div className="pt-24 lg:pt-32">
+              <ScrollReveal>
+                <h1 className="font-display text-[clamp(48px,8vw,120px)] font-bold uppercase leading-[0.85] text-black tracking-tight">
+                  Contact
+                </h1>
+                <p className="font-body text-base text-black leading-relaxed mt-4 max-w-md">
+                  Have a question, want to partner, or just want to say hi?
+                  We&apos;d love to hear from you.
+                </p>
+              </ScrollReveal>
+            </div>
+
+            {/* Bottom — contact details grid */}
+            <div className="pt-16 pb-8 lg:pb-16">
+              <ScrollReveal delay={100}>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-12 border-t border-gray-200 pt-10">
+                  {/* Vince — primary */}
+                  <div>
+                    <p
+                      className="uppercase text-gray-400 mb-4"
+                      style={{ ...fontStyle, fontSize: "10px", fontWeight: 600 }}
+                    >
+                      Team Owner &amp; Sponsorship Contact
+                    </p>
+                    <h2 className="font-display text-2xl lg:text-3xl font-bold text-black leading-[1.1] mb-1">
+                      Vince Caceres
+                    </h2>
+                    <a
+                      href="mailto:vince@thecyclery.ca"
+                      className="inline-block font-display text-lg lg:text-xl font-bold text-magenta hover:text-black transition-colors nav-link"
+                    >
+                      vince@thecyclery.ca
+                    </a>
+                  </div>
+
+                  {/* Right column — social + media stacked */}
+                  <div className="space-y-8">
+                    {/* Follow */}
+                    <div>
+                      <p
+                        className="uppercase text-gray-400 mb-3"
+                        style={{ ...fontStyle, fontSize: "10px", fontWeight: 600 }}
+                      >
+                        Follow Us
+                      </p>
+                      <a
+                        href="https://instagram.com/cycleryracing"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="nav-link font-display text-lg font-bold text-black hover:text-magenta transition-colors"
+                      >
+                        @cycleryracing
+                      </a>
+                    </div>
+
+                    {/* Media */}
+                    <div>
+                      <p
+                        className="uppercase text-gray-400 mb-3"
+                        style={{ ...fontStyle, fontSize: "10px", fontWeight: 600 }}
+                      >
+                        Media &amp; Press
+                      </p>
+                      <a
+                        href="mailto:regina@trevs.ca"
+                        className="nav-link font-body text-base text-black hover:text-magenta transition-colors"
+                      >
+                        regina@trevs.ca
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </ScrollReveal>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Contact Section */}
-      <section className="pb-24 lg:pb-32 px-6">
-        <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16">
-          {/* Form */}
-          <ScrollReveal direction="left">
-            {submitted ? (
-              <div className="bg-lime rounded p-12 text-center">
-                <h3 className="font-display text-3xl font-bold uppercase text-black mb-4">
-                  Message Sent
-                </h3>
-                <p className="font-body text-black/60">
-                  Thanks for reaching out. We&apos;ll get back to you soon.
-                </p>
-              </div>
-            ) : (
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  setSubmitted(true);
-                }}
-                className="space-y-6"
-              >
-                <div>
-                  <label className="block font-mono text-[10px] uppercase tracking-[0.25em] text-gray-400 mb-2">
-                    Name
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    className="w-full px-4 py-3 border border-gray-200 rounded bg-white text-black font-body focus:outline-none focus:border-magenta transition-colors"
-                    placeholder="Your name"
-                  />
-                </div>
-
-                <div>
-                  <label className="block font-mono text-[10px] uppercase tracking-[0.25em] text-gray-400 mb-2">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    required
-                    className="w-full px-4 py-3 border border-gray-200 rounded bg-white text-black font-body focus:outline-none focus:border-magenta transition-colors"
-                    placeholder="your@email.com"
-                  />
-                </div>
-
-                <div>
-                  <label className="block font-mono text-[10px] uppercase tracking-[0.25em] text-gray-400 mb-2">
-                    Subject
-                  </label>
-                  <select className="w-full px-4 py-3 border border-gray-200 rounded bg-white text-black font-body focus:outline-none focus:border-magenta transition-colors">
-                    <option>General Inquiry</option>
-                    <option>Sponsorship</option>
-                    <option>Join the Team</option>
-                    <option>Media / Press</option>
-                    <option>Other</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block font-mono text-[10px] uppercase tracking-[0.25em] text-gray-400 mb-2">
-                    Message
-                  </label>
-                  <textarea
-                    required
-                    rows={5}
-                    className="w-full px-4 py-3 border border-gray-200 rounded bg-white text-black font-body focus:outline-none focus:border-magenta transition-colors resize-none"
-                    placeholder="Your message..."
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  className="font-body text-[12px] font-bold uppercase tracking-[0.1em] bg-magenta text-white px-8 py-3.5 rounded-full hover:bg-lime hover:text-black transition-all"
+      {/* Map — full width, pink-tinted */}
+      <section className="px-6 py-20 lg:py-28">
+        <div className="max-w-[1440px] mx-auto">
+          <ScrollReveal>
+            <div className="mb-6 flex items-baseline justify-between">
+              <div>
+                <p
+                  className="uppercase text-gray-400 mb-3"
+                  style={{ ...fontStyle, fontSize: "10px", fontWeight: 600 }}
                 >
-                  Send Message
-                </button>
-              </form>
-            )}
-          </ScrollReveal>
-
-          {/* Info */}
-          <ScrollReveal direction="right">
-            <div className="space-y-10">
-              <div>
-                <h3 className="font-display text-xl font-bold uppercase text-black mb-4">
-                  Contact Info
-                </h3>
-                <div className="space-y-3">
-                  <div>
-                    <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-gray-400 mb-1">Email</p>
-                    <p className="font-body text-black">hello@cycleryracing.com</p>
-                  </div>
-                  <div>
-                    <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-gray-400 mb-1">Based In</p>
-                    <p className="font-body text-black">Toronto, Ontario, Canada</p>
-                  </div>
-                  <div>
-                    <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-gray-400 mb-1">Home Shop</p>
-                    <p className="font-body text-black">The Cyclery — Toronto</p>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <h3 className="font-display text-xl font-bold uppercase text-black mb-4">
-                  Follow Us
-                </h3>
-                <div className="space-y-3">
-                  {socials.map((social) => (
-                    <a
-                      key={social.name}
-                      href={social.href}
-                      className="flex items-center justify-between py-3 border-b border-gray-200 group"
-                    >
-                      <span className="font-body text-sm font-semibold text-black group-hover:text-magenta transition-colors">
-                        {social.name}
-                      </span>
-                      <span className="font-mono text-[10px] text-gray-400 group-hover:text-magenta transition-colors">
-                        {social.handle}
-                      </span>
-                    </a>
-                  ))}
-                </div>
-              </div>
-
-              <div className="bg-gray-100 rounded p-8">
-                <h3 className="font-display text-xl font-bold uppercase text-black mb-3">
-                  Interested in Sponsoring?
-                </h3>
-                <p className="font-body text-sm text-gray-600 leading-relaxed mb-6">
-                  We&apos;re always open to conversations with brands that share our
-                  values. Let&apos;s build something together.
+                  Our Home Shop
                 </p>
-                <Button href="/sponsors" variant="outline">
-                  Sponsorship Info
-                </Button>
+                <p className="font-display text-lg lg:text-xl font-bold text-black">
+                  The Cyclery
+                </p>
+                <p className="font-body text-sm text-black/60 mt-1">
+                  1115 Bank St, Ottawa, Ontario, Canada
+                </p>
               </div>
+              <a
+                href="https://maps.google.com/?q=The+Cyclery+1115+Bank+St+Ottawa"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="nav-link font-body text-sm font-bold text-black hover:text-magenta transition-colors hidden lg:block"
+              >
+                Open in Maps →
+              </a>
+            </div>
+          </ScrollReveal>
+          <ScrollReveal delay={80}>
+            <div
+              className="relative w-full h-[400px] lg:h-[500px] overflow-hidden"
+              style={{
+                filter: "saturate(0) contrast(1.1) brightness(1.05)",
+              }}
+            >
+              {/* Pink overlay */}
+              <div
+                className="absolute inset-0 z-10 pointer-events-none"
+                style={{
+                  backgroundColor: "rgba(255, 19, 140, 0.08)",
+                  mixBlendMode: "multiply",
+                }}
+              />
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5603.5512717170395!2d-75.68533602240592!3d45.39369657107294!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4cce05e9cd0ea36d%3A0x94b181e207f67f54!2sThe%20Cyclery!5e0!3m2!1sen!2sca!4v1776210461299!5m2!1sen!2sca"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="The Cyclery — Ottawa"
+              />
             </div>
           </ScrollReveal>
         </div>
