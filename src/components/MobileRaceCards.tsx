@@ -7,7 +7,8 @@ interface Race {
   day: string;
   name: string;
   location: string;
-  distance: string;
+  distance?: string;
+  photo?: string;
 }
 
 function RaceCard({ race, index }: { race: Race; index: number }) {
