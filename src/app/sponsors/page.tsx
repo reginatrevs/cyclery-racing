@@ -1,3 +1,7 @@
+"use client";
+
+import { useState } from "react";
+import Image from "next/image";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { Button } from "@/components/Button";
 
@@ -7,18 +11,18 @@ const fontStyle = {
 };
 
 const sponsors = [
-  { name: "Abacus Data" },
-  { name: "The Cyclery" },
-  { name: "Factor" },
-  { name: "SRAM" },
-  { name: "Mark Motors" },
-  { name: "Castelli" },
-  { name: "Smith" },
-  { name: "Look" },
-  { name: "Pirelli" },
-  { name: "HLC" },
-  { name: "Bont" },
-  { name: "Skratch Labs" },
+  { name: "The Cyclery", slug: "cyclery", url: "https://thecyclery.ca" },
+  { name: "Factor", slug: "factor", url: "https://factorbikes.com" },
+  { name: "SRAM", slug: "sram", url: "https://sram.com" },
+  { name: "Mark Motors", slug: "mark-motors", url: "https://markmotorsofottawa.com" },
+  { name: "Castelli", slug: "castelli", url: "https://castelli-cycling.com" },
+  { name: "Smith", slug: "smith", url: "https://smithoptics.com" },
+  { name: "Look", slug: "look", url: "https://lookcycle.com" },
+  { name: "Pirelli", slug: "pirelli", url: "https://pirelli.com/cycling" },
+  { name: "HLC", slug: "hlc", url: "https://hlc.com" },
+  { name: "Bont", slug: "bont", url: "https://bfrdsrl.com" },
+  { name: "Skratch Labs", slug: "skratch", url: "https://skratchlabs.com" },
+  { name: "Physio Bike Fitter", slug: "physio", url: "#" },
 ];
 
 const benefits = [
@@ -40,110 +44,211 @@ const benefits = [
   {
     title: "Tailored Partnerships",
     description:
-      "Every partnership is different. Whether it's branded vehicles, in-store events, team talks at your HQ, co-branded training sessions, or custom activations — we build sponsorships that make sense for your industry and audience.",
+      "Every partnership is different. Whether it's branded vehicles, in-store events, or custom activations — we build sponsorships that make sense for your industry and audience.",
   },
 ];
 
 export default function SponsorsPage() {
+  const [hoveredSponsor, setHoveredSponsor] = useState<number | null>(null);
+  const [hoveredBenefit, setHoveredBenefit] = useState<number | null>(null);
+
   return (
     <>
-      {/* Hero + Benefits under title */}
+      {/* Hero — title + intro text */}
       <section className="pt-32 pb-16 px-6">
         <div className="max-w-[1440px] mx-auto">
           <h1 className="font-display text-[clamp(48px,10vw,140px)] font-bold uppercase leading-[0.85] text-black tracking-tight mb-6">
             Sponsors
           </h1>
 
-          <p className="font-body text-base lg:text-lg text-gray-500 leading-relaxed max-w-2xl mb-16">
+          <p className="font-body text-base lg:text-lg text-black leading-relaxed max-w-2xl">
             We&apos;re proud to partner with brands that believe in the future of
             women&apos;s cycling. Our sponsors make it possible for us to compete,
             develop talent, and push the sport forward.
           </p>
+        </div>
+      </section>
 
-          {/* Benefits grid — under the intro text */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-0 border-t border-gray-200">
-            {benefits.map((b, i) => (
-              <ScrollReveal key={b.title} delay={i * 100}>
-                <div
-                  className={`py-8 lg:py-10 pr-8 ${
-                    i % 2 === 0
-                      ? "md:pr-12 md:border-r border-gray-200"
-                      : "md:pl-12"
-                  } border-b border-gray-200`}
+      {/* Sponsor Grid — logos, no borders, pink on hover */}
+      <section className="py-16 lg:py-24 px-6">
+        <div className="max-w-[1440px] mx-auto">
+          {/* Abacus Data — title sponsor, bigger */}
+          <ScrollReveal>
+            <a
+              href="https://abacusdata.ca"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group cursor-pointer flex flex-col items-center justify-center py-12 lg:py-20 mb-4"
+              onMouseEnter={() => setHoveredSponsor(-1)}
+              onMouseLeave={() => setHoveredSponsor(null)}
+            >
+              <span
+                className="uppercase text-magenta mb-4"
+                style={{ ...fontStyle, fontSize: "10px", fontWeight: 600 }}
+              >
+                Title Sponsor
+              </span>
+              <div className="relative h-[60px] lg:h-[100px] w-[280px] lg:w-[400px]">
+                {/* Black logo — default */}
+                <Image
+                  src="/sponsors/abacus-black.png"
+                  alt="Abacus Data"
+                  fill
+                  className="object-contain transition-opacity duration-300 group-hover:opacity-0"
+                />
+                {/* Pink logo — hover */}
+                <Image
+                  src="/sponsors/abacus-pink.png"
+                  alt="Abacus Data"
+                  fill
+                  className="object-contain opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                />
+              </div>
+            </a>
+          </ScrollReveal>
+
+          {/* Rest of sponsors — clean grid, no borders */}
+          <div
+            className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+            onMouseLeave={() => setHoveredSponsor(null)}
+          >
+            {sponsors.map((sponsor, i) => (
+              <ScrollReveal key={sponsor.name} delay={i * 50}>
+                <a
+                  href={sponsor.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="relative flex flex-col items-center justify-center h-[120px] lg:h-[160px] group cursor-pointer transition-colors"
+                  onMouseEnter={() => setHoveredSponsor(i)}
                 >
+                  {"textOnly" in sponsor && sponsor.textOnly ? (
+                    <span
+                      className="uppercase text-center select-none transition-colors duration-300 text-black group-hover:text-magenta"
+                      style={{ ...fontStyle, fontSize: "clamp(14px, 2vw, 20px)", fontWeight: 700 }}
+                    >
+                      {sponsor.name}
+                    </span>
+                  ) : (
+                    <div className="relative h-[48px] lg:h-[64px] w-[140px] lg:w-[200px]">
+                      <Image
+                        src={`/sponsors/${sponsor.slug}-black.png`}
+                        alt={sponsor.name}
+                        fill
+                        className="object-contain transition-opacity duration-300 group-hover:opacity-0"
+                      />
+                      <Image
+                        src={`/sponsors/${sponsor.slug}-pink.png`}
+                        alt={sponsor.name}
+                        fill
+                        className="object-contain opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                      />
+                    </div>
+                  )}
+                  {/* Name text on hover */}
                   <span
-                    className="uppercase text-magenta"
-                    style={{ ...fontStyle, fontSize: "10px", fontWeight: 600 }}
+                    className="absolute bottom-3 uppercase transition-all duration-300 text-center"
+                    style={{
+                      ...fontStyle,
+                      fontSize: "9px",
+                      fontWeight: 500,
+                      color: "#ff138c",
+                      opacity: hoveredSponsor === i ? 0.6 : 0,
+                      transform: hoveredSponsor === i ? "translateY(0)" : "translateY(4px)",
+                    }}
                   >
-                    {String(i + 1).padStart(2, "0")}
+                    {sponsor.name}
                   </span>
-                  <h3 className="font-display text-xl lg:text-2xl font-bold uppercase text-black mt-2 mb-3">
-                    {b.title}
-                  </h3>
-                  <p className="font-body text-sm text-gray-500 leading-relaxed max-w-sm">
+                </a>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Benefits + CTA — light pink section, left-aligned */}
+      <section className="px-6 py-20 lg:py-28" style={{ backgroundColor: "#ffe8f0" }}>
+        <div className="max-w-[1440px] mx-auto">
+          {/* CTA — left aligned */}
+          <ScrollReveal>
+            <div className="mb-16 max-w-2xl">
+              <p
+                className="uppercase mb-4"
+                style={{ ...fontStyle, fontSize: "11px", fontWeight: 500, color: "rgba(0,0,0,0.35)" }}
+              >
+                Interested?
+              </p>
+              <h2 className="font-display text-[clamp(32px,5vw,64px)] font-bold uppercase leading-[0.9] text-black tracking-tight mb-6">
+                Let&apos;s Talk
+              </h2>
+              <p className="font-body text-base text-black leading-relaxed mb-10">
+                Every partnership starts with a conversation. Tell us about your brand
+                and we&apos;ll find a way to make it work — from race-day branding to
+                fully custom activations.
+              </p>
+              <Button href="/contact" variant="primary">
+                Contact Us
+              </Button>
+            </div>
+          </ScrollReveal>
+
+          {/* Sponsor Benefits heading */}
+          <ScrollReveal>
+            <p
+              className="uppercase mb-6"
+              style={{ ...fontStyle, fontSize: "11px", fontWeight: 600, color: "rgba(0,0,0,0.35)" }}
+            >
+              Sponsor Benefits
+            </p>
+          </ScrollReveal>
+
+          {/* Benefits cards — hover to light pink */}
+          <div
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"
+            onMouseLeave={() => setHoveredBenefit(null)}
+          >
+            {benefits.map((b, i) => (
+              <ScrollReveal key={b.title} delay={i * 80}>
+                <div
+                  className="relative aspect-[3/4] flex flex-col justify-between p-7 lg:p-9 cursor-pointer group transition-all duration-500"
+                  onMouseEnter={() => setHoveredBenefit(i)}
+                  style={{
+                    backgroundColor: hoveredBenefit === i ? "#fff0f5" : "rgba(255,255,255,0.5)",
+                    border: "1px solid",
+                    borderColor: hoveredBenefit === i ? "#ff138c" : "transparent",
+                  }}
+                >
+                  {/* Number + Title at top */}
+                  <div>
+                    <span
+                      className="block uppercase mb-3"
+                      style={{
+                        ...fontStyle,
+                        fontSize: "10px",
+                        fontWeight: 600,
+                        color: hoveredBenefit === i ? "#ff138c" : "rgba(0,0,0,0.3)",
+                        transition: "color 0.3s ease",
+                      }}
+                    >
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <span
+                      className="font-display text-[clamp(22px,2.5vw,32px)] font-bold uppercase leading-tight transition-colors duration-300"
+                      style={{ color: hoveredBenefit === i ? "#ff138c" : "#111" }}
+                    >
+                      {b.title}
+                    </span>
+                  </div>
+
+                  {/* Description at bottom */}
+                  <p
+                    className="font-body text-sm text-black leading-relaxed transition-all duration-500"
+                  >
                     {b.description}
                   </p>
                 </div>
               </ScrollReveal>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* Sponsor List */}
-      <section className="py-20 lg:py-28 px-6 border-t border-gray-200">
-        <div className="max-w-[1440px] mx-auto">
-          <ScrollReveal>
-            <h2 className="font-display text-[clamp(36px,5vw,72px)] font-bold uppercase leading-[0.9] text-black tracking-tight mb-16">
-              Our Partners
-            </h2>
-          </ScrollReveal>
-
-          {/* Sponsor grid — clean bordered cards */}
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-0 border-t border-l border-gray-200">
-            {sponsors.map((sponsor, i) => (
-              <ScrollReveal key={sponsor.name} delay={i * 50}>
-                <div className="flex items-center justify-center h-[120px] lg:h-[160px] border-r border-b border-gray-200 group cursor-pointer transition-colors hover:bg-gray-50">
-                  <span
-                    className="uppercase text-center select-none transition-colors duration-300 group-hover:text-magenta"
-                    style={{
-                      ...fontStyle,
-                      fontSize: "clamp(14px, 2vw, 20px)",
-                      fontWeight: 600,
-                      color: "#999",
-                    }}
-                  >
-                    {sponsor.name}
-                  </span>
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA — Contact for partnerships */}
-      <section className="py-20 lg:py-28 px-6 bg-black">
-        <div className="max-w-[700px] mx-auto text-center">
-          <ScrollReveal>
-            <p
-              className="uppercase mb-4"
-              style={{ ...fontStyle, fontSize: "11px", fontWeight: 500, color: "rgba(255,255,255,0.4)" }}
-            >
-              Interested?
-            </p>
-            <h2 className="font-display text-[clamp(32px,5vw,64px)] font-bold uppercase leading-[0.9] text-white tracking-tight mb-6">
-              Let&apos;s Talk
-            </h2>
-            <p className="font-body text-base text-white/50 leading-relaxed mb-10 max-w-lg mx-auto">
-              Every partnership starts with a conversation. Tell us about your brand
-              and we&apos;ll find a way to make it work — from race-day branding to
-              fully custom activations.
-            </p>
-            <Button href="/contact" variant="secondary">
-              Contact Us
-            </Button>
-          </ScrollReveal>
         </div>
       </section>
     </>

@@ -28,7 +28,7 @@ export function AboutHero() {
     >
       {/* Background photo */}
       <Image
-        src="/splash-desktop.jpg"
+        src="/about-us-hero.jpg"
         alt=""
         fill
         className="object-cover"
@@ -36,8 +36,8 @@ export function AboutHero() {
         sizes="100vw"
       />
 
-      {/* Light overlay */}
-      <div className="absolute inset-0 bg-white/60" />
+      {/* Subtle gradient at bottom for text readability */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
 
       {/* Text — bleeds off edges, semi-transparent */}
       <div

@@ -1,11 +1,13 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
+import Image from "next/image";
 
 interface Stat {
   number: string;
   label: string;
   description?: string;
+  image?: string;
 }
 
 interface FluidStatsProps {
@@ -20,171 +22,139 @@ const colors = [
 ];
 
 export function FluidStats({ stats }: FluidStatsProps) {
-  const [active, setActive] = useState(-1);
-  const [completed, setCompleted] = useState(false);
-  const wrapperRef = useRef<HTMLDivElement>(null);
-  const stickyRef = useRef<HTMLDivElement>(null);
+  const [hovered, setHovered] = useState<number | null>(null);
 
-  // The trick: we make a tall wrapper (stats.length * scrollPerCard + viewport height)
-  // Inside, a sticky container stays pinned. We read scroll progress to determine active card.
-  const scrollPerCard = 600; // px of scroll per card step
+  // Mobile scroll-triggered active state
+  const [mobileActive, setMobileActive] = useState(-1);
+  const [mobileCompleted, setMobileCompleted] = useState(false);
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const scrollPerCard = 600;
   const totalScroll = stats.length * scrollPerCard;
 
   const handleScroll = useCallback(() => {
-    if (completed) return;
+    if (mobileCompleted) return;
     const wrapper = wrapperRef.current;
     if (!wrapper) return;
+    if (window.innerWidth >= 1024) return; // Desktop doesn't use scroll
 
     const rect = wrapper.getBoundingClientRect();
-    // How far we've scrolled into the wrapper (0 = just entered, totalScroll = exited)
     const scrolled = -rect.top;
 
     if (scrolled < 0) {
-      // Haven't reached section yet
-      if (active !== -1) setActive(-1);
+      if (mobileActive !== -1) setMobileActive(-1);
       return;
     }
-
     if (scrolled >= totalScroll) {
-      // Past the section — complete
-      if (!completed) {
-        setCompleted(true);
-        setActive(stats.length - 1);
+      if (!mobileCompleted) {
+        setMobileCompleted(true);
+        setMobileActive(stats.length - 1);
       }
       return;
     }
-
-    // Which card should be active based on scroll position
-    const cardIndex = Math.min(
-      stats.length - 1,
-      Math.floor(scrolled / scrollPerCard)
-    );
-    if (cardIndex !== active) {
-      setActive(cardIndex);
-    }
-  }, [active, completed, stats.length, totalScroll]);
+    const cardIndex = Math.min(stats.length - 1, Math.floor(scrolled / scrollPerCard));
+    if (cardIndex !== mobileActive) setMobileActive(cardIndex);
+  }, [mobileActive, mobileCompleted, stats.length, totalScroll]);
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, [handleScroll]);
 
-  // Click handler — only works in completed state
-  const handleClick = (index: number) => {
-    if (!completed) return;
-    setActive(active === index ? -1 : index);
-  };
-
-  // Desktop card positioning
-  const sideW = 30;
-  const mainW = 100 - sideW - 0.3;
-  const rowH = 33.1;
-  const rowGap = 0.35;
-  const transition = "left 0.8s cubic-bezier(0.4, 0, 0.2, 1), top 0.8s cubic-bezier(0.4, 0, 0.2, 1), width 0.8s cubic-bezier(0.4, 0, 0.2, 1), height 0.8s cubic-bezier(0.4, 0, 0.2, 1)";
-
-  const getCardRect = (index: number) => {
-    if (active < 0) {
-      const col = index % 2;
-      const row = Math.floor(index / 2);
-      return {
-        left: `${col * 50.15}%`,
-        top: `${row * 50.15}%`,
-        width: "49.85%",
-        height: "49.85%",
-      };
-    }
-
-    const inactiveIndices = stats.map((_, i) => i).filter((i) => i !== active);
-    const pos = inactiveIndices.indexOf(index);
-
-    if (index === active) {
-      return {
-        left: `${sideW + 0.3}%`,
-        top: "0%",
-        width: `${mainW}%`,
-        height: "100%",
-      };
-    }
-
-    return {
-      left: "0%",
-      top: `${pos * (rowH + rowGap)}%`,
-      width: `${sideW}%`,
-      height: `${rowH}%`,
-    };
+  const handleMobileClick = (index: number) => {
+    if (!mobileCompleted) return;
+    setMobileActive(mobileActive === index ? -1 : index);
   };
 
   return (
     <section className="px-6">
-      {/* Tall scroll wrapper — creates the scroll distance needed */}
-      <div
-        ref={wrapperRef}
-        style={{ height: `${totalScroll + 100}px`, position: "relative" }}
-      >
-        {/* Sticky container — stays pinned while user scrolls through */}
-        <div
-          ref={stickyRef}
-          className="sticky top-[80px] py-16 lg:py-24"
-        >
-          <div className="max-w-[1440px] mx-auto">
-            {/* Desktop */}
-            <div className="hidden lg:block relative h-[480px]">
-              {stats.map((stat, i) => {
-                const isActive = i === active;
-                const isPast = active >= 0 && i < active && !completed;
-                const color = colors[i % colors.length];
-                const rect = getCardRect(i);
-                return (
+      {/* Desktop — Fulton Market style bordered cards */}
+      <div className="hidden lg:block py-16 lg:py-24">
+        <div className="max-w-[1440px] mx-auto">
+          <div
+            className="grid grid-cols-4 gap-4"
+            onMouseLeave={() => setHovered(null)}
+          >
+            {stats.map((stat, i) => (
+              <div
+                key={stat.label}
+                className="relative border border-gray-300 aspect-[3/4] flex flex-col justify-between p-7 lg:p-9 cursor-pointer group transition-all duration-500"
+                onMouseEnter={() => setHovered(i)}
+                data-cursor-expand="true"
+                style={{
+                  backgroundColor: hovered === i ? "#fafafa" : "transparent",
+                  transitionDelay: `${i * 100}ms`,
+                }}
+              >
+                {/* Title at top */}
+                <div className="relative z-10">
+                  <span
+                    className="font-display text-[clamp(28px,3vw,42px)] font-bold uppercase leading-none transition-colors duration-300"
+                    style={{ color: hovered === i ? (stat.image ? "#fff" : "#ff138c") : "#111" }}
+                  >
+                    {stat.number}
+                  </span>
+                  <span
+                    className="block font-display text-[clamp(16px,1.8vw,22px)] font-bold uppercase leading-tight mt-2 transition-colors duration-300"
+                    style={{ color: hovered === i ? (stat.image ? "#fff" : "#ff138c") : "#111" }}
+                  >
+                    {stat.label}
+                  </span>
+                </div>
+
+                {/* Card image — appears as background on hover */}
+                {stat.image && (
                   <div
-                    key={stat.label}
-                    onClick={() => handleClick(i)}
-                    className={`${color.bg} ${color.text} absolute overflow-hidden flex flex-col justify-between p-7 lg:p-8 ${completed ? "cursor-pointer" : ""}`}
+                    className="absolute inset-0 overflow-hidden transition-all duration-500 pointer-events-none"
                     style={{
-                      ...rect,
-                      transition,
-                      opacity: isPast ? 0.7 : 1,
+                      opacity: hovered === i ? 1 : 0,
                     }}
                   >
-                    <div>
-                      <span
-                        className="font-display font-bold uppercase leading-none"
-                        style={{
-                          fontSize: isActive ? "72px" : active < 0 ? "56px" : "36px",
-                          transition: "font-size 0.8s cubic-bezier(0.4, 0, 0.2, 1)",
-                        }}
-                      >
-                        {stat.number} {stat.label}
-                      </span>
-                      {stat.description && (
-                        <p
-                          className={`mt-4 font-body text-sm leading-relaxed max-w-md ${color.opacity}`}
-                          style={{
-                            opacity: isActive ? 1 : 0,
-                            maxHeight: isActive ? "100px" : "0",
-                            transition: "opacity 0.5s ease 0.3s, max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1)",
-                            overflow: "hidden",
-                          }}
-                        >
-                          {stat.description}
-                        </p>
-                      )}
-                    </div>
+                    <Image
+                      src={stat.image}
+                      alt={stat.label}
+                      fill
+                      className="object-cover"
+                      sizes="25vw"
+                    />
                   </div>
-                );
-              })}
-            </div>
+                )}
 
-            {/* Mobile */}
-            <div className="lg:hidden flex flex-col gap-[3px]">
+                {/* Description at bottom left */}
+                {stat.description && (
+                  <p
+                    className="relative z-10 font-body text-sm leading-relaxed max-w-[220px] transition-all duration-500"
+                    style={{
+                      opacity: hovered === i ? 1 : 0.8,
+                      transform: hovered === i ? "translateY(0)" : "translateY(4px)",
+                      color: hovered === i && stat.image ? "#fff" : "#111",
+                    }}
+                  >
+                    {stat.description}
+                  </p>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile — keep existing scroll-lock behavior */}
+      <div className="lg:hidden">
+        <div
+          ref={wrapperRef}
+          style={{ height: `${totalScroll + 100}px`, position: "relative" }}
+        >
+          <div className="sticky top-[80px] py-16">
+            <div className="flex flex-col gap-[3px]">
               {stats.map((stat, i) => {
-                const isActive = i === active;
-                const isPast = active >= 0 && i < active && !completed;
+                const isActive = i === mobileActive;
+                const isPast = mobileActive >= 0 && i < mobileActive && !mobileCompleted;
                 const color = colors[i % colors.length];
                 return (
                   <div
                     key={stat.label}
-                    onClick={() => handleClick(i)}
-                    className={`${color.bg} ${color.text} p-6 overflow-hidden ${completed ? "cursor-pointer" : ""}`}
+                    onClick={() => handleMobileClick(i)}
+                    className={`${color.bg} ${color.text} p-6 overflow-hidden ${mobileCompleted ? "cursor-pointer" : ""}`}
                     style={{
                       height: isActive ? "200px" : isPast ? "60px" : "72px",
                       opacity: isPast ? 0.6 : 1,

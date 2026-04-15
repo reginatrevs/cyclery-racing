@@ -9,10 +9,10 @@ import { MobileRaceCards } from "@/components/MobileRaceCards";
 import { SponsorsList } from "@/components/SponsorsList";
 
 const stats = [
-  { number: "19+", label: "RACES", description: "From Gatineau to Chicago, Charlevoix to Philadelphia — competing across North America at the elite level." },
-  { number: "10", label: "RIDERS", description: "An all-women roster of dedicated Canadian athletes pushing each other to new heights." },
-  { number: "2009", label: "EST.", description: "One of Canada's longest-running competitive cycling programs, building legacy for over 15 years." },
-  { number: "100%", label: "CAN", description: "Homegrown talent representing Canada on the international stage." },
+  { number: "19+", label: "RACES", description: "From Ottawa to Chicago, Charlevoix to Philadelphia — competing across North America at the elite level.", image: "/cards/card1.png" },
+  { number: "10", label: "RIDERS", description: "An all-women roster of dedicated Canadian athletes pushing each other to new heights.", image: "/cards/card2.png" },
+  { number: "2009", label: "EST.", description: "One of Canada's longest-running competitive cycling programs, building legacy for over 15 years.", image: "/cards/card3.png" },
+  { number: "100%", label: "CAN", description: "Homegrown talent representing Canada on the international stage.", image: "/cards/card4.png" },
 ];
 
 const riders = [
@@ -23,27 +23,28 @@ const riders = [
 ];
 
 const upcomingRaces = [
-  { date: "APR", day: "19", name: "Clarence Rockland", location: "Clarence, ON", distance: "" },
-  { date: "APR", day: "26", name: "Almonte Roubaix", location: "Almonte, ON", distance: "" },
-  { date: "MAY", day: "09", name: "Tour of the Battenkill", location: "Batenkill, NY", distance: "" },
-  { date: "MAY", day: "15", name: "Tour de Bloom", location: "Wenatchee, WA", distance: "" },
-  { date: "MAY", day: "31", name: "Via d'Italia", location: "Windsor, ON", distance: "" },
-  { date: "JUN", day: "14", name: "Preston Street", location: "Ottawa, ON", distance: "" },
+  { date: "APR", day: "19", name: "Clarence Rockland", location: "Clarence, ON", photo: "/race/race-1.png" },
+  { date: "APR", day: "26", name: "Almonte Roubaix", location: "Almonte, ON", photo: "/race/race-2.png" },
+  { date: "MAY", day: "09", name: "Tour of the Battenkill", location: "Batenkill, NY", photo: "/race/race-3.png" },
+  { date: "MAY", day: "15", name: "Tour de Bloom", location: "Wenatchee, WA", photo: "/race/race4.png" },
+  { date: "MAY", day: "31", name: "Via d'Italia", location: "Windsor, ON", photo: "/race/race-1.png" },
+  { date: "JUN", day: "14", name: "Preston Street", location: "Ottawa, ON", photo: "/race/race-2.png" },
 ];
 
 const sponsors = [
-  { name: "Abacus Data" },
-  { name: "The Cyclery" },
-  { name: "Factor" },
-  { name: "SRAM" },
-  { name: "Mark Motors" },
-  { name: "Castelli" },
-  { name: "Smith" },
-  { name: "Look" },
-  { name: "Pirelli" },
-  { name: "HLC" },
-  { name: "Bont" },
-  { name: "Skratch Labs" },
+  { name: "Abacus Data", slug: "abacus" },
+  { name: "The Cyclery", slug: "cyclery" },
+  { name: "Factor", slug: "factor" },
+  { name: "SRAM", slug: "sram" },
+  { name: "Mark Motors", slug: "mark-motors" },
+  { name: "Castelli", slug: "castelli" },
+  { name: "Smith", slug: "smith" },
+  { name: "Look", slug: "look" },
+  { name: "Pirelli", slug: "pirelli" },
+  { name: "HLC", slug: "hlc" },
+  { name: "Bont", slug: "bont" },
+  { name: "Skratch Labs", slug: "skratch" },
+  { name: "Physio Bike Fitter", slug: "physio" },
 ];
 
 export default function Home() {
@@ -143,25 +144,28 @@ export default function Home() {
         <div className="hidden lg:grid grid-cols-2 gap-3">
           {upcomingRaces.map((race, i) => (
             <ScrollReveal key={race.name} direction="layer" delay={i * 100}>
-              <div className="group relative aspect-[3/4] bg-gray-100 overflow-hidden cursor-pointer border border-gray-200 hover:border-magenta transition-colors flex flex-col justify-between p-5">
-                <div className="flex-1 flex items-center justify-center opacity-[0.06]">
-                  <span className="font-display text-[120px] font-bold leading-none select-none">
-                    {race.day}
-                  </span>
-                </div>
-                <div>
+              <div className="group relative aspect-[3/4] overflow-hidden cursor-pointer border border-gray-200 hover:border-magenta transition-colors flex flex-col justify-end p-5">
+                <Image
+                  src={race.photo}
+                  alt={race.name}
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  sizes="(min-width: 1024px) 33vw, 50vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
+                <div className="relative z-10">
                   <div className="flex items-baseline gap-2 mb-2">
-                    <span className="font-display text-2xl font-bold text-black leading-none">
+                    <span className="font-display text-2xl font-bold text-white leading-none">
                       {race.day}
                     </span>
-                    <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-gray-400">
+                    <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/60">
                       {race.date}
                     </span>
                   </div>
-                  <h3 className="font-display text-sm lg:text-base font-bold uppercase text-black group-hover:text-magenta transition-colors leading-tight">
+                  <h3 className="font-display text-sm lg:text-base font-bold uppercase text-white group-hover:text-magenta transition-colors leading-tight">
                     {race.name}
                   </h3>
-                  <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-gray-400">
+                  <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/50">
                     {race.location}
                   </span>
                 </div>

@@ -1,9 +1,12 @@
 "use client";
 
 import { useState, useRef, useCallback, useEffect } from "react";
+import Image from "next/image";
 
 interface Sponsor {
   name: string;
+  slug: string;
+  textOnly?: boolean;
 }
 
 const fontStyle = {
@@ -34,7 +37,6 @@ export function SponsorsList({ sponsors }: { sponsors: Sponsor[] }) {
     if (!row || !list) return;
     const listRect = list.getBoundingClientRect();
     const rowRect = row.getBoundingClientRect();
-    // Center the logo vertically with the active row
     setLogoPos(rowRect.top - listRect.top + rowRect.height / 2);
   }, []);
 
@@ -125,7 +127,7 @@ export function SponsorsList({ sponsors }: { sponsors: Sponsor[] }) {
                     ...fontStyle,
                     fontWeight: 500,
                     fontSize: "clamp(24px, 3vw, 42px)",
-                    color: "#111111",
+                    color: active === i ? "#ff138c" : "#111111",
                     transition: "color 0.3s ease",
                   }}
                 >
@@ -138,7 +140,7 @@ export function SponsorsList({ sponsors }: { sponsors: Sponsor[] }) {
 
         {/* Logo — right half, positioned at active row height */}
         <div
-          className="absolute right-0 top-0 w-1/2 pointer-events-none"
+          className="absolute right-0 top-0 w-1/2 pointer-events-none hidden lg:block"
           style={{ height: "100%" }}
         >
           {sponsors.map((sponsor, i) => (
@@ -154,14 +156,13 @@ export function SponsorsList({ sponsors }: { sponsors: Sponsor[] }) {
                 height: "clamp(80px, 14vw, 160px)",
               }}
             >
-              {/* Replace with <Image> when logos in public/sponsors/ */}
-              <div className="w-full h-full bg-gray-100 flex items-center justify-center">
-                <span
-                  className="uppercase text-center select-none px-3"
-                  style={{ ...fontStyle, fontWeight: 700, fontSize: "clamp(14px, 2vw, 24px)", color: "#cccccc" }}
-                >
-                  {sponsor.name}
-                </span>
+              <div className="relative w-full h-full">
+                <Image
+                  src={`/sponsors/${sponsor.slug}-pink.png`}
+                  alt={sponsor.name}
+                  fill
+                  className="object-contain"
+                />
               </div>
             </div>
           ))}

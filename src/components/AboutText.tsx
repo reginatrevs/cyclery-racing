@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import Image from "next/image";
 
 const fontStyle = {
@@ -36,23 +36,18 @@ function useTeamAge() {
   const [elapsed, setElapsed] = useState({ years: 0, months: 0, days: 0, hours: 0, minutes: 0, seconds: 0 });
 
   useEffect(() => {
-    const start = new Date("2008-01-01T00:00:00-05:00").getTime(); // January 2008, Ottawa time
+    const start = new Date("2008-01-01T00:00:00-05:00").getTime();
 
     function calc() {
-      // Use Ottawa timezone for display
       const now = new Date();
-      const diff = now.getTime() - start;
-
-      const totalSeconds = Math.floor(diff / 1000);
+      const totalSeconds = Math.floor((now.getTime() - start) / 1000);
       const totalMinutes = Math.floor(totalSeconds / 60);
       const totalHours = Math.floor(totalMinutes / 60);
-      const totalDays = Math.floor(totalHours / 24);
 
       const seconds = totalSeconds % 60;
       const minutes = totalMinutes % 60;
       const hours = totalHours % 24;
 
-      // Calculate years, months, days from date diff
       const startDate = new Date(2008, 0, 1);
       let years = now.getFullYear() - startDate.getFullYear();
       let months = now.getMonth() - startDate.getMonth();
@@ -72,11 +67,80 @@ function useTeamAge() {
     }
 
     calc();
-    const timer = setInterval(calc, 1000); // update every second
+    const timer = setInterval(calc, 1000);
     return () => clearInterval(timer);
   }, []);
 
   return elapsed;
+}
+
+// Collage photos — scattered around the counter, draggable
+const collagePhotos = [
+  { src: "/about-gallery-1.jpg", alt: "Cyclery Racing", w: 210, h: 260, top: "0%", left: "2%", rotate: -6 },
+  { src: "/about-gallery-2.webp", alt: "Cyclery Racing", w: 195, h: 240, top: "-4%", right: "4%", rotate: 5 },
+  { src: "/about-gallery-3.jpeg", alt: "Cyclery Racing", w: 185, h: 230, bottom: "0%", left: "12%", rotate: 3 },
+  { src: "/about-gallery-4.jpeg", alt: "Cyclery Racing", w: 200, h: 250, bottom: "-2%", right: "2%", rotate: -4 },
+];
+
+function DraggablePhoto({ photo }: { photo: typeof collagePhotos[number] }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const dragState = useRef<{ startX: number; startY: number; origX: number; origY: number } | null>(null);
+  const [offset, setOffset] = useState({ x: 0, y: 0 });
+  const [dragging, setDragging] = useState(false);
+  const [zBump, setZBump] = useState(false);
+
+  const handlePointerDown = useCallback((e: React.PointerEvent) => {
+    const el = ref.current;
+    if (!el) return;
+    el.setPointerCapture(e.pointerId);
+    dragState.current = { startX: e.clientX, startY: e.clientY, origX: offset.x, origY: offset.y };
+    setDragging(true);
+    setZBump(true);
+  }, [offset]);
+
+  const handlePointerMove = useCallback((e: React.PointerEvent) => {
+    if (!dragState.current) return;
+    const dx = e.clientX - dragState.current.startX;
+    const dy = e.clientY - dragState.current.startY;
+    setOffset({ x: dragState.current.origX + dx, y: dragState.current.origY + dy });
+  }, []);
+
+  const handlePointerUp = useCallback(() => {
+    dragState.current = null;
+    setDragging(false);
+  }, []);
+
+  return (
+    <div
+      ref={ref}
+      className="absolute shadow-xl overflow-hidden select-none touch-none"
+      style={{
+        width: `${photo.w}px`,
+        height: `${photo.h}px`,
+        top: photo.top,
+        left: photo.left,
+        right: photo.right,
+        bottom: photo.bottom,
+        transform: `translate(${offset.x}px, ${offset.y}px) rotate(${dragging ? 0 : photo.rotate}deg) scale(${dragging ? 1.04 : 1})`,
+        transition: dragging ? "none" : "transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
+        zIndex: zBump ? 20 : 10,
+        cursor: dragging ? "grabbing" : "grab",
+      }}
+      onPointerDown={handlePointerDown}
+      onPointerMove={handlePointerMove}
+      onPointerUp={handlePointerUp}
+      onPointerCancel={handlePointerUp}
+    >
+      <Image
+        src={photo.src}
+        alt={photo.alt}
+        fill
+        className="object-cover pointer-events-none"
+        sizes="260px"
+        draggable={false}
+      />
+    </div>
+  );
 }
 
 export function AboutText() {
@@ -105,74 +169,22 @@ export function AboutText() {
     return () => observer.disconnect();
   }, []);
 
+  const counterItems = [
+    { value: years, label: "Years" },
+    { value: months, label: "Months" },
+    { value: days, label: "Days" },
+    { value: hours, label: "Hours" },
+    { value: minutes, label: "Min" },
+    { value: seconds, label: "Sec" },
+  ];
+
   return (
-    <section
-      ref={sectionRef}
-      className="py-10 lg:py-16 px-6"
-    >
-      <div className="max-w-[1440px] mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14">
-
-          {/* Left side — photo + counter stacked tight */}
-          <div className="relative order-2 lg:order-1 flex flex-col justify-end">
-            {/* Small square photo */}
-            <div className="relative w-[140px] lg:w-[160px] aspect-square overflow-hidden mb-4">
-              <Image
-                src="/splash-desktop.jpg"
-                alt="Cyclery Racing"
-                fill
-                className="object-cover grayscale"
-                sizes="160px"
-              />
-            </div>
-
-            {/* Counter — pink, tight under photo */}
-            <div>
-              <p
-                className="uppercase mb-2"
-                style={{ ...fontStyle, fontSize: "12px", fontWeight: 600, color: "#ff138c" }}
-              >
-                We&apos;ve been riding for
-              </p>
-              <div className="flex gap-3">
-                {[
-                  { value: years, label: "Yrs" },
-                  { value: months, label: "Mo" },
-                  { value: days, label: "Days" },
-                  { value: hours, label: "Hrs" },
-                  { value: minutes, label: "Min" },
-                  { value: seconds, label: "Sec" },
-                ].map((item) => (
-                  <div key={item.label}>
-                    <span
-                      className="block tabular-nums leading-none"
-                      style={{ ...fontStyle, fontSize: "24px", fontWeight: 700, color: "#ff138c" }}
-                    >
-                      {String(item.value).padStart(2, "0")}
-                    </span>
-                    <span
-                      className="block uppercase text-gray-400 mt-0.5"
-                      style={{ ...fontStyle, fontSize: "8px", fontWeight: 500 }}
-                    >
-                      {item.label}
-                    </span>
-                  </div>
-                ))}
-              </div>
-              <p
-                className="uppercase text-gray-400 mt-2"
-                style={{ ...fontStyle, fontSize: "10px", fontWeight: 500 }}
-              >
-                Ottawa, ON — EST
-              </p>
-            </div>
-          </div>
-
-          {/* Right side — text */}
-          <div className="order-1 lg:order-2 lg:pr-12">
-            <p
-              className="font-body text-xl lg:text-2xl text-black font-semibold leading-[1.35] mb-6"
-            >
+    <section ref={sectionRef}>
+      {/* Text — off-centered with white space on left */}
+      <div className="px-6 pt-14 lg:pt-20 pb-10 lg:pb-14">
+        <div className="max-w-[1440px] mx-auto">
+          <div className="lg:ml-[18%] lg:max-w-[65%]">
+            <p className="font-body text-xl lg:text-2xl text-black font-semibold leading-[1.35] mb-6">
               We&apos;re{" "}
               <Highlight color="lime">
                 <span data-auto-highlight>one of Canada&apos;s oldest continually running women&apos;s cycling programs</span>
@@ -180,9 +192,7 @@ export function AboutText() {
               {" "}&mdash; and one of its most successful.
             </p>
 
-            <p
-              className="font-body text-base lg:text-lg text-black leading-[1.6] mb-6"
-            >
+            <p className="font-body text-base lg:text-lg text-black leading-[1.6] mb-6">
               Based in Ottawa, we develop and support female cyclists across elite,
               U23, and junior categories. Over the last decade we&apos;ve won{" "}
               <Highlight color="pink">
@@ -200,15 +210,134 @@ export function AboutText() {
               on the international stage.
             </p>
 
-            <p
-              className="font-body text-base lg:text-lg text-black leading-[1.6]"
-            >
+            <p className="font-body text-base lg:text-lg text-black leading-[1.6]">
               No other women&apos;s program in Canada has a track record like ours.
               We&apos;re a proud affiliate member of{" "}
               <Highlight color="lime">
                 <span data-auto-highlight>Cycling Canada&apos;s 1882 Collective</span>
               </Highlight>
               {" "}national fundraising initiative, and we&apos;re just getting started.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Counter with collage photos */}
+      <div className="relative overflow-hidden py-16 lg:py-24 px-6">
+        {/* Desktop: relative container with draggable photos + counter */}
+        <div className="hidden lg:block max-w-[1440px] mx-auto relative" style={{ minHeight: "clamp(440px, 52vw, 660px)" }}>
+          {/* Draggable scattered photos */}
+          {collagePhotos.map((photo) => (
+            <DraggablePhoto key={photo.src} photo={photo} />
+          ))}
+
+          {/* Big counter — centered behind photos */}
+          <div className="absolute inset-0 flex flex-col items-center justify-center z-[5] pointer-events-none">
+            <p
+              className="uppercase mb-8 text-center font-display font-bold tracking-wide"
+              style={{ fontSize: "clamp(18px, 2vw, 28px)", color: "#ff138c" }}
+            >
+              We&apos;ve been riding for
+            </p>
+            <div className="flex items-baseline gap-0">
+              {counterItems.map((item, i) => (
+                <div key={item.label} className="flex items-baseline">
+                  <div className="text-center px-1">
+                    <span
+                      className="block tabular-nums leading-none"
+                      style={{ ...fontStyle, fontSize: "clamp(60px, 7vw, 100px)", fontWeight: 800, color: "#ff138c" }}
+                    >
+                      {String(item.value).padStart(2, "0")}
+                    </span>
+                    <span
+                      className="block uppercase mt-2"
+                      style={{ ...fontStyle, fontSize: "11px", fontWeight: 600, color: "rgba(255, 19, 140, 0.45)" }}
+                    >
+                      {item.label}
+                    </span>
+                  </div>
+                  {i < counterItems.length - 1 && (
+                    <span
+                      className="leading-none select-none"
+                      style={{ ...fontStyle, fontSize: "clamp(30px, 3.5vw, 50px)", fontWeight: 300, color: "rgba(255, 19, 140, 0.25)" }}
+                    >
+                      :
+                    </span>
+                  )}
+                </div>
+              ))}
+            </div>
+            <p
+              className="uppercase mt-6 text-center"
+              style={{ ...fontStyle, fontSize: "11px", fontWeight: 500, color: "rgba(255, 19, 140, 0.4)" }}
+            >
+              Ottawa, ON — EST
+            </p>
+          </div>
+        </div>
+
+        {/* Mobile: stacked layout — photos then counter */}
+        <div className="lg:hidden">
+          {/* Photo strip */}
+          <div className="flex gap-3 overflow-x-auto pb-8 -mx-6 px-6 snap-x snap-mandatory no-scrollbar">
+            {collagePhotos.map((photo) => (
+              <div
+                key={photo.src}
+                className="relative flex-shrink-0 w-[140px] h-[175px] overflow-hidden shadow-lg snap-start"
+                style={{ transform: `rotate(${photo.rotate}deg)` }}
+              >
+                <Image
+                  src={photo.src}
+                  alt={photo.alt}
+                  fill
+                  className="object-cover"
+                  sizes="140px"
+                />
+              </div>
+            ))}
+          </div>
+
+          {/* Counter */}
+          <div className="flex flex-col items-center">
+            <p
+              className="uppercase mb-4 text-center font-display font-bold tracking-wide"
+              style={{ fontSize: "14px", color: "#ff138c" }}
+            >
+              We&apos;ve been riding for
+            </p>
+            <div className="flex items-baseline gap-1">
+              {counterItems.map((item, i) => (
+                <div key={item.label} className="flex items-baseline">
+                  <div className="text-center">
+                    <span
+                      className="block tabular-nums leading-none"
+                      style={{ ...fontStyle, fontSize: "42px", fontWeight: 800, color: "#ff138c" }}
+                    >
+                      {String(item.value).padStart(2, "0")}
+                    </span>
+                    <span
+                      className="block uppercase mt-1"
+                      style={{ ...fontStyle, fontSize: "7px", fontWeight: 600, color: "rgba(255, 19, 140, 0.45)" }}
+                    >
+                      {item.label}
+                    </span>
+                  </div>
+                  {i < counterItems.length - 1 && (
+                    <span
+                      className="leading-none select-none mx-0.5"
+                      style={{ ...fontStyle, fontSize: "24px", fontWeight: 300, color: "rgba(255, 19, 140, 0.25)" }}
+                    >
+                      :
+                    </span>
+                  )}
+                </div>
+              ))}
+            </div>
+            <p
+              className="uppercase mt-3 text-center"
+              style={{ ...fontStyle, fontSize: "9px", fontWeight: 500, color: "rgba(255, 19, 140, 0.4)" }}
+            >
+              Ottawa, ON — EST
             </p>
           </div>
         </div>

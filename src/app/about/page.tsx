@@ -58,60 +58,43 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Values */}
+      {/* Values — step layout matching reference */}
       <section className="py-20 lg:py-28 px-6">
         <div className="max-w-[1440px] mx-auto">
           <ScrollReveal>
-            <p
-              className="uppercase text-gray-400 mb-4"
-              style={{ ...fontStyle, fontSize: "11px", fontWeight: 500 }}
-            >
-              What Drives Us
-            </p>
-            <h2 className="font-display text-[clamp(36px,5vw,72px)] font-bold uppercase leading-[0.9] text-black tracking-tight mb-16">
+            <h2 className="font-display text-[clamp(36px,5vw,72px)] font-bold uppercase leading-[0.9] text-black tracking-tight mb-12">
               Our Values
             </h2>
           </ScrollReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-0 border-t border-gray-200">
-            {values.map((value, i) => (
-              <ScrollReveal key={value.title} delay={i * 100}>
-                <div className={`py-8 lg:py-10 pr-8 ${
-                  i % 2 === 0 ? "md:pr-12 md:border-r border-gray-200" : "md:pl-12"
-                } border-b border-gray-200`}>
-                  <span
-                    className="uppercase text-magenta"
-                    style={{ ...fontStyle, fontSize: "10px", fontWeight: 600 }}
-                  >
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <h3 className="font-display text-xl lg:text-2xl font-bold uppercase text-black mt-2 mb-3">
-                    {value.title}
-                  </h3>
-                  <p className="font-body text-sm text-gray-500 leading-relaxed max-w-sm">
-                    {value.description}
-                  </p>
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
-        </div>
-      </section>
+          {values.map((value, i) => (
+            <ScrollReveal key={value.title} delay={i * 80}>
+              <div className="group grid grid-cols-1 lg:grid-cols-[100px_1fr_320px] gap-4 lg:gap-16 items-start py-12 lg:py-16 border-b border-gray-200">
+                {/* Number label */}
+                <span
+                  className="uppercase text-gray-400 lg:pt-4"
+                  style={{ ...fontStyle, fontSize: "12px", fontWeight: 500 }}
+                >
+                  {String(i + 1).padStart(2, "0")}
+                </span>
 
-      {/* Gallery placeholder — rotating gallery */}
-      <section className="py-0">
-        <div className="w-full h-[50vh] lg:h-[70vh] bg-gray-100 flex items-center justify-center">
-          <p
-            className="uppercase text-gray-300"
-            style={{ ...fontStyle, fontSize: "13px", fontWeight: 500 }}
-          >
-            Gallery — coming soon
-          </p>
+                {/* Title — large, turns pink on hover */}
+                <h3 className="font-display text-[clamp(32px,4vw,56px)] font-bold leading-[1] text-black tracking-tight transition-colors duration-300 group-hover:text-magenta">
+                  {value.title}
+                </h3>
+
+                {/* Description — right column */}
+                <p className="font-body text-sm text-black leading-relaxed lg:pt-4">
+                  {value.description}
+                </p>
+              </div>
+            </ScrollReveal>
+          ))}
         </div>
       </section>
 
       {/* Women's Cycling in Canada */}
-      <section className="py-20 lg:py-28 px-6">
+      <section className="py-20 lg:py-28 px-6" style={{ backgroundColor: "#ffe8f0" }}>
         <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16">
           <ScrollReveal>
             <p
@@ -129,13 +112,13 @@ export default function AboutPage() {
 
           <ScrollReveal delay={100}>
             <div className="lg:pt-16">
-              <p className="font-body text-base text-gray-500 leading-relaxed mb-6">
+              <p className="font-body text-base text-black leading-relaxed mb-6">
                 Women&apos;s cycling in Canada has incredible talent but faces real
                 challenges — underfunded teams, limited race calendars, and low
                 visibility compared to men&apos;s programs. The North American
                 landscape is tough for ambitious riders chasing their dreams.
               </p>
-              <p className="font-body text-base text-gray-500 leading-relaxed mb-10">
+              <p className="font-body text-base text-black leading-relaxed mb-10">
                 Cyclery Racing exists to challenge that reality. We&apos;re building
                 the program we wish had existed — one that competes at the highest
                 level, develops athletes from junior through elite, and proves that
@@ -167,40 +150,26 @@ export default function AboutPage() {
               </div>
 
               {/* Content */}
-              <div className="relative z-10 flex flex-col lg:flex-row items-center lg:items-end justify-between gap-10 py-10">
-                <div>
-                  <p
-                    className="uppercase text-gray-400 mb-4"
-                    style={{ ...fontStyle, fontSize: "11px", fontWeight: 500 }}
-                  >
-                    @cycleryracing
+              <div className="relative z-10 py-10">
+                <div className="max-w-xl">
+                  <div className="flex items-baseline gap-4 flex-wrap mb-4">
+                    <h2 className="font-display text-[clamp(36px,6vw,80px)] font-bold uppercase leading-[0.9] text-black tracking-tight">
+                      Follow the ride.
+                    </h2>
+                    <a
+                      href="https://instagram.com/cycleryracing"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="nav-link text-magenta font-bold uppercase whitespace-nowrap hover:text-black transition-colors"
+                      style={{ ...fontStyle, fontSize: "clamp(14px,1.5vw,18px)" }}
+                    >
+                      @cycleryracing
+                    </a>
+                  </div>
+                  <p className="font-body text-sm lg:text-base text-black leading-relaxed">
+                    Race-day stories, behind-the-scenes training, team travel, and the moments in between. Follow along for an inside look at what it takes to compete at the elite level in women&apos;s cycling.
                   </p>
-                  <h2 className="font-display text-[clamp(36px,6vw,80px)] font-bold uppercase leading-[0.9] text-black tracking-tight">
-                    Follow
-                    <br />
-                    <span className="text-magenta">the ride.</span>
-                  </h2>
                 </div>
-
-                <a
-                  href="https://instagram.com/cycleryracing"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex items-center gap-4 border-2 border-black rounded-full px-8 py-4 hover:bg-magenta hover:border-magenta hover:text-white transition-all"
-                >
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="transition-colors">
-                    <rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" strokeWidth="2"/>
-                    <circle cx="12" cy="12" r="5" stroke="currentColor" strokeWidth="2"/>
-                    <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/>
-                  </svg>
-                  <span
-                    className="uppercase font-bold"
-                    style={{ ...fontStyle, fontSize: "14px" }}
-                  >
-                    Instagram
-                  </span>
-                  <span className="inline-block transition-transform group-hover:translate-x-1">→</span>
-                </a>
               </div>
             </div>
           </ScrollReveal>

@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 
 export function CustomCursor() {
   const cursorRef = useRef<HTMLDivElement>(null);
-  const [expanded, setExpanded] = useState(false);
+  const [mode, setMode] = useState<"default" | "expand" | "light">("default");
   const pos = useRef({ x: -100, y: -100 });
   const target = useRef({ x: -100, y: -100 });
 
@@ -17,27 +17,30 @@ export function CustomCursor() {
       target.current = { x: e.clientX, y: e.clientY };
     };
 
-    // Detect hover on mission section or other expand zones
+    // Detect hover zones
     const handleOver = (e: MouseEvent) => {
       const el = e.target as HTMLElement;
-      if (el.closest("[data-cursor-expand]")) {
-        setExpanded(true);
+      // Light cursor for magenta backgrounds (footer, CTA sections)
+      if (el.closest("[data-cursor-light]")) {
+        setMode("light");
+      } else if (el.closest("[data-cursor-expand]")) {
+        setMode("expand");
       } else {
-        setExpanded(false);
+        setMode("default");
       }
     };
 
     window.addEventListener("mousemove", handleMove, { passive: true });
     window.addEventListener("mouseover", handleOver, { passive: true });
 
-    // Smooth follow with RAF
+    // Smooth follow with RAF — near-instant
     let raf: number;
-    const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
     const animate = () => {
-      pos.current.x = lerp(pos.current.x, target.current.x, 0.15);
-      pos.current.y = lerp(pos.current.y, target.current.y, 0.15);
+      const speed = 0.85;
+      pos.current.x += (target.current.x - pos.current.x) * speed;
+      pos.current.y += (target.current.y - pos.current.y) * speed;
       if (cursorRef.current) {
-        cursorRef.current.style.transform = `translate(${pos.current.x}px, ${pos.current.y}px) translate(-50%, -50%)`;
+        cursorRef.current.style.transform = `translate3d(${pos.current.x}px, ${pos.current.y}px, 0) translate(-50%, -50%)`;
       }
       raf = requestAnimationFrame(animate);
     };
@@ -53,15 +56,18 @@ export function CustomCursor() {
   // Don't render on SSR or touch
   if (typeof window !== "undefined" && "ontouchstart" in window) return null;
 
+  const isExpand = mode === "expand";
+  const isLight = mode === "light";
+
   return (
     <div
       ref={cursorRef}
-      className={`fixed top-0 left-0 pointer-events-none ${expanded ? "z-[1]" : "z-[9999]"}`}
+      className={`fixed top-0 left-0 pointer-events-none ${isExpand ? "z-[1]" : "z-[9999]"}`}
       style={{
-        width: expanded ? "120px" : "12px",
-        height: expanded ? "120px" : "12px",
+        width: isExpand ? "120px" : "12px",
+        height: isExpand ? "120px" : "12px",
         borderRadius: "50%",
-        backgroundColor: expanded ? "#f8b4d0" : "#ff138c",
+        backgroundColor: isLight ? "#ffffff" : isExpand ? "#f8b4d0" : "#ff138c",
         transition: "width 0.4s cubic-bezier(0.16, 1, 0.3, 1), height 0.4s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.4s ease",
         willChange: "transform",
       }}

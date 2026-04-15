@@ -1,21 +1,22 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { SectionHeading } from "@/components/SectionHeading";
 import { Button } from "@/components/Button";
 
 const riders = [
-  { name: "Emily Driedger", category: "Elite", disciplines: ["Road", "Track"] },
-  { name: "Sara Everson", category: "Elite", disciplines: ["Road", "Track", "Cyclocross"] },
-  { name: "Skyler Goudswaard", category: "Elite", disciplines: ["Road", "Track"] },
-  { name: "Annie Scott", category: "Elite", disciplines: ["Road", "Track", "Cyclocross"] },
-  { name: "Raylan Stroud", category: "Elite", disciplines: ["Road", "Cyclocross"] },
-  { name: "Dylan Baker", category: "U23", disciplines: ["Road", "Track"] },
-  { name: "Cadie Geertsma", category: "U23", disciplines: ["Road"] },
-  { name: "Kristen Taylor", category: "U23", disciplines: ["Road", "Track", "Cyclocross"] },
-  { name: "Alexandra Fangeat", category: "Junior", disciplines: ["Road", "Track"] },
-  { name: "Elly Moore", category: "Junior", disciplines: ["Road", "Track", "Cyclocross"] },
+  { name: "Emily Driedger", category: "Elite", disciplines: ["Road", "Track"], photo: "emily" },
+  { name: "Sara Everson", category: "Elite", disciplines: ["Road", "Track", "Cyclocross"], photo: "sara" },
+  { name: "Skyler Goudswaard", category: "Elite", disciplines: ["Road", "Track"], photo: "skyler" },
+  { name: "Annie Scott", category: "Elite", disciplines: ["Road", "Track", "Cyclocross"], photo: "annie" },
+  { name: "Raylan Stroud", category: "Elite", disciplines: ["Road", "Cyclocross"], photo: "raylan" },
+  { name: "Dylan Baker", category: "U23", disciplines: ["Road", "Track"], photo: "dylan" },
+  { name: "Cadie Geertsma", category: "U23", disciplines: ["Road"], photo: "cadie" },
+  { name: "Kristen Taylor", category: "U23", disciplines: ["Road", "Track", "Cyclocross"], photo: "kristen" },
+  { name: "Alexandra Fangeat", category: "Junior", disciplines: ["Road", "Track"], photo: "alex" },
+  { name: "Elly Moore", category: "Junior", disciplines: ["Road", "Track", "Cyclocross"], photo: "elly" },
 ];
 
 const filterItems = ["All", "Elite", "U23", "Junior", "Road", "Track", "Cyclocross"];
@@ -207,11 +208,22 @@ export default function TeamPage() {
                           <div className="group">
                             <div className="border border-gray-200 overflow-hidden transition-colors hover:border-magenta">
                               <div className="relative aspect-[3/4] bg-gray-100 overflow-hidden">
-                                <div className="absolute inset-0 flex items-center justify-center">
-                                  <span className="font-display text-[60px] lg:text-[80px] font-bold leading-none text-gray-200/40 select-none">
-                                    {String(idx + 1).padStart(2, "0")}
-                                  </span>
-                                </div>
+                                {/* BW photo — default */}
+                                <Image
+                                  src={`/team-bw/${rider.photo}-bw.jpg`}
+                                  alt={rider.name}
+                                  fill
+                                  className="object-cover transition-opacity duration-500 group-hover:opacity-0"
+                                  sizes="(max-width: 1024px) 45vw, 35vw"
+                                />
+                                {/* Color photo — on hover */}
+                                <Image
+                                  src={`/team-color/${rider.photo}-color.jpg`}
+                                  alt={rider.name}
+                                  fill
+                                  className="object-cover opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                                  sizes="(max-width: 1024px) 45vw, 35vw"
+                                />
                               </div>
                             </div>
                             <div className="pt-2 pb-4">
