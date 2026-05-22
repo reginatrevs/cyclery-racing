@@ -135,10 +135,109 @@ function DraggablePhoto({ photo }: { photo: typeof collagePhotos[number] }) {
         src={photo.src}
         alt={photo.alt}
         fill
-        className="object-cover pointer-events-none"
+        className="object-cover pointer-events-none grayscale"
         sizes="260px"
         draggable={false}
       />
+    </div>
+  );
+}
+
+// Mobile: scattered photo pile — draggable with touch
+function MobileDraggablePhoto({ photo, pos, zIndex, onDragStart }: {
+  photo: typeof collagePhotos[number];
+  pos: { top: string; left: string; rotate: number };
+  zIndex: number;
+  onDragStart: () => void;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const dragState = useRef<{ startX: number; startY: number; origX: number; origY: number } | null>(null);
+  const [offset, setOffset] = useState({ x: 0, y: 0 });
+  const [dragging, setDragging] = useState(false);
+
+  const handlePointerDown = useCallback((e: React.PointerEvent) => {
+    const el = ref.current;
+    if (!el) return;
+    el.setPointerCapture(e.pointerId);
+    dragState.current = { startX: e.clientX, startY: e.clientY, origX: offset.x, origY: offset.y };
+    setDragging(true);
+    onDragStart();
+  }, [offset, onDragStart]);
+
+  const handlePointerMove = useCallback((e: React.PointerEvent) => {
+    if (!dragState.current) return;
+    const dx = e.clientX - dragState.current.startX;
+    const dy = e.clientY - dragState.current.startY;
+    setOffset({ x: dragState.current.origX + dx, y: dragState.current.origY + dy });
+  }, []);
+
+  const handlePointerUp = useCallback(() => {
+    dragState.current = null;
+    setDragging(false);
+  }, []);
+
+  return (
+    <div
+      ref={ref}
+      className="absolute shadow-lg overflow-hidden select-none touch-none"
+      style={{
+        width: "130px",
+        height: "165px",
+        top: pos.top,
+        left: pos.left,
+        transform: `translate(${offset.x}px, ${offset.y}px) rotate(${dragging ? 0 : pos.rotate}deg) scale(${dragging ? 1.06 : 1})`,
+        transition: dragging ? "none" : "transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
+        zIndex,
+        cursor: dragging ? "grabbing" : "grab",
+      }}
+      onPointerDown={handlePointerDown}
+      onPointerMove={handlePointerMove}
+      onPointerUp={handlePointerUp}
+      onPointerCancel={handlePointerUp}
+    >
+      <Image
+        src={photo.src}
+        alt={photo.alt}
+        fill
+        className="object-cover grayscale"
+        sizes="130px"
+        draggable={false}
+      />
+    </div>
+  );
+}
+
+function MobilePhotoCollage({ photos }: { photos: typeof collagePhotos }) {
+  const [topIdx, setTopIdx] = useState(-1);
+  const [zCounter, setZCounter] = useState(10);
+
+  const mobilePositions = [
+    { top: "5%", left: "8%", rotate: -8 },
+    { top: "0%", left: "52%", rotate: 6 },
+    { top: "45%", left: "15%", rotate: 4 },
+    { top: "42%", left: "48%", rotate: -5 },
+  ];
+
+  const zIndexes = useRef(photos.map((_, i) => i + 1));
+
+  const bringToTop = (idx: number) => {
+    const next = zCounter + 1;
+    zIndexes.current[idx] = next;
+    setZCounter(next);
+    setTopIdx(idx);
+  };
+
+  return (
+    <div className="relative mx-auto mb-8" style={{ width: "280px", height: "320px" }}>
+      {photos.map((photo, i) => (
+        <MobileDraggablePhoto
+          key={photo.src}
+          photo={photo}
+          pos={mobilePositions[i]}
+          zIndex={zIndexes.current[i]}
+          onDragStart={() => bringToTop(i)}
+        />
+      ))}
     </div>
   );
 }
@@ -224,6 +323,18 @@ export function AboutText() {
 
       {/* Counter with collage photos */}
       <div className="relative overflow-hidden py-16 lg:py-24 px-6">
+        {/* Handwritten drag hint — desktop only, centered above counter */}
+        <p
+          className="hidden lg:block max-w-[1440px] mx-auto mb-6 pointer-events-none text-center"
+          style={{
+            fontFamily: "'Caveat', cursive",
+            fontSize: "20px",
+            color: "rgba(255, 19, 140, 0.45)",
+            transform: "rotate(-3deg)",
+          }}
+        >
+          psst... drag the photos around!
+        </p>
         {/* Desktop: relative container with draggable photos + counter */}
         <div className="hidden lg:block max-w-[1440px] mx-auto relative" style={{ minHeight: "clamp(440px, 52vw, 660px)" }}>
           {/* Draggable scattered photos */}
@@ -276,26 +387,23 @@ export function AboutText() {
           </div>
         </div>
 
-        {/* Mobile: stacked layout — photos then counter */}
+        {/* Mobile: scattered collage + counter */}
         <div className="lg:hidden">
-          {/* Photo strip */}
-          <div className="flex gap-3 overflow-x-auto pb-8 -mx-6 px-6 snap-x snap-mandatory no-scrollbar">
-            {collagePhotos.map((photo) => (
-              <div
-                key={photo.src}
-                className="relative flex-shrink-0 w-[140px] h-[175px] overflow-hidden shadow-lg snap-start"
-                style={{ transform: `rotate(${photo.rotate}deg)` }}
-              >
-                <Image
-                  src={photo.src}
-                  alt={photo.alt}
-                  fill
-                  className="object-cover"
-                  sizes="140px"
-                />
-              </div>
-            ))}
-          </div>
+          {/* Handwritten hint — mobile */}
+          <p
+            className="text-center mb-4 pointer-events-none"
+            style={{
+              fontFamily: "'Caveat', cursive",
+              fontSize: "17px",
+              color: "rgba(255, 19, 140, 0.45)",
+              transform: "rotate(-2deg)",
+            }}
+          >
+            move the photos around!
+          </p>
+
+          {/* Scattered photo pile */}
+          <MobilePhotoCollage photos={collagePhotos} />
 
           {/* Counter */}
           <div className="flex flex-col items-center">

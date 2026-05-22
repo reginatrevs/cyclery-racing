@@ -181,9 +181,9 @@ export default function SponsorsPage() {
                 Let&apos;s Talk
               </h2>
               <p className="font-body text-base text-black leading-relaxed mb-10">
-                Every partnership starts with a conversation. Tell us about your brand
-                and we&apos;ll find a way to make it work — from race-day branding to
-                fully custom activations.
+                We love working with brands that believe in what we&apos;re building.
+                Whether it&apos;s race-day visibility, content collaboration, or something
+                completely custom — reach out and let&apos;s figure it out together.
               </p>
               <Button href="/contact" variant="primary">
                 Contact Us

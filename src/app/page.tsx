@@ -200,35 +200,40 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ============ CTA — DONATIONS ============ */}
-      <section className="py-24 lg:py-32 px-6 bg-black">
-        <div className="max-w-[800px] mx-auto text-center">
-          <ScrollReveal direction="layer">
-            <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-white/40 mb-6">
-              Make a Difference
-            </p>
-            <h2 className="font-display text-[clamp(40px,7vw,88px)] font-bold uppercase leading-[0.85] text-white">
-              Fuel the Ride
-            </h2>
-            <p className="mt-6 font-body text-base lg:text-lg text-white/50 max-w-lg mx-auto leading-relaxed">
-              Your support covers race entries, equipment, travel, and everything
-              it takes to compete at the highest level.
-            </p>
-            <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
+      {/* ============ EQUIPMENT CTA ============ */}
+      <section className="relative bg-white overflow-hidden">
+        <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16 pt-20 lg:pt-32">
+          <ScrollReveal>
+            <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 mb-10 lg:mb-12">
+              <div>
+                <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-black/40 mb-3">
+                  Equipment
+                </p>
+                <h2 className="font-display text-[clamp(56px,12vw,160px)] font-bold uppercase leading-[0.85] text-magenta tracking-tight">
+                  Built to Win
+                </h2>
+              </div>
               <Link
-                href="/donations"
-                className="inline-block font-body text-[12px] font-bold uppercase tracking-[0.1em] px-7 py-3.5 rounded-full bg-white text-black border-2 border-white hover:bg-magenta hover:border-magenta hover:text-white transition-all"
+                href="/equipment"
+                className="inline-block font-body text-[11px] font-bold uppercase tracking-[0.15em] px-6 py-3 rounded-full border-2 border-black text-black hover:bg-magenta hover:border-magenta hover:text-white transition-all whitespace-nowrap self-start lg:self-end mb-2"
               >
-                Donate Now
-              </Link>
-              <Link
-                href="/sponsors"
-                className="inline-block font-body text-[12px] font-bold uppercase tracking-[0.1em] px-7 py-3.5 rounded-full border-2 border-white/30 text-white hover:border-white hover:bg-white hover:text-black transition-all"
-              >
-                Become a Sponsor
+                View Equipment
               </Link>
             </div>
           </ScrollReveal>
+        </div>
+
+        {/* Video — near full width, smooth loop */}
+        <div className="relative w-full pb-16 lg:pb-24">
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-[95%] lg:w-[90%] mx-auto h-auto object-contain"
+          >
+            <source src="/factor-bike.mp4" type="video/mp4" />
+          </video>
         </div>
       </section>
     </>

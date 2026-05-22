@@ -43,46 +43,28 @@ export default function ContactPage() {
             <div className="pt-16 pb-8 lg:pb-16">
               <ScrollReveal delay={100}>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-12 border-t border-gray-200 pt-10">
-                  {/* Vince — primary */}
-                  <div>
-                    <p
-                      className="uppercase text-gray-400 mb-4"
-                      style={{ ...fontStyle, fontSize: "10px", fontWeight: 600 }}
-                    >
-                      Team Owner &amp; Sponsorship Contact
-                    </p>
-                    <h2 className="font-display text-2xl lg:text-3xl font-bold text-black leading-[1.1] mb-1">
-                      Vince Caceres
-                    </h2>
-                    <a
-                      href="mailto:vince@thecyclery.ca"
-                      className="inline-block font-display text-lg lg:text-xl font-bold text-magenta hover:text-black transition-colors nav-link"
-                    >
-                      vince@thecyclery.ca
-                    </a>
-                  </div>
-
-                  {/* Right column — social + media stacked */}
-                  <div className="space-y-8">
-                    {/* Follow */}
+                  {/* Left column — Vince + Regina */}
+                  <div className="space-y-10">
+                    {/* Vince — primary */}
                     <div>
                       <p
-                        className="uppercase text-gray-400 mb-3"
+                        className="uppercase text-gray-400 mb-4"
                         style={{ ...fontStyle, fontSize: "10px", fontWeight: 600 }}
                       >
-                        Follow Us
+                        Team Owner &amp; Sponsorship Contact
                       </p>
+                      <h2 className="font-display text-2xl lg:text-3xl font-bold text-black leading-[1.1] mb-1">
+                        Vince Caceres
+                      </h2>
                       <a
-                        href="https://instagram.com/cycleryracing"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="nav-link font-display text-lg font-bold text-black hover:text-magenta transition-colors"
+                        href="mailto:vince@thecyclery.ca"
+                        className="inline-block font-display text-lg lg:text-xl font-bold text-magenta hover:underline transition-all"
                       >
-                        @cycleryracing
+                        vince@thecyclery.ca
                       </a>
                     </div>
 
-                    {/* Media */}
+                    {/* Regina — secondary */}
                     <div>
                       <p
                         className="uppercase text-gray-400 mb-3"
@@ -90,13 +72,34 @@ export default function ContactPage() {
                       >
                         Media &amp; Press
                       </p>
+                      <h3 className="font-display text-xl lg:text-2xl font-bold text-black leading-[1.1] mb-1">
+                        Regina Trevino
+                      </h3>
                       <a
                         href="mailto:regina@trevs.ca"
-                        className="nav-link font-body text-base text-black hover:text-magenta transition-colors"
+                        className="inline-block font-display text-base lg:text-lg font-bold text-magenta hover:underline transition-all"
                       >
                         regina@trevs.ca
                       </a>
                     </div>
+                  </div>
+
+                  {/* Right column — social */}
+                  <div>
+                    <p
+                      className="uppercase text-gray-400 mb-3"
+                      style={{ ...fontStyle, fontSize: "10px", fontWeight: 600 }}
+                    >
+                      Follow Us
+                    </p>
+                    <a
+                      href="https://instagram.com/cycleryracing"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-display text-lg font-bold text-black hover:text-magenta hover:underline transition-all"
+                    >
+                      @cycleryracing
+                    </a>
                   </div>
                 </div>
               </ScrollReveal>
