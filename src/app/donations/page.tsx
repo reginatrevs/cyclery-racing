@@ -62,32 +62,41 @@ export default function DonationsPage() {
         </div>
       </section>
 
-      {/* Donate — single CTA */}
-      <section className="py-20 lg:py-28 px-6 bg-black">
-        <div className="max-w-[800px] mx-auto text-center">
-          <ScrollReveal direction="layer">
-            <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-white/40 mb-6">
-              Donate
-            </p>
-            <h2 className="font-display text-[clamp(40px,7vw,88px)] font-bold uppercase leading-[0.85] text-white mb-6">
-              Make a<br />Donation
-            </h2>
-            <p className="font-body text-base lg:text-lg text-white/50 max-w-lg mx-auto leading-relaxed mb-10">
-              All donations go through Zeffy via Cycling Canada&apos;s 1882 Collective.
-              100% of your contribution supports our team — Zeffy charges zero platform fees.
-            </p>
-            <Link
-              href="https://www.zeffy.com/en-CA/donation-form/1882-collective"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block font-body text-[13px] font-bold uppercase tracking-[0.1em] px-10 py-4 rounded-full bg-magenta text-white border-2 border-magenta hover:bg-white hover:text-black hover:border-white transition-all"
-            >
-              Donate via Zeffy
-            </Link>
-            <p className="mt-6 font-mono text-[10px] uppercase tracking-[0.2em] text-white/30">
-              Tax receipts issued through Cycling Canada
-            </p>
-          </ScrollReveal>
+      {/* Donate — high-impact CTA */}
+      <section className="relative bg-magenta overflow-hidden">
+        {/* Giant background text for visual energy */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden">
+          <span className="font-display text-[clamp(200px,30vw,500px)] font-bold uppercase text-white/[0.07] leading-none tracking-tight whitespace-nowrap">
+            DONATE
+          </span>
+        </div>
+
+        <div className="relative z-10 py-24 lg:py-36 px-6">
+          <div className="max-w-[900px] mx-auto text-center">
+            <ScrollReveal direction="layer">
+              <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-white/60 mb-6">
+                100% goes to the team
+              </p>
+              <h2 className="font-display text-[clamp(52px,10vw,140px)] font-bold uppercase leading-[0.85] text-white mb-8">
+                Make a<br />Donation
+              </h2>
+              <p className="font-body text-base lg:text-xl text-white/70 max-w-xl mx-auto leading-relaxed mb-12">
+                All donations go through Zeffy via Cycling Canada&apos;s 1882 Collective.
+                Zero platform fees — every dollar supports our athletes directly.
+              </p>
+              <Link
+                href="https://www.zeffy.com/en-CA/donation-form/1882-collective"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block font-body text-[14px] font-bold uppercase tracking-[0.1em] px-12 py-5 rounded-full bg-white text-magenta border-2 border-white hover:bg-black hover:text-white hover:border-black transition-all"
+              >
+                Donate via Zeffy
+              </Link>
+              <p className="mt-8 font-mono text-[10px] uppercase tracking-[0.2em] text-white/40">
+                Tax receipts issued through Cycling Canada
+              </p>
+            </ScrollReveal>
+          </div>
         </div>
       </section>
 
@@ -101,7 +110,17 @@ export default function DonationsPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-px bg-gray-200">
             {/* Merch */}
             <ScrollReveal delay={0}>
-              <div className="bg-white p-10 lg:p-14 flex flex-col h-full">
+              <div className="bg-white flex flex-col h-full">
+                <div className="relative w-full aspect-[16/9] overflow-hidden">
+                  <Image
+                    src="/race/race-2.png"
+                    alt="Rep the Team"
+                    fill
+                    className="object-cover"
+                    sizes="(min-width: 1024px) 50vw, 100vw"
+                  />
+                </div>
+                <div className="p-10 lg:p-14 flex flex-col flex-1">
                 <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-magenta mb-4">
                   Merch
                 </p>
@@ -117,19 +136,20 @@ export default function DonationsPage() {
                     Shop at The Cyclery
                   </Button>
                 </div>
+                </div>
               </div>
             </ScrollReveal>
 
             {/* Sponsorship */}
             <ScrollReveal delay={100}>
-              <div className="bg-white p-10 lg:p-14 flex flex-col h-full">
+              <div className="bg-white p-10 lg:p-14">
                 <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-magenta mb-4">
                   Partnership
                 </p>
                 <h3 className="font-display text-2xl lg:text-3xl font-bold uppercase text-black leading-tight mb-4">
                   Become a Sponsor
                 </h3>
-                <p className="font-body text-base text-gray-600 leading-relaxed mb-8 flex-1">
+                <p className="font-body text-base text-gray-600 leading-relaxed mb-8">
                   Align your brand with one of Canada&apos;s most established women&apos;s cycling
                   programs. We offer flexible partnership packages for businesses of all sizes.
                 </p>

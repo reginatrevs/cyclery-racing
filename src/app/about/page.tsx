@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { Button } from "@/components/Button";
 import { AboutHero } from "@/components/AboutHero";
@@ -149,9 +150,9 @@ export default function AboutPage() {
                 </div>
               </div>
 
-              {/* Content */}
-              <div className="relative z-10 py-10">
-                <div className="max-w-xl">
+              {/* Content — two column with photo */}
+              <div className="relative z-10 py-10 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 items-center">
+                <div>
                   <div className="flex items-baseline gap-4 flex-wrap mb-4">
                     <h2 className="font-display text-[clamp(36px,6vw,80px)] font-bold uppercase leading-[0.9] text-black tracking-tight">
                       Follow the ride.
@@ -169,6 +170,18 @@ export default function AboutPage() {
                   <p className="font-body text-sm lg:text-base text-black leading-relaxed">
                     Race-day stories, behind-the-scenes training, team travel, and the moments in between. Follow along for an inside look at what it takes to compete at the elite level in women&apos;s cycling.
                   </p>
+                </div>
+                <div className="flex justify-center lg:justify-end">
+                  <a href="https://instagram.com/cycleryracing" target="_blank" rel="noopener noreferrer">
+                    <Image
+                      src="/ig-post.png"
+                      alt="Cyclery Racing on Instagram"
+                      width={460}
+                      height={460}
+                      className="w-[320px] lg:w-[460px] h-auto hover:scale-[1.02] transition-transform"
+                      style={{ transform: "rotate(2deg)" }}
+                    />
+                  </a>
                 </div>
               </div>
             </div>
