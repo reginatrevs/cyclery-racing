@@ -1,44 +1,21 @@
 import Image from "next/image";
-import Link from "next/link";
 import { ScrollReveal } from "@/components/ScrollReveal";
-import { SectionHeading } from "@/components/SectionHeading";
 import { Button } from "@/components/Button";
 
 export default function DonationsPage() {
   return (
     <>
-      {/* Hero — big support photo */}
-      <section className="relative w-full min-h-[60vh] lg:min-h-[80vh] overflow-hidden flex items-end">
-        <Image
-          src="/support.png"
-          alt="Support Cyclery Racing"
-          fill
-          className="object-cover"
-          priority
-          sizes="100vw"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
-        <div className="relative z-10 w-full px-6 md:px-12 lg:px-16 pb-10 lg:pb-16 max-w-[1440px] mx-auto">
-          <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-white/60 mb-4">
-            Support Us
-          </p>
-          <h1 className="font-display text-[clamp(48px,10vw,120px)] font-bold uppercase leading-[0.85] text-white">
-            Fuel the Ride
-          </h1>
-        </div>
-      </section>
-
-      {/* Why It Matters */}
-      <section className="py-20 lg:py-28 px-6">
+      {/* Hero — The Reality */}
+      <section className="pt-32 lg:pt-40 pb-20 lg:pb-28 px-6 md:px-12 lg:px-16">
         <div className="max-w-[1440px] mx-auto">
-          <div className="lg:grid lg:grid-cols-12 lg:gap-16">
-            <div className="lg:col-span-5">
-              <ScrollReveal>
-                <SectionHeading label="Why It Matters" heading="The Reality" className="mb-8 lg:mb-0" />
-              </ScrollReveal>
-            </div>
-            <div className="lg:col-span-7">
-              <ScrollReveal delay={100}>
+          <ScrollReveal>
+            <h1 className="font-display text-[clamp(48px,10vw,140px)] font-bold uppercase leading-[0.85] text-black tracking-tight mb-12 lg:mb-16">
+              The Reality
+            </h1>
+          </ScrollReveal>
+
+          <div className="lg:max-w-3xl">
+            <ScrollReveal delay={100}>
                 <p className="font-body text-lg lg:text-xl text-black leading-[1.6] mb-6">
                   Women&apos;s cycling is chronically underfunded. Unlike men&apos;s professional teams,
                   most women&apos;s programs operate on minimal budgets with little institutional backing.
@@ -57,103 +34,110 @@ export default function DonationsPage() {
                   women&apos;s cycling in Canada.
                 </p>
               </ScrollReveal>
+          </div>
+        </div>
+      </section>
+
+      {/* Photo gallery — staggered like races page */}
+      <section className="py-8 lg:py-12 px-6 overflow-hidden">
+        <div className="max-w-[1440px] mx-auto">
+          <div className="flex gap-3 lg:gap-4 items-end">
+            <div className="relative w-[200px] lg:w-[300px] h-[260px] lg:h-[400px] overflow-hidden flex-shrink-0">
+              <Image src="/race/race-1.png" alt="" fill className="object-cover" sizes="300px" />
+            </div>
+            <div className="relative w-[180px] lg:w-[260px] h-[320px] lg:h-[480px] overflow-hidden flex-shrink-0">
+              <Image src="/support.png" alt="" fill className="object-cover" sizes="260px" />
+            </div>
+            <div className="relative w-[220px] lg:w-[340px] h-[240px] lg:h-[360px] overflow-hidden flex-shrink-0">
+              <Image src="/race/race-3.png" alt="" fill className="object-cover" sizes="340px" />
+            </div>
+            <div className="relative w-[190px] lg:w-[280px] h-[300px] lg:h-[440px] overflow-hidden flex-shrink-0">
+              <Image src="/race/race4.png" alt="" fill className="object-cover" sizes="280px" />
             </div>
           </div>
         </div>
       </section>
 
-      {/* Donate — high-impact CTA */}
-      <section className="relative bg-magenta overflow-hidden">
-        {/* Giant background text for visual energy */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden">
-          <span className="font-display text-[clamp(200px,30vw,500px)] font-bold uppercase text-white/[0.07] leading-none tracking-tight whitespace-nowrap">
-            DONATE
-          </span>
-        </div>
-
-        <div className="relative z-10 py-24 lg:py-36 px-6">
-          <div className="max-w-[900px] mx-auto text-center">
-            <ScrollReveal direction="layer">
-              <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-white/60 mb-6">
-                100% goes to the team
-              </p>
-              <h2 className="font-display text-[clamp(52px,10vw,140px)] font-bold uppercase leading-[0.85] text-white mb-8">
-                Make a<br />Donation
-              </h2>
-              <p className="font-body text-base lg:text-xl text-white/70 max-w-xl mx-auto leading-relaxed mb-12">
-                All donations go through Zeffy via Cycling Canada&apos;s 1882 Collective.
-                Zero platform fees — every dollar supports our athletes directly.
-              </p>
-              <Link
-                href="https://www.zeffy.com/en-CA/donation-form/1882-collective"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block font-body text-[14px] font-bold uppercase tracking-[0.1em] px-12 py-5 rounded-full bg-white text-magenta border-2 border-white hover:bg-black hover:text-white hover:border-black transition-all"
-              >
-                Donate via Zeffy
-              </Link>
-              <p className="mt-8 font-mono text-[10px] uppercase tracking-[0.2em] text-white/40">
-                Tax receipts issued through Cycling Canada
-              </p>
-            </ScrollReveal>
-          </div>
+      {/* Donate CTA */}
+      <section className="py-28 lg:py-40 px-6 md:px-12 lg:px-16" style={{ backgroundColor: "#ffe8f0" }}>
+        <div className="max-w-[1440px] mx-auto">
+          <ScrollReveal>
+            <h2 className="font-display text-[clamp(52px,10vw,140px)] font-bold uppercase leading-[0.85] text-black tracking-tight mb-8">
+              Make a<br />Donation
+            </h2>
+            <p className="font-body text-lg lg:text-xl text-black leading-relaxed max-w-2xl mb-12">
+              100% of your donation goes directly to the team. All donations go through
+              Zeffy via Cycling Canada&apos;s 1882 Collective. Zero platform fees. Every dollar
+              supports our athletes directly. Tax receipts are issued through Cycling Canada.
+            </p>
+            <Button href="https://www.zeffy.com/en-CA/donation-form/1882-collective" variant="primary">
+              Donate via Zeffy
+            </Button>
+          </ScrollReveal>
         </div>
       </section>
 
-      {/* Other Ways to Support */}
-      <section className="py-20 lg:py-28 px-6 border-t border-gray-200">
+      {/* Merch + Sponsorship — rider-card style */}
+      <section className="py-20 lg:py-28 px-6 md:px-12 lg:px-16">
         <div className="max-w-[1440px] mx-auto">
-          <ScrollReveal>
-            <SectionHeading label="More Ways to Help" heading="Other Support" className="mb-16" />
-          </ScrollReveal>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-px bg-gray-200">
-            {/* Merch */}
-            <ScrollReveal delay={0}>
-              <div className="bg-white flex flex-col h-full">
-                <div className="relative w-full aspect-[16/9] overflow-hidden">
-                  <Image
-                    src="/race/race-2.png"
-                    alt="Rep the Team"
-                    fill
-                    className="object-cover"
-                    sizes="(min-width: 1024px) 50vw, 100vw"
-                  />
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+            {/* Merch card */}
+            <ScrollReveal>
+              <div className="group">
+                <div className="border border-gray-200 overflow-hidden transition-colors hover:border-magenta">
+                  <div className="relative aspect-[4/3] bg-gray-100 overflow-hidden">
+                    <Image
+                      src="/race/race-2.png"
+                      alt="Rep the Team"
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      sizes="(min-width: 1024px) 50vw, 100vw"
+                    />
+                  </div>
                 </div>
-                <div className="p-10 lg:p-14 flex flex-col flex-1">
-                <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-magenta mb-4">
-                  Merch
-                </p>
-                <h3 className="font-display text-2xl lg:text-3xl font-bold uppercase text-black leading-tight mb-4">
-                  Rep the Team
-                </h3>
-                <p className="font-body text-base text-gray-600 leading-relaxed mb-8 flex-1">
-                  Grab a Cyclery Racing hat and show your support wherever you go.
-                  Available through The Cyclery shop.
-                </p>
-                <div>
+                <div className="pt-3 pb-4">
+                  <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-magenta mb-2">
+                    Merch
+                  </p>
+                  <h3 className="font-display text-lg lg:text-xl font-bold uppercase text-black group-hover:text-magenta transition-colors leading-tight mb-2">
+                    Rep the Team
+                  </h3>
+                  <p className="font-body text-sm text-gray-500 leading-relaxed mb-4">
+                    Grab a Cyclery Racing hat and show your support wherever you go.
+                    Available through The Cyclery shop.
+                  </p>
                   <Button href="https://thecyclery.ca" variant="outline">
                     Shop at The Cyclery
                   </Button>
                 </div>
-                </div>
               </div>
             </ScrollReveal>
 
-            {/* Sponsorship */}
+            {/* Sponsorship card */}
             <ScrollReveal delay={100}>
-              <div className="bg-white p-10 lg:p-14">
-                <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-magenta mb-4">
-                  Partnership
-                </p>
-                <h3 className="font-display text-2xl lg:text-3xl font-bold uppercase text-black leading-tight mb-4">
-                  Become a Sponsor
-                </h3>
-                <p className="font-body text-base text-gray-600 leading-relaxed mb-8">
-                  Align your brand with one of Canada&apos;s most established women&apos;s cycling
-                  programs. We offer flexible partnership packages for businesses of all sizes.
-                </p>
-                <div>
+              <div className="group">
+                <div className="border border-gray-200 overflow-hidden transition-colors hover:border-magenta">
+                  <div className="relative aspect-[4/3] bg-gray-100 overflow-hidden">
+                    <Image
+                      src="/support.png"
+                      alt="Become a Sponsor"
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      sizes="(min-width: 1024px) 50vw, 100vw"
+                    />
+                  </div>
+                </div>
+                <div className="pt-3 pb-4">
+                  <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-magenta mb-2">
+                    Partnership
+                  </p>
+                  <h3 className="font-display text-lg lg:text-xl font-bold uppercase text-black group-hover:text-magenta transition-colors leading-tight mb-2">
+                    Become a Sponsor
+                  </h3>
+                  <p className="font-body text-sm text-gray-500 leading-relaxed mb-4">
+                    Align your brand with one of Canada&apos;s most established women&apos;s cycling
+                    programs. Flexible partnership packages for businesses of all sizes.
+                  </p>
                   <Button href="/sponsors" variant="outline">
                     Learn More
                   </Button>

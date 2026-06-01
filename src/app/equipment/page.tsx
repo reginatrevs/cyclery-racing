@@ -1,130 +1,304 @@
+import Link from "next/link";
+import Image from "next/image";
 import { ScrollReveal } from "@/components/ScrollReveal";
-import { SectionHeading } from "@/components/SectionHeading";
+import { Button } from "@/components/Button";
 
-const bikes = [
-  { brand: "Cervélo", model: "R5", type: "Road Race", specs: ["Shimano Ultegra Di2", "Carbon Frame", "Disc Brakes", "7.2kg"] },
-  { brand: "Cervélo", model: "S5", type: "Aero / Crit", specs: ["Shimano Dura-Ace Di2", "Aero Carbon", "Disc Brakes", "7.6kg"] },
-  { brand: "Cervélo", model: "Caledonia-5", type: "All-Road / Endurance", specs: ["Shimano Ultegra Di2", "Endurance Geometry", "Disc Brakes", "7.8kg"] },
-];
+const fontStyle = {
+  fontFamily: '"PP Neue Montreal", "Helvetica Neue", Helvetica, sans-serif',
+  letterSpacing: "-0.03em",
+};
 
-const bikeAccents = ["bg-lime", "bg-magenta", "bg-gray-200"];
-
-const equipment = [
+const gear = [
   {
-    category: "Components",
-    items: [
-      { name: "Shimano Ultegra Di2 Groupset", detail: "Electronic shifting for precise, reliable gear changes in any condition." },
-      { name: "Shimano Dura-Ace Wheels", detail: "Carbon clincher wheels for the ultimate in weight savings and aerodynamics." },
-      { name: "Continental GP5000 Tires", detail: "The gold standard of road tires — fast, grippy, and incredibly durable." },
-    ],
+    category: "Drivetrain",
+    brand: "SRAM",
+    product: "Force AXS w/ Powermeter",
+    slug: "sram",
+    url: "https://sram.com",
+    image: "/force-sram.png",
+    imageBg: "bg-black",
+    description:
+      "Wireless electronic shifting paired with an integrated power meter. The SRAM Force AXS gives our riders precision data and flawless shifting in every race.",
   },
   {
-    category: "Nutrition",
-    items: [
-      { name: "Skratch Labs Hydration", detail: "Real ingredients for real athletes. Our go-to for on-bike hydration and fueling." },
-      { name: "Clif Bar Race Day Nutrition", detail: "Bars, gels, and chews that keep us powered through the hardest efforts." },
-    ],
+    category: "Wheels",
+    brand: "House Cyclery",
+    product: "Custom Race Wheels",
+    slug: "cyclery",
+    url: "https://thecyclery.ca",
+    image: null,
+    imageBg: "bg-gray-50",
+    description:
+      "Built in-house by The Cyclery, our race wheels are spec'd for elite competition. Lightweight, stiff, and proven across North America.",
   },
   {
     category: "Kit & Clothing",
-    items: [
-      { name: "Pearl Izumi Pro Racing Kit", detail: "Custom team kit designed for performance and comfort in all conditions." },
-      { name: "Giro Helmets", detail: "Aero and lightweight helmet options for road, TT, and training." },
-      { name: "Giro Shoes", detail: "Carbon-soled road shoes for maximum power transfer." },
-    ],
+    brand: "Castelli",
+    product: "Custom Team Kit",
+    slug: "castelli",
+    url: "https://castelli-cycling.com",
+    image: null,
+    imageBg: "bg-gray-50",
+    description:
+      "Our race kit is designed and manufactured by Castelli. Built for comfort, aerodynamics, and looking fast standing still.",
   },
   {
-    category: "Tech & Accessories",
-    items: [
-      { name: "Garmin Edge 840", detail: "GPS computer for navigation, power data, and race analytics." },
-      { name: "Wahoo KICKR Trainers", detail: "Indoor training platforms for structured winter workouts." },
-      { name: "Muc-Off Bike Care", detail: "Premium cleaning and maintenance products to keep our bikes race-ready." },
-    ],
+    category: "Helmets & Eyewear",
+    brand: "Smith",
+    product: "Race Helmets & Sunglasses",
+    slug: "smith",
+    url: "https://smithoptics.com",
+    image: "/helmet-smith.png",
+    imageBg: "bg-white",
+    description:
+      "Smith keeps us protected and focused with MIPS-equipped helmets and ChromaPop lens technology for every condition.",
   },
+  {
+    category: "Nutrition",
+    brand: "Skratch Labs",
+    product: "Hydration & Fuel",
+    slug: "skratch",
+    url: "https://skratchlabs.com",
+    image: null,
+    imageBg: "bg-gray-50",
+    description:
+      "Real ingredients, no shortcuts. Skratch fuels our training and racing with hydration and nutrition made for endurance athletes.",
+  },
+];
+
+const staggerPositions = [
+  "ml-0",
+  "ml-[50%] mt-8",
+  "ml-[5%] mt-6",
+  "ml-[48%] -mt-4",
+  "ml-[10%] mt-8",
 ];
 
 export default function EquipmentPage() {
   return (
     <>
-      {/* Hero */}
-      <section className="pt-32 pb-20 px-6">
-        <div className="max-w-[1440px] mx-auto">
-          <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-magenta mb-4">
-            What We Ride
-          </p>
-          <h1 className="font-display text-[clamp(48px,10vw,140px)] font-bold uppercase leading-[0.85] text-black">
-            Our Equipment
-          </h1>
-        </div>
-      </section>
-
-      {/* Bikes */}
-      <section className="pb-24 lg:pb-32 px-6">
-        <div className="max-w-[1440px] mx-auto">
+      {/* Hero — Equipment title + Ostro VAM2 info + bike video */}
+      <section className="relative bg-white overflow-hidden">
+        <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16 pt-32 lg:pt-40">
           <ScrollReveal>
-            <SectionHeading label="The Fleet" heading="Our Bikes" className="mb-14" />
+            <h1 className="font-display text-[clamp(48px,10vw,140px)] font-bold uppercase leading-[0.85] text-black tracking-tight mb-10 lg:mb-14">
+              Equipment
+            </h1>
           </ScrollReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-            {bikes.map((bike, i) => (
-              <ScrollReveal key={bike.model} delay={i * 120}>
-                <div className="card-hover rounded overflow-hidden border border-gray-200">
-                  <div className={`aspect-[4/3] ${bikeAccents[i]}`} />
-                  <div className="p-6">
-                    <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-gray-400 mb-2">
-                      {bike.brand}
-                    </p>
-                    <h3 className="font-display text-3xl font-bold uppercase text-black mb-1">
-                      {bike.model}
-                    </h3>
-                    <p className="font-body text-sm text-magenta font-semibold mb-4">
-                      {bike.type}
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      {bike.specs.map((spec) => (
-                        <span key={spec} className="font-mono text-[10px] uppercase tracking-[0.1em] px-3 py-1 rounded bg-gray-100 text-gray-600">
-                          {spec}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
+          <ScrollReveal delay={100}>
+            <div className="max-w-xl">
+              {/* Logo + title inline */}
+              <div className="flex items-center gap-4 mb-4">
+                <div className="relative w-[50px] lg:w-[65px] h-[50px] lg:h-[65px] flex-shrink-0">
+                  <Image
+                    src="/sponsors/factor-pink.png"
+                    alt="Factor Bikes"
+                    fill
+                    className="object-contain object-left"
+                    sizes="65px"
+                  />
                 </div>
-              </ScrollReveal>
-            ))}
-          </div>
+                <h2 className="font-display text-[clamp(24px,3.5vw,42px)] font-bold uppercase leading-[0.9] text-magenta">
+                  Ostro VAM2
+                </h2>
+              </div>
+              <p className="font-body text-base text-black leading-relaxed mb-4">
+                Ostro VAM2 with Prisma print. Built by The Cyclery, Ottawa. A next-generation
+                aero bike that doesn&apos;t compromise on weight, engineered to be the fastest
+                bike in the peloton.
+              </p>
+              <p className="font-body text-base text-black leading-relaxed mb-8">
+                Light enough to climb, aero enough to win sprints, and stiff enough
+                to put down serious power when it counts.
+              </p>
+              <Button href="https://www.thecyclery.ca/factor-ostro-vam-build-sram.html" variant="outline">
+                Build Your Own
+              </Button>
+            </div>
+          </ScrollReveal>
+        </div>
+
+        {/* Factor bike video */}
+        <div className="relative w-full mt-12 lg:mt-16 pb-8 lg:pb-16">
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-[95%] lg:w-[90%] mx-auto h-auto object-contain"
+          >
+            <source src="/factor-bike.mp4" type="video/mp4" />
+          </video>
         </div>
       </section>
 
-      {/* Equipment Categories */}
-      <section className="py-20 lg:py-28 px-6 bg-gray-100">
+      {/* Gear — staggered layout, white bg */}
+      <section className="py-20 lg:py-28 px-6 bg-white">
         <div className="max-w-[1440px] mx-auto">
           <ScrollReveal>
-            <SectionHeading label="Gear" heading="Equipment & Partners" className="mb-14" />
+            <h2 className="font-display text-[clamp(36px,6vw,80px)] font-bold uppercase leading-[0.85] text-black tracking-tight mb-16">
+              What We Use
+            </h2>
           </ScrollReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-            {equipment.map((cat, catIdx) => (
-              <ScrollReveal key={cat.category} delay={catIdx * 100}>
-                <div>
-                  <h3 className="font-display text-xl font-bold uppercase text-black mb-6 pb-3 border-b-2 border-magenta">
-                    {cat.category}
-                  </h3>
-                  <div className="space-y-5">
-                    {cat.items.map((item) => (
-                      <div key={item.name}>
-                        <h4 className="font-body text-base font-semibold text-black mb-1">
-                          {item.name}
-                        </h4>
-                        <p className="font-body text-sm text-gray-600 leading-relaxed">
-                          {item.detail}
-                        </p>
+          {/* Desktop: staggered layout */}
+          <div className="hidden lg:block relative">
+            {gear.map((item, i) => (
+              <ScrollReveal key={item.brand} delay={i * 100} className={`w-[42%] ${staggerPositions[i]}`}>
+                <a
+                  href={item.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group block"
+                >
+                  {/* Image / Logo area */}
+                  <div className="bg-white overflow-hidden">
+                    {item.image ? (
+                      <div className="relative aspect-[4/3] overflow-hidden">
+                        <Image
+                          src={item.image}
+                          alt={item.product}
+                          fill
+                          className="object-contain px-6 pt-6 pb-0 transition-transform duration-500 group-hover:scale-105"
+                          sizes="42vw"
+                        />
                       </div>
-                    ))}
+                    ) : (
+                      <div className="aspect-[4/3] flex items-center justify-center px-10 pt-10 pb-0 bg-gray-50">
+                        <div className="relative w-[160px] h-[64px]">
+                          <Image
+                            src={`/sponsors/${item.slug}-black.png`}
+                            alt={item.brand}
+                            fill
+                            className="object-contain transition-opacity duration-300 group-hover:opacity-0"
+                            sizes="160px"
+                          />
+                          <Image
+                            src={`/sponsors/${item.slug}-pink.png`}
+                            alt={item.brand}
+                            fill
+                            className="object-contain opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                            sizes="160px"
+                          />
+                        </div>
+                      </div>
+                    )}
                   </div>
-                </div>
+
+                  {/* Info below image */}
+                  <div className="pt-3 pb-6">
+                    <div className="relative w-[130px] h-[42px] mb-3">
+                      <Image
+                        src={`/sponsors/${item.slug}-black.png`}
+                        alt={item.brand}
+                        fill
+                        className="object-contain object-left transition-opacity duration-300 group-hover:opacity-0"
+                        sizes="130px"
+                      />
+                      <Image
+                        src={`/sponsors/${item.slug}-pink.png`}
+                        alt={item.brand}
+                        fill
+                        className="object-contain object-left opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                        sizes="130px"
+                      />
+                    </div>
+                    <h3 className="font-display text-lg font-bold uppercase text-black group-hover:text-magenta transition-colors leading-tight mb-2">
+                      {item.product}
+                    </h3>
+                    <p className="font-body text-sm text-gray-500 leading-relaxed">
+                      {item.description}
+                    </p>
+                  </div>
+                </a>
               </ScrollReveal>
             ))}
           </div>
+
+          {/* Mobile: single column */}
+          <div className="lg:hidden space-y-10">
+            {gear.map((item, i) => (
+              <ScrollReveal key={item.brand} delay={i * 80}>
+                <a
+                  href={item.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group block"
+                >
+                  <div className="bg-white overflow-hidden">
+                    {item.image ? (
+                      <div className="relative aspect-[4/3] overflow-hidden">
+                        <Image
+                          src={item.image}
+                          alt={item.product}
+                          fill
+                          className="object-contain px-6 pt-6 pb-0"
+                          sizes="100vw"
+                        />
+                      </div>
+                    ) : (
+                      <div className="aspect-[4/3] flex items-center justify-center px-8 pt-8 pb-0 bg-gray-50">
+                        <div className="relative w-[140px] h-[56px]">
+                          <Image
+                            src={`/sponsors/${item.slug}-black.png`}
+                            alt={item.brand}
+                            fill
+                            className="object-contain"
+                            sizes="140px"
+                          />
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="pt-2 pb-2">
+                    <div className="relative w-[100px] h-[34px] mb-2">
+                      <Image
+                        src={`/sponsors/${item.slug}-black.png`}
+                        alt={item.brand}
+                        fill
+                        className="object-contain object-left"
+                        sizes="100px"
+                      />
+                    </div>
+                    <h3 className="font-display text-base font-bold uppercase text-black leading-tight mb-1">
+                      {item.product}
+                    </h3>
+                    <p className="font-body text-sm text-gray-500 leading-relaxed">
+                      {item.description}
+                    </p>
+                  </div>
+                </a>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA — support / sponsors */}
+      <section className="px-6 py-20 lg:py-28" style={{ backgroundColor: "#ffe8f0" }}>
+        <div className="max-w-[1440px] mx-auto">
+          <ScrollReveal>
+            <div className="max-w-2xl">
+              <p
+                className="uppercase mb-4"
+                style={{ ...fontStyle, fontSize: "11px", fontWeight: 500, color: "rgba(0,0,0,0.35)" }}
+              >
+                Want to equip the team?
+              </p>
+              <h2 className="font-display text-[clamp(32px,5vw,64px)] font-bold uppercase leading-[0.9] text-black tracking-tight mb-6">
+                Become a Partner
+              </h2>
+              <p className="font-body text-base text-black leading-relaxed mb-10">
+                We&apos;re always looking for brands that want to be part of something real.
+                If you make products that help athletes perform, let&apos;s talk.
+              </p>
+              <Button href="/sponsors" variant="primary">
+                View Sponsorship
+              </Button>
+            </div>
+          </ScrollReveal>
         </div>
       </section>
     </>
