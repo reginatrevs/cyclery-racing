@@ -283,6 +283,36 @@ body {
   color: #ff138c !important;
 }
 
+/* ===== SCROLL INDICATOR ===== */
+@keyframes scroll-line {
+  0% { transform: translateY(-100%); }
+  50% { transform: translateY(0); }
+  100% { transform: translateY(100%); }
+}
+
+.animate-scroll-line {
+  animation: scroll-line 1.8s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
+@keyframes scroll-dot {
+  0% { opacity: 1; transform: translateY(0); }
+  60% { opacity: 0.3; transform: translateY(10px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.animate-scroll-dot {
+  animation: scroll-dot 1.6s ease-in-out infinite;
+}
+
+@keyframes arrow-pulse {
+  0%, 100% { opacity: 0.4; transform: translateY(0); }
+  50% { opacity: 0.8; transform: translateY(6px); }
+}
+
+.animate-arrow-pulse {
+  animation: arrow-pulse 2s ease-in-out infinite;
+}
+
 /* ===== MARQUEE ===== */
 @keyframes marquee {
   0% { transform: translateX(0); }

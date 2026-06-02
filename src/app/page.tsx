@@ -6,6 +6,8 @@ import { StickySection } from "@/components/StickySection";
 import { FluidStats } from "@/components/FluidStats";
 import { MobileRaceCards } from "@/components/MobileRaceCards";
 import { SponsorsList } from "@/components/SponsorsList";
+import { HeroText } from "@/components/HeroText";
+import { ScrollHint } from "@/components/ScrollHint";
 
 const stats = [
   { number: "19+", label: "RACES", description: "From Ottawa to Chicago, Charlevoix to Philadelphia. Competing across North America at the elite level.", image: "/cards/card1.png" },
@@ -50,7 +52,7 @@ export default function Home() {
   return (
     <>
       {/* ============ HERO ============ */}
-      <section id="hero" className="relative min-h-screen flex flex-col justify-between overflow-hidden">
+      <section id="hero" className="relative min-h-screen flex flex-col justify-between lg:justify-center lg:gap-6 overflow-hidden">
         {/* Background image */}
         <Image
           src="/hero-bg.png"
@@ -61,31 +63,30 @@ export default function Home() {
           sizes="100vw"
         />
 
-        {/* Logo — left-aligned, pushed up from center */}
-        <div className="relative z-10 flex-1 flex items-center px-6 md:px-12 lg:px-16 -mt-12 lg:-mt-20 max-w-[1440px] mx-auto w-full">
+        {/* Logo — top on mobile, centered on desktop */}
+        <div className="relative z-10 flex-1 lg:flex-none flex items-start lg:items-center px-6 md:px-12 lg:px-16 pt-24 lg:pt-0 max-w-[1440px] mx-auto w-full">
           <div className="animate-hero" style={{ animationDelay: "0ms" }}>
             <Image
               src="/logo-black.png"
               alt="Cyclery Racing Abacus Data"
               width={900}
               height={180}
-              className="w-[280px] md:w-[460px] lg:w-[650px] xl:w-[850px] 2xl:w-[1000px] h-auto"
+              className="w-[320px] md:w-[460px] lg:w-[650px] xl:w-[850px] 2xl:w-[1000px] h-auto"
               priority
             />
           </div>
         </div>
 
-        {/* Text — bottom right */}
-        <div className="relative z-10 px-6 md:px-12 lg:px-16 pb-12 lg:pb-16 flex justify-end max-w-[1440px] mx-auto w-full">
-          <div className="animate-hero text-right max-w-lg" style={{ animationDelay: "200ms" }}>
-            <h2 className="font-display text-[clamp(20px,3.5vw,40px)] font-bold leading-[1.15] text-black whitespace-nowrap">
-              A pioneering force in<br />Canadian women&apos;s cycling.
-            </h2>
-            <p className="mt-1 font-body text-sm md:text-base text-black leading-snug">
-              One of the country&apos;s longest-running teams, built<br className="hidden md:block" />
-              on a legacy of performance and progression.
-            </p>
+        {/* Text — typing effect */}
+        <div className="relative z-10 px-6 md:px-12 lg:px-16 lg:mb-8 max-w-[1440px] mx-auto w-full">
+          <div className="w-[320px] md:w-[460px] lg:w-[650px] xl:w-[850px] 2xl:w-[1000px]">
+            <HeroText />
           </div>
+        </div>
+
+        {/* Scroll hint — fades out on scroll, pinned to bottom on desktop */}
+        <div className="relative lg:absolute lg:bottom-0 lg:left-0 lg:right-0 z-10 px-6 md:px-12 lg:px-16 pb-10 lg:pb-12 pt-6 max-w-[1440px] lg:mx-auto w-full animate-hero" style={{ animationDelay: "800ms" }}>
+          <ScrollHint />
         </div>
       </section>
 
