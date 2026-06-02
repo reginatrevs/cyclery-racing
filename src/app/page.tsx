@@ -8,7 +8,7 @@ import { MobileRaceCards } from "@/components/MobileRaceCards";
 import { SponsorsList } from "@/components/SponsorsList";
 
 const stats = [
-  { number: "19+", label: "RACES", description: "From Ottawa to Chicago, Charlevoix to Philadelphia — competing across North America at the elite level.", image: "/cards/card1.png" },
+  { number: "19+", label: "RACES", description: "From Ottawa to Chicago, Charlevoix to Philadelphia. Competing across North America at the elite level.", image: "/cards/card1.png" },
   { number: "10", label: "RIDERS", description: "An all-women roster of dedicated Canadian athletes pushing each other to new heights.", image: "/cards/card2.png" },
   { number: "2009", label: "EST.", description: "One of Canada's longest-running competitive cycling programs, building legacy for over 15 years.", image: "/cards/card3.png" },
   { number: "100%", label: "CAN", description: "Homegrown talent representing Canada on the international stage.", image: "/cards/card4.png" },
@@ -22,12 +22,11 @@ const riders = [
 ];
 
 const upcomingRaces = [
-  { date: "APR", day: "19", name: "Clarence Rockland", location: "Clarence, ON", photo: "/race/race-1.png" },
-  { date: "APR", day: "26", name: "Almonte Roubaix", location: "Almonte, ON", photo: "/race/race-2.png" },
-  { date: "MAY", day: "09", name: "Tour of the Battenkill", location: "Batenkill, NY", photo: "/race/race-3.png" },
-  { date: "MAY", day: "15", name: "Tour de Bloom", location: "Wenatchee, WA", photo: "/race/race4.png" },
-  { date: "MAY", day: "31", name: "Via d'Italia", location: "Windsor, ON", photo: "/race/race-1.png" },
-  { date: "JUN", day: "14", name: "Preston Street", location: "Ottawa, ON", photo: "/race/race-2.png" },
+  { date: "MAY", day: "15", name: "Tour de Bloom", location: "Wenatchee, WA", photo: "/course-race/bloom.png" },
+  { date: "JUN", day: "14", name: "Preston Street", location: "Ottawa, ON", photo: "/course-race/preston.png" },
+  { date: "JUN", day: "06", name: "Ontario Cup 2", location: "Northumberland, ON", photo: "/course-race/ontario-cup.png" },
+  { date: "JUL", day: "03", name: "Kingston Stage Race", location: "Kingston, ON", photo: "/course-race/kingston.png" },
+  { date: "AUG", day: "30", name: "Philadelphia", location: "Philadelphia, PA", photo: "/course-race/philadelphia.png" },
 ];
 
 const sponsors = [
