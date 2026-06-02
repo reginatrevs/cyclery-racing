@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 
 interface Stat {
@@ -24,46 +24,39 @@ const colors = [
 export function FluidStats({ stats }: FluidStatsProps) {
   const [hovered, setHovered] = useState<number | null>(null);
 
-  // Mobile scroll-triggered active state
-  const [mobileActive, setMobileActive] = useState(-1);
-  const [mobileCompleted, setMobileCompleted] = useState(false);
-  const wrapperRef = useRef<HTMLDivElement>(null);
-  const scrollPerCard = 600;
-  const totalScroll = stats.length * scrollPerCard;
-
-  const handleScroll = useCallback(() => {
-    if (mobileCompleted) return;
-    const wrapper = wrapperRef.current;
-    if (!wrapper) return;
-    if (window.innerWidth >= 1024) return; // Desktop doesn't use scroll
-
-    const rect = wrapper.getBoundingClientRect();
-    const scrolled = -rect.top;
-
-    if (scrolled < 0) {
-      if (mobileActive !== -1) setMobileActive(-1);
-      return;
-    }
-    if (scrolled >= totalScroll) {
-      if (!mobileCompleted) {
-        setMobileCompleted(true);
-        setMobileActive(stats.length - 1);
-      }
-      return;
-    }
-    const cardIndex = Math.min(stats.length - 1, Math.floor(scrolled / scrollPerCard));
-    if (cardIndex !== mobileActive) setMobileActive(cardIndex);
-  }, [mobileActive, mobileCompleted, stats.length, totalScroll]);
+  // Mobile scroll-triggered active state — cards activate one by one
+  const [mobileActivated, setMobileActivated] = useState<Set<number>>(new Set());
+  const mobileGridRef = useRef<HTMLDivElement>(null);
+  const mobileTriggered = useRef(false);
 
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [handleScroll]);
-
-  const handleMobileClick = (index: number) => {
-    if (!mobileCompleted) return;
-    setMobileActive(mobileActive === index ? -1 : index);
-  };
+    if (typeof window === "undefined") return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (window.innerWidth >= 1024) return;
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && entry.intersectionRatio > 0.2 && !mobileTriggered.current) {
+            mobileTriggered.current = true;
+            // Stagger activation: one card every 300ms
+            stats.forEach((_, i) => {
+              setTimeout(() => {
+                setMobileActivated((prev) => {
+                  const next = new Set(prev);
+                  next.add(i);
+                  return next;
+                });
+              }, i * 300);
+            });
+          }
+        });
+      },
+      { threshold: [0, 0.2, 0.5], rootMargin: "-5% 0px -5% 0px" }
+    );
+    const timer = setTimeout(() => {
+      if (mobileGridRef.current) observer.observe(mobileGridRef.current);
+    }, 100);
+    return () => { clearTimeout(timer); observer.disconnect(); };
+  }, [stats]);
 
   return (
     <section className="px-6">
@@ -138,58 +131,66 @@ export function FluidStats({ stats }: FluidStatsProps) {
         </div>
       </div>
 
-      {/* Mobile — keep existing scroll-lock behavior */}
-      <div className="lg:hidden">
-        <div
-          ref={wrapperRef}
-          style={{ height: `${totalScroll + 100}px`, position: "relative" }}
-        >
-          <div className="sticky top-[80px] py-16">
-            <div className="flex flex-col gap-[3px]">
-              {stats.map((stat, i) => {
-                const isActive = i === mobileActive;
-                const isPast = mobileActive >= 0 && i < mobileActive && !mobileCompleted;
-                const color = colors[i % colors.length];
-                return (
+      {/* Mobile — bordered cards with scroll-activated images */}
+      <div className="lg:hidden py-12">
+        <div ref={mobileGridRef} className="grid grid-cols-2 gap-3">
+          {stats.map((stat, i) => {
+            const isActive = mobileActivated.has(i);
+            return (
+              <div
+                key={stat.label}
+                className="relative border border-gray-300 aspect-[3/4] flex flex-col justify-between p-5 overflow-hidden transition-all duration-500"
+                style={{
+                  backgroundColor: isActive ? "#fafafa" : "transparent",
+                }}
+              >
+                {/* Title at top */}
+                <div className="relative z-10">
+                  <span
+                    className="font-display text-[clamp(22px,6vw,32px)] font-bold uppercase leading-none transition-colors duration-300"
+                    style={{ color: isActive ? (stat.image ? "#fff" : "#ff138c") : "#111" }}
+                  >
+                    {stat.number}
+                  </span>
+                  <span
+                    className="block font-display text-[clamp(12px,3vw,16px)] font-bold uppercase leading-tight mt-1 transition-colors duration-300"
+                    style={{ color: isActive ? (stat.image ? "#fff" : "#ff138c") : "#111" }}
+                  >
+                    {stat.label}
+                  </span>
+                </div>
+
+                {/* Card image — appears as background on scroll */}
+                {stat.image && (
                   <div
-                    key={stat.label}
-                    onClick={() => handleMobileClick(i)}
-                    className={`${color.bg} ${color.text} p-6 overflow-hidden ${mobileCompleted ? "cursor-pointer" : ""}`}
+                    className="absolute inset-0 overflow-hidden transition-all duration-500 pointer-events-none"
+                    style={{ opacity: isActive ? 1 : 0 }}
+                  >
+                    <Image
+                      src={stat.image}
+                      alt={stat.label}
+                      fill
+                      className="object-cover"
+                      sizes="50vw"
+                    />
+                  </div>
+                )}
+
+                {/* Description at bottom */}
+                {stat.description && (
+                  <p
+                    className="relative z-10 font-body text-[11px] leading-relaxed transition-all duration-500"
                     style={{
-                      height: isActive ? "200px" : isPast ? "60px" : "72px",
-                      opacity: isPast ? 0.6 : 1,
-                      transition: "height 0.7s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease",
+                      opacity: isActive ? 1 : 0.7,
+                      color: isActive && stat.image ? "#fff" : "#111",
                     }}
                   >
-                    <div>
-                      <span
-                        className="font-display font-bold uppercase leading-none"
-                        style={{
-                          fontSize: isActive ? "36px" : "22px",
-                          transition: "font-size 0.7s cubic-bezier(0.16, 1, 0.3, 1)",
-                        }}
-                      >
-                        {stat.number} {stat.label}
-                      </span>
-                    </div>
-                    {stat.description && (
-                      <p
-                        className={`mt-3 font-body text-sm leading-relaxed ${color.opacity}`}
-                        style={{
-                          opacity: isActive ? 1 : 0,
-                          maxHeight: isActive ? "80px" : "0",
-                          transition: "opacity 0.4s ease 0.2s, max-height 0.5s cubic-bezier(0.16, 1, 0.3, 1)",
-                          overflow: "hidden",
-                        }}
-                      >
-                        {stat.description}
-                      </p>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
+                    {stat.description}
+                  </p>
+                )}
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>

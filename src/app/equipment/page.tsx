@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { Button } from "@/components/Button";
+import { GearList } from "@/components/GearList";
 
 const fontStyle = {
   fontFamily: '"PP Neue Montreal", "Helvetica Neue", Helvetica, sans-serif',
@@ -26,8 +27,8 @@ const gear = [
     product: "Custom Race Wheels",
     slug: "cyclery",
     url: "https://thecyclery.ca",
-    image: null,
-    imageBg: "bg-gray-50",
+    image: "/house-wheelset.png",
+    imageBg: "bg-white",
     description:
       "Built in-house by The Cyclery, our race wheels are spec'd for elite competition. Lightweight, stiff, and proven across North America.",
   },
@@ -37,8 +38,8 @@ const gear = [
     product: "Custom Team Kit",
     slug: "castelli",
     url: "https://castelli-cycling.com",
-    image: null,
-    imageBg: "bg-gray-50",
+    image: "/jersey.png",
+    imageBg: "bg-white",
     description:
       "Our race kit is designed and manufactured by Castelli. Built for comfort, aerodynamics, and looking fast standing still.",
   },
@@ -49,6 +50,7 @@ const gear = [
     slug: "smith",
     url: "https://smithoptics.com",
     image: "/helmet-smith.png",
+    secondImage: "/sunglasses.png",
     imageBg: "bg-white",
     description:
       "Smith keeps us protected and focused with MIPS-equipped helmets and ChromaPop lens technology for every condition.",
@@ -59,8 +61,8 @@ const gear = [
     product: "Hydration & Fuel",
     slug: "skratch",
     url: "https://skratchlabs.com",
-    image: null,
-    imageBg: "bg-gray-50",
+    image: "/skratch-drink.png",
+    imageBg: "bg-white",
     description:
       "Real ingredients, no shortcuts. Skratch fuels our training and racing with hydration and nutrition made for endurance athletes.",
   },
@@ -126,14 +128,14 @@ export default function EquipmentPage() {
             loop
             muted
             playsInline
-            className="w-[95%] lg:w-[90%] mx-auto h-auto object-contain"
+            className="w-[85%] lg:w-[70%] mx-auto h-auto object-contain"
           >
             <source src="/factor-bike.mp4" type="video/mp4" />
           </video>
         </div>
       </section>
 
-      {/* Gear — staggered layout, white bg */}
+      {/* Gear — Interactive List */}
       <section className="py-20 lg:py-28 px-6 bg-white">
         <div className="max-w-[1440px] mx-auto">
           <ScrollReveal>
@@ -141,138 +143,7 @@ export default function EquipmentPage() {
               What We Use
             </h2>
           </ScrollReveal>
-
-          {/* Desktop: staggered layout */}
-          <div className="hidden lg:block relative">
-            {gear.map((item, i) => (
-              <ScrollReveal key={item.brand} delay={i * 100} className={`w-[42%] ${staggerPositions[i]}`}>
-                <a
-                  href={item.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group block"
-                >
-                  {/* Image / Logo area */}
-                  <div className="bg-white overflow-hidden">
-                    {item.image ? (
-                      <div className="relative aspect-[4/3] overflow-hidden">
-                        <Image
-                          src={item.image}
-                          alt={item.product}
-                          fill
-                          className="object-contain px-6 pt-6 pb-0 transition-transform duration-500 group-hover:scale-105"
-                          sizes="42vw"
-                        />
-                      </div>
-                    ) : (
-                      <div className="aspect-[4/3] flex items-center justify-center px-10 pt-10 pb-0 bg-gray-50">
-                        <div className="relative w-[160px] h-[64px]">
-                          <Image
-                            src={`/sponsors/${item.slug}-black.png`}
-                            alt={item.brand}
-                            fill
-                            className="object-contain transition-opacity duration-300 group-hover:opacity-0"
-                            sizes="160px"
-                          />
-                          <Image
-                            src={`/sponsors/${item.slug}-pink.png`}
-                            alt={item.brand}
-                            fill
-                            className="object-contain opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-                            sizes="160px"
-                          />
-                        </div>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Info below image */}
-                  <div className="pt-3 pb-6">
-                    <div className="relative w-[130px] h-[42px] mb-3">
-                      <Image
-                        src={`/sponsors/${item.slug}-black.png`}
-                        alt={item.brand}
-                        fill
-                        className="object-contain object-left transition-opacity duration-300 group-hover:opacity-0"
-                        sizes="130px"
-                      />
-                      <Image
-                        src={`/sponsors/${item.slug}-pink.png`}
-                        alt={item.brand}
-                        fill
-                        className="object-contain object-left opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-                        sizes="130px"
-                      />
-                    </div>
-                    <h3 className="font-display text-lg font-bold uppercase text-black group-hover:text-magenta transition-colors leading-tight mb-2">
-                      {item.product}
-                    </h3>
-                    <p className="font-body text-sm text-gray-500 leading-relaxed">
-                      {item.description}
-                    </p>
-                  </div>
-                </a>
-              </ScrollReveal>
-            ))}
-          </div>
-
-          {/* Mobile: single column */}
-          <div className="lg:hidden space-y-10">
-            {gear.map((item, i) => (
-              <ScrollReveal key={item.brand} delay={i * 80}>
-                <a
-                  href={item.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group block"
-                >
-                  <div className="bg-white overflow-hidden">
-                    {item.image ? (
-                      <div className="relative aspect-[4/3] overflow-hidden">
-                        <Image
-                          src={item.image}
-                          alt={item.product}
-                          fill
-                          className="object-contain px-6 pt-6 pb-0"
-                          sizes="100vw"
-                        />
-                      </div>
-                    ) : (
-                      <div className="aspect-[4/3] flex items-center justify-center px-8 pt-8 pb-0 bg-gray-50">
-                        <div className="relative w-[140px] h-[56px]">
-                          <Image
-                            src={`/sponsors/${item.slug}-black.png`}
-                            alt={item.brand}
-                            fill
-                            className="object-contain"
-                            sizes="140px"
-                          />
-                        </div>
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="pt-2 pb-2">
-                    <div className="relative w-[100px] h-[34px] mb-2">
-                      <Image
-                        src={`/sponsors/${item.slug}-black.png`}
-                        alt={item.brand}
-                        fill
-                        className="object-contain object-left"
-                        sizes="100px"
-                      />
-                    </div>
-                    <h3 className="font-display text-base font-bold uppercase text-black leading-tight mb-1">
-                      {item.product}
-                    </h3>
-                    <p className="font-body text-sm text-gray-500 leading-relaxed">
-                      {item.description}
-                    </p>
-                  </div>
-                </a>
-              </ScrollReveal>
-            ))}
-          </div>
+          <GearList gear={gear} />
         </div>
       </section>
 
