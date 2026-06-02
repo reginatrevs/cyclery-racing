@@ -6,9 +6,11 @@ import { StickySection } from "@/components/StickySection";
 import { FluidStats } from "@/components/FluidStats";
 import { MobileRaceCards } from "@/components/MobileRaceCards";
 import { SponsorsList } from "@/components/SponsorsList";
+import { HeroText } from "@/components/HeroText";
+import { ScrollHint } from "@/components/ScrollHint";
 
 const stats = [
-  { number: "19+", label: "RACES", description: "From Ottawa to Chicago, Charlevoix to Philadelphia — competing across North America at the elite level.", image: "/cards/card1.png" },
+  { number: "19+", label: "RACES", description: "From Ottawa to Chicago, Charlevoix to Philadelphia. Competing across North America at the elite level.", image: "/cards/card1.png" },
   { number: "10", label: "RIDERS", description: "An all-women roster of dedicated Canadian athletes pushing each other to new heights.", image: "/cards/card2.png" },
   { number: "2009", label: "EST.", description: "One of Canada's longest-running competitive cycling programs, building legacy for over 15 years.", image: "/cards/card3.png" },
   { number: "100%", label: "CAN", description: "Homegrown talent representing Canada on the international stage.", image: "/cards/card4.png" },
@@ -22,12 +24,12 @@ const riders = [
 ];
 
 const upcomingRaces = [
-  { date: "APR", day: "19", name: "Clarence Rockland", location: "Clarence, ON", photo: "/race/race-1.png" },
-  { date: "APR", day: "26", name: "Almonte Roubaix", location: "Almonte, ON", photo: "/race/race-2.png" },
-  { date: "MAY", day: "09", name: "Tour of the Battenkill", location: "Batenkill, NY", photo: "/race/race-3.png" },
-  { date: "MAY", day: "15", name: "Tour de Bloom", location: "Wenatchee, WA", photo: "/race/race4.png" },
-  { date: "MAY", day: "31", name: "Via d'Italia", location: "Windsor, ON", photo: "/race/race-1.png" },
-  { date: "JUN", day: "14", name: "Preston Street", location: "Ottawa, ON", photo: "/race/race-2.png" },
+  { date: "MAY", day: "15", name: "Tour de Bloom", location: "Wenatchee, WA", photo: "/course-race/bloom.png" },
+  { date: "JUN", day: "14", name: "Preston Street", location: "Ottawa, ON", photo: "/course-race/preston.png" },
+  { date: "JUN", day: "06", name: "Ontario Cup 2", location: "Northumberland, ON", photo: "/course-race/ontario-cup.png" },
+  { date: "JUL", day: "03", name: "Kingston Stage Race", location: "Kingston, ON", photo: "/course-race/kingston.png" },
+  { date: "AUG", day: "30", name: "Philadelphia", location: "Philadelphia, PA", photo: "/course-race/philadelphia.png" },
+  { date: "SEP", day: "07", name: "Maryland Cycling Classic", location: "Baltimore, MD", photo: "/course-race/maryland.png" },
 ];
 
 const sponsors = [
@@ -50,7 +52,7 @@ export default function Home() {
   return (
     <>
       {/* ============ HERO ============ */}
-      <section id="hero" className="relative min-h-screen flex flex-col justify-between overflow-hidden">
+      <section id="hero" className="relative min-h-screen flex flex-col justify-between lg:justify-center lg:gap-6 overflow-hidden">
         {/* Background image */}
         <Image
           src="/hero-bg.png"
@@ -61,31 +63,30 @@ export default function Home() {
           sizes="100vw"
         />
 
-        {/* Logo — left-aligned, pushed up from center */}
-        <div className="relative z-10 flex-1 flex items-center px-6 md:px-12 lg:px-16 -mt-12 lg:-mt-20 max-w-[1440px] mx-auto w-full">
+        {/* Logo — top on mobile, centered on desktop */}
+        <div className="relative z-10 flex-1 lg:flex-none flex items-start lg:items-center px-6 md:px-12 lg:px-16 pt-24 lg:pt-0 max-w-[1440px] mx-auto w-full">
           <div className="animate-hero" style={{ animationDelay: "0ms" }}>
             <Image
               src="/logo-black.png"
               alt="Cyclery Racing Abacus Data"
               width={900}
               height={180}
-              className="w-[280px] md:w-[460px] lg:w-[650px] xl:w-[850px] 2xl:w-[1000px] h-auto"
+              className="w-[320px] md:w-[460px] lg:w-[650px] xl:w-[850px] 2xl:w-[1000px] h-auto"
               priority
             />
           </div>
         </div>
 
-        {/* Text — bottom right */}
-        <div className="relative z-10 px-6 md:px-12 lg:px-16 pb-12 lg:pb-16 flex justify-end max-w-[1440px] mx-auto w-full">
-          <div className="animate-hero text-right max-w-lg" style={{ animationDelay: "200ms" }}>
-            <h2 className="font-display text-[clamp(20px,3.5vw,40px)] font-bold leading-[1.15] text-black whitespace-nowrap">
-              A pioneering force in<br />Canadian women&apos;s cycling.
-            </h2>
-            <p className="mt-1 font-body text-sm md:text-base text-black leading-snug">
-              One of the country&apos;s longest-running teams, built<br className="hidden md:block" />
-              on a legacy of performance and progression.
-            </p>
+        {/* Text — typing effect */}
+        <div className="relative z-10 px-6 md:px-12 lg:px-16 lg:mb-8 max-w-[1440px] mx-auto w-full">
+          <div className="w-[320px] md:w-[460px] lg:w-[650px] xl:w-[850px] 2xl:w-[1000px]">
+            <HeroText />
           </div>
+        </div>
+
+        {/* Scroll hint — fades out on scroll, pinned to bottom on desktop */}
+        <div className="relative lg:absolute lg:bottom-0 lg:left-0 lg:right-0 z-10 px-6 md:px-12 lg:px-16 pb-10 lg:pb-12 pt-6 max-w-[1440px] lg:mx-auto w-full animate-hero" style={{ animationDelay: "800ms" }}>
+          <ScrollHint />
         </div>
       </section>
 

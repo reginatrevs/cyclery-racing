@@ -102,7 +102,7 @@ export function Footer() {
         </div>
       </div>
 
-      {/* TREVS logo — right on desktop, full width mobile */}
+      {/* TREVS logo — full width mobile, right on desktop */}
       <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16 mt-8 lg:mt-4 lg:flex lg:justify-end">
         <Image
           src="/trevs-logo.svg"
@@ -117,13 +117,13 @@ export function Footer() {
       {/* Bottom bar — split layout */}
       <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16 pb-12 pt-8">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-          {/* Left — copyright */}
-          <div className="flex items-center gap-3">
-            <p className="text-[9px] md:text-[13px] uppercase tracking-[0.12em] font-semibold text-white/70" style={fontNM}>
-              &copy;{new Date().getFullYear()} Cyclery Racing — Abacus Data
+          {/* Left on desktop — copyright */}
+          <div className="hidden md:flex items-center gap-3">
+            <p className="text-[13px] uppercase tracking-[0.12em] font-semibold text-white/70" style={fontNM}>
+              &copy;2026 Cyclery Racing — Abacus Data
             </p>
           </div>
-          {/* Right — web design credit (two lines on mobile) */}
+          {/* Right — web design credit + copyright below on mobile */}
           <div className="text-[13px] uppercase tracking-[0.12em] font-semibold text-white/70" style={fontNM}>
             <span>Web Design &amp; Development</span>
             <br className="md:hidden" />
@@ -148,6 +148,10 @@ export function Footer() {
                 trevs.ca
               </a>
             </span>
+            {/* Copyright — below on mobile only */}
+            <p className="md:hidden mt-3 text-[9px] text-white/40">
+              &copy;2026 Cyclery Racing — Abacus Data
+            </p>
           </div>
         </div>
       </div>

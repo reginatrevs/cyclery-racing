@@ -221,7 +221,7 @@ export default function SponsorsPage() {
               <p className="font-body text-base text-black leading-relaxed mb-10">
                 We love working with brands that believe in what we&apos;re building.
                 Whether it&apos;s race-day visibility, content collaboration, or something
-                completely custom, reach out and let&apos;s figure it out together.
+                completely custom. Reach out and let&apos;s figure it out together.
               </p>
               <Button href="/contact" variant="primary">
                 Contact Us

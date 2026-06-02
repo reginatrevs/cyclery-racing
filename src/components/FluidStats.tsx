@@ -24,39 +24,37 @@ const colors = [
 export function FluidStats({ stats }: FluidStatsProps) {
   const [hovered, setHovered] = useState<number | null>(null);
 
-  // Mobile: scroll triggers staggered flash, tap toggles image
-  const [mobilePressed, setMobilePressed] = useState<number | null>(null);
-  const [mobileFlash, setMobileFlash] = useState<Set<number>>(new Set());
-  const mobileGridRef = useRef<HTMLDivElement>(null);
-  const mobileTriggered = useRef(false);
+  // Mobile: scroll-based activation — closest card to center shows image
+  const [mobileActive, setMobileActive] = useState<number | null>(null);
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    const observer = new IntersectionObserver(
-      (entries) => {
+    let raf = 0;
+    const onScroll = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
         if (window.innerWidth >= 1024) return;
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && entry.intersectionRatio > 0.2 && !mobileTriggered.current) {
-            mobileTriggered.current = true;
-            // Stagger flash: each card activates alone, then all deactivate
-            stats.forEach((_, i) => {
-              setTimeout(() => {
-                setMobileFlash(new Set([i]));
-              }, i * 400);
-            });
-            setTimeout(() => {
-              setMobileFlash(new Set());
-            }, stats.length * 400 + 500);
+        const midY = window.innerHeight * 0.45;
+        let closest: number | null = null;
+        let closestDist = Infinity;
+        cardRefs.current.forEach((el, i) => {
+          if (!el) return;
+          const rect = el.getBoundingClientRect();
+          const center = rect.top + rect.height / 2;
+          const dist = Math.abs(center - midY);
+          if (dist < closestDist && rect.top < window.innerHeight && rect.bottom > 0) {
+            closestDist = dist;
+            closest = i;
           }
         });
-      },
-      { threshold: [0, 0.2, 0.5], rootMargin: "-5% 0px -5% 0px" }
-    );
-    const timer = setTimeout(() => {
-      if (mobileGridRef.current) observer.observe(mobileGridRef.current);
-    }, 100);
-    return () => { clearTimeout(timer); observer.disconnect(); };
-  }, [stats]);
+        setMobileActive(closest);
+      });
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    const timer = setTimeout(onScroll, 200);
+    return () => { clearTimeout(timer); cancelAnimationFrame(raf); window.removeEventListener("scroll", onScroll); };
+  }, []);
 
   return (
     <section className="px-6">
@@ -131,44 +129,41 @@ export function FluidStats({ stats }: FluidStatsProps) {
         </div>
       </div>
 
-      {/* Mobile — single column, scroll activates one by one then deactivates, tap for image */}
+      {/* Mobile — single column, scroll activates closest card with image */}
       <div className="lg:hidden py-12">
-        <div ref={mobileGridRef} className="flex flex-col gap-3">
+        <div className="flex flex-col gap-3">
           {stats.map((stat, i) => {
-            const isFlashing = mobileFlash.has(i);
-            const isPressed = mobilePressed === i;
-            const showImage = isPressed;
-            const highlight = isFlashing || isPressed;
+            const active = mobileActive === i;
             return (
               <div
                 key={stat.label}
-                className="relative border border-gray-300 aspect-[5/3] flex flex-col justify-between p-5 overflow-hidden transition-all duration-500 cursor-pointer"
+                ref={(el) => { cardRefs.current[i] = el; }}
+                className="relative border border-gray-300 aspect-[5/3] flex flex-col justify-between p-5 overflow-hidden transition-all duration-500"
                 style={{
-                  backgroundColor: highlight ? "#fafafa" : "transparent",
+                  backgroundColor: active ? "#fafafa" : "transparent",
                 }}
-                onClick={() => setMobilePressed(isPressed ? null : i)}
               >
                 {/* Title at top */}
                 <div className="relative z-10">
                   <span
                     className="font-display text-[clamp(28px,8vw,40px)] font-bold uppercase leading-none transition-colors duration-300"
-                    style={{ color: highlight ? (stat.image ? "#fff" : "#ff138c") : "#111" }}
+                    style={{ color: active && stat.image ? "#fff" : active ? "#ff138c" : "#111" }}
                   >
                     {stat.number}
                   </span>
                   <span
                     className="block font-display text-[clamp(14px,3.5vw,18px)] font-bold uppercase leading-tight mt-1 transition-colors duration-300"
-                    style={{ color: highlight ? (stat.image ? "#fff" : "#ff138c") : "#111" }}
+                    style={{ color: active && stat.image ? "#fff" : active ? "#ff138c" : "#111" }}
                   >
                     {stat.label}
                   </span>
                 </div>
 
-                {/* Card image — appears on tap */}
+                {/* Card image — appears on scroll activation */}
                 {stat.image && (
                   <div
                     className="absolute inset-0 overflow-hidden transition-all duration-500 pointer-events-none"
-                    style={{ opacity: showImage ? 1 : 0 }}
+                    style={{ opacity: active ? 1 : 0 }}
                   >
                     <Image
                       src={stat.image}
@@ -185,8 +180,8 @@ export function FluidStats({ stats }: FluidStatsProps) {
                   <p
                     className="relative z-10 font-body text-xs leading-relaxed max-w-[280px] transition-all duration-500"
                     style={{
-                      opacity: highlight ? 1 : 0.7,
-                      color: showImage ? "#fff" : "#111",
+                      opacity: active ? 1 : 0.7,
+                      color: active && stat.image ? "#fff" : "#111",
                     }}
                   >
                     {stat.description}

@@ -35,7 +35,13 @@ export function Navbar() {
       return;
     }
     const heroBottom = hero.getBoundingClientRect().bottom;
-    setShowLogo(heroBottom < 80);
+    // Use hysteresis to prevent flickering on fast scroll
+    setShowLogo((prev) => {
+      if (prev && heroBottom < 160) return true;
+      if (!prev && heroBottom < 80) return true;
+      if (heroBottom >= 160) return false;
+      return prev;
+    });
   }, []);
 
   useEffect(() => {
@@ -89,14 +95,14 @@ export function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="nav-link font-body text-[12px] font-bold uppercase tracking-[0.1em] text-magenta hover:text-magenta transition-colors hover:opacity-70"
+                className={`nav-link font-body text-[12px] font-bold uppercase tracking-[0.1em] transition-colors hover:opacity-70 ${showLogo ? "text-magenta" : "text-black"}`}
               >
                 {link.label}
               </Link>
             ))}
             <Link
               href="/donations"
-              className="font-body text-[12px] font-bold uppercase tracking-[0.1em] bg-magenta text-white border-2 border-magenta px-5 py-1.5 rounded-full hover:bg-black hover:border-black hover:text-white transition-all"
+              className={`font-body text-[12px] font-bold uppercase tracking-[0.1em] px-5 py-1.5 rounded-full transition-all ${showLogo ? "bg-magenta text-white border-2 border-magenta hover:bg-black hover:border-black" : "bg-black text-white border-2 border-black hover:bg-magenta hover:border-magenta"}`}
             >
               Support Us
             </Link>

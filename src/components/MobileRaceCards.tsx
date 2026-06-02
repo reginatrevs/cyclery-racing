@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 
 interface Race {
   date: string;
@@ -47,34 +48,39 @@ function RaceCard({ race, index }: { race: Race; index: number }) {
   return (
     <div
       ref={ref}
-      className="group relative aspect-[3/4] bg-gray-100 overflow-hidden cursor-pointer border border-gray-200 hover:border-magenta transition-all flex flex-col justify-between p-4"
+      className="group relative aspect-[3/4] overflow-hidden cursor-pointer border border-gray-200 hover:border-magenta transition-all flex flex-col justify-end p-4"
       style={{
         opacity: visible ? 1 : 0,
         transform: visible ? "translateY(0) scale(1)" : "translateY(60px) scale(0.92)",
         transition: "opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1)",
       }}
     >
-      {/* Large ghost number */}
-      <div className="flex-1 flex items-center justify-center opacity-[0.06]">
-        <span className="font-display text-[80px] font-bold leading-none select-none">
-          {race.day}
-        </span>
-      </div>
+      {/* Background photo */}
+      {race.photo && (
+        <Image
+          src={race.photo}
+          alt={race.name}
+          fill
+          className="object-cover"
+          sizes="50vw"
+        />
+      )}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
 
       {/* Race info */}
-      <div>
+      <div className="relative z-10">
         <div className="flex items-baseline gap-2 mb-1">
-          <span className="font-display text-xl font-bold text-black leading-none">
+          <span className="font-display text-xl font-bold text-white leading-none">
             {race.day}
           </span>
-          <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-gray-400">
+          <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-white/60">
             {race.date}
           </span>
         </div>
-        <h3 className="font-display text-xs font-bold uppercase text-black group-hover:text-magenta transition-colors leading-tight">
+        <h3 className="font-display text-xs font-bold uppercase text-white group-hover:text-magenta transition-colors leading-tight">
           {race.name}
         </h3>
-        <span className="font-mono text-[8px] uppercase tracking-[0.2em] text-gray-400">
+        <span className="font-mono text-[8px] uppercase tracking-[0.2em] text-white/50">
           {race.location}
         </span>
       </div>
