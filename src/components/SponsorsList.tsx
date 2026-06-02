@@ -40,35 +40,39 @@ export function SponsorsList({ sponsors }: { sponsors: Sponsor[] }) {
     setLogoPos(rowRect.top - listRect.top + rowRect.height / 2);
   }, []);
 
-  // Mobile: IntersectionObserver
+  // Mobile: scroll-based highlighting via scroll position (smoother than IO)
+  const activeRef = useRef(active);
+  activeRef.current = active;
+
   useEffect(() => {
     if (typeof window === "undefined") return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
+    let raf = 0;
+    const onScroll = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
         if (!isMobile.current) return;
-        let best: number | null = null;
-        let bestRatio = 0;
-        entries.forEach((entry) => {
-          const idx = rowRefs.current.indexOf(entry.target as HTMLDivElement);
-          if (entry.isIntersecting && entry.intersectionRatio > bestRatio) {
-            bestRatio = entry.intersectionRatio;
-            best = idx;
+        const midY = window.innerHeight * 0.45;
+        let closest: number | null = null;
+        let closestDist = Infinity;
+        rowRefs.current.forEach((el, i) => {
+          if (!el) return;
+          const rect = el.getBoundingClientRect();
+          const center = rect.top + rect.height / 2;
+          const dist = Math.abs(center - midY);
+          if (dist < closestDist && rect.top < window.innerHeight && rect.bottom > 0) {
+            closestDist = dist;
+            closest = i;
           }
         });
-        if (best !== null) {
-          setActive(best);
-          updateLogoPos(best);
+        if (closest !== null && closest !== activeRef.current) {
+          setActive(closest);
+          updateLogoPos(closest);
         }
-      },
-      { threshold: [0, 0.5, 1], rootMargin: "-40% 0px -40% 0px" }
-    );
-
-    const timer = setTimeout(() => {
-      rowRefs.current.forEach((el) => { if (el) observer.observe(el); });
-    }, 100);
-
-    return () => { clearTimeout(timer); observer.disconnect(); };
+      });
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    const timer = setTimeout(onScroll, 200);
+    return () => { clearTimeout(timer); cancelAnimationFrame(raf); window.removeEventListener("scroll", onScroll); };
   }, [sponsors.length, updateLogoPos]);
 
   // Desktop: track mouse Y
@@ -107,7 +111,8 @@ export function SponsorsList({ sponsors }: { sponsors: Sponsor[] }) {
                 className="py-[5px] flex items-baseline gap-3"
                 style={{
                   opacity: active !== null && active !== i ? 0.25 : 1,
-                  transition: "opacity 0.3s ease",
+                  transition: "opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
+                  willChange: "opacity",
                 }}
               >
                 <span
@@ -138,9 +143,9 @@ export function SponsorsList({ sponsors }: { sponsors: Sponsor[] }) {
           ))}
         </div>
 
-        {/* Logo — right half, positioned at active row height */}
+        {/* Logo — right side, positioned at active row height (visible on mobile too) */}
         <div
-          className="absolute right-0 top-0 w-1/2 pointer-events-none hidden lg:block"
+          className="absolute right-0 top-0 w-[40%] lg:w-1/2 pointer-events-none"
           style={{ height: "100%" }}
         >
           {sponsors.map((sponsor, i) => (
@@ -152,8 +157,8 @@ export function SponsorsList({ sponsors }: { sponsors: Sponsor[] }) {
                 transform: `translateY(-50%) ${active === i ? "scale(1)" : "scale(0.9)"}`,
                 opacity: active === i ? 1 : 0,
                 transition: "opacity 0.4s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), top 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
-                width: "clamp(120px, 20vw, 240px)",
-                height: "clamp(80px, 14vw, 160px)",
+                width: "clamp(80px, 20vw, 240px)",
+                height: "clamp(60px, 14vw, 160px)",
               }}
             >
               <div className="relative w-full h-full">

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { SectionHeading } from "@/components/SectionHeading";
@@ -32,6 +32,20 @@ export default function TeamPage() {
   const [hoveredFilter, setHoveredFilter] = useState<number | null>(null);
   const [viewMode, setViewMode] = useState<"gallery" | "list">("gallery");
   const [hoveredRider, setHoveredRider] = useState<number | null>(null);
+  const [showBackToTop, setShowBackToTop] = useState(false);
+  const galleryRef = useRef<HTMLDivElement>(null);
+
+  // Show back-to-top once scrolled into gallery
+  useEffect(() => {
+    const onScroll = () => {
+      if (!galleryRef.current) return;
+      const rect = galleryRef.current.getBoundingClientRect();
+      // Show when gallery top is above viewport and bottom is still below
+      setShowBackToTop(rect.top < -200 && rect.bottom > 100);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   const filtered = riders.filter((rider) => {
     if (activeFilter === "All") return true;
@@ -186,7 +200,28 @@ export default function TeamPage() {
               {filtered.length > 0 ? (
                 viewMode === "gallery" ? (
                   /* ---- GALLERY VIEW ---- */
-                  <div className="relative">
+                  <div ref={galleryRef} className="relative">
+                    {/* Sticky back-to-top — stays within gallery area */}
+                    <button
+                      onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                      className="sticky top-[90vh] float-right z-30 mr-1 group flex items-center justify-center w-8 h-8 rounded-full border border-magenta bg-magenta hover:bg-black hover:border-black transition-all duration-300 cursor-pointer shadow-sm"
+                      aria-label="Back to top"
+                      style={{
+                        opacity: showBackToTop ? 1 : 0,
+                        pointerEvents: showBackToTop ? "auto" : "none",
+                        transition: "opacity 0.3s, background-color 0.3s, border-color 0.3s",
+                      }}
+                    >
+                      <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        className="text-white transition-colors duration-300"
+                      >
+                        <path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </button>
                     {filtered.map((rider, i) => {
                       const idx = riders.indexOf(rider);
                       const positions = [
@@ -251,6 +286,7 @@ export default function TeamPage() {
                         </ScrollReveal>
                       );
                     })}
+
                   </div>
                 ) : (
                   /* ---- LIST VIEW — right-aligned, dimming on hover ---- */
@@ -357,6 +393,7 @@ export default function TeamPage() {
           </div>
         </div>
       </section>
+
     </>
   );
 }

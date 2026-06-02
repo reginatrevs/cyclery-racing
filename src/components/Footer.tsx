@@ -25,17 +25,6 @@ export function Footer() {
       {/* Top info grid */}
       <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16 pt-14 lg:pt-16">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-8">
-          {/* Site logo */}
-          <div className="col-span-2 md:col-span-4 mb-2">
-            <Image
-              src="/logo.svg"
-              alt="Cyclery Racing Abacus Data"
-              width={160}
-              height={40}
-              className="h-[28px] lg:h-[36px] w-auto brightness-0 invert opacity-80"
-            />
-          </div>
-
           {/* Menu */}
           <div>
             <p className="text-[10px] uppercase tracking-[0.25em] text-white/40 mb-4" style={fontNM}>
@@ -113,15 +102,14 @@ export function Footer() {
         </div>
       </div>
 
-      {/* Giant TREVS logo */}
-      <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16 mt-8 lg:mt-4">
+      {/* TREVS logo — right on desktop, full width mobile */}
+      <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16 mt-8 lg:mt-4 lg:flex lg:justify-end">
         <Image
           src="/trevs-logo.svg"
           alt="TREVS"
           width={1200}
           height={300}
-          className="w-full h-auto select-none"
-          style={{ opacity: 0.35 }}
+          className="w-full lg:w-[35%] h-auto select-none opacity-35 transition-all duration-300 lg:hover:opacity-100 lg:hover:brightness-0 lg:hover:invert"
           draggable={false}
         />
       </div>
@@ -131,38 +119,36 @@ export function Footer() {
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           {/* Left — copyright */}
           <div className="flex items-center gap-3">
-            <Image
-              src="/logo-mobile.svg"
-              alt="Cyclery Racing"
-              width={28}
-              height={28}
-              className="w-6 h-6 brightness-0 invert opacity-70"
-            />
-            <p className="text-[13px] uppercase tracking-[0.12em] font-semibold text-white/70" style={fontNM}>
+            <p className="text-[9px] md:text-[13px] uppercase tracking-[0.12em] font-semibold text-white/70" style={fontNM}>
               &copy;{new Date().getFullYear()} Cyclery Racing — Abacus Data
             </p>
           </div>
-          {/* Right — web design credit */}
-          <p className="text-[13px] uppercase tracking-[0.12em] font-semibold text-white/70" style={fontNM}>
-            Web Design &amp; Development by{" "}
-            <a
-              href="https://trevs.ca"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-white hover:underline underline-offset-2 transition-colors"
-            >
-              Regina Trevs
-            </a>
-            {" · "}
-            <a
-              href="https://trevs.ca"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-white/80 hover:text-white hover:underline underline-offset-2 transition-colors"
-            >
-              trevs.ca
-            </a>
-          </p>
+          {/* Right — web design credit (two lines on mobile) */}
+          <div className="text-[13px] uppercase tracking-[0.12em] font-semibold text-white/70" style={fontNM}>
+            <span>Web Design &amp; Development</span>
+            <br className="md:hidden" />
+            <span className="hidden md:inline">{" "}</span>
+            <span>
+              by{" "}
+              <a
+                href="https://trevs.ca"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white hover:underline underline-offset-2 transition-colors"
+              >
+                Regina Trevs
+              </a>
+              {" · "}
+              <a
+                href="https://trevs.ca"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white/80 hover:text-white hover:underline underline-offset-2 transition-colors"
+              >
+                trevs.ca
+              </a>
+            </span>
+          </div>
         </div>
       </div>
     </footer>

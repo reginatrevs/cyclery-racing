@@ -4,6 +4,7 @@ import { Button } from "@/components/Button";
 import { AboutHero } from "@/components/AboutHero";
 import { AboutText } from "@/components/AboutText";
 import { MissionText } from "@/components/MissionText";
+import { ValuesScroll } from "@/components/ValuesScroll";
 
 const fontStyle = {
   fontFamily: '"PP Neue Montreal", "Helvetica Neue", Helvetica, sans-serif',
@@ -68,29 +69,7 @@ export default function AboutPage() {
             </h2>
           </ScrollReveal>
 
-          {values.map((value, i) => (
-            <ScrollReveal key={value.title} delay={i * 80}>
-              <div className="group grid grid-cols-1 lg:grid-cols-[100px_1fr_320px] gap-4 lg:gap-16 items-start py-12 lg:py-16 border-b border-gray-200">
-                {/* Number label */}
-                <span
-                  className="uppercase text-gray-400 lg:pt-4"
-                  style={{ ...fontStyle, fontSize: "12px", fontWeight: 500 }}
-                >
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-
-                {/* Title — large, turns pink on hover */}
-                <h3 className="font-display text-[clamp(32px,4vw,56px)] font-bold leading-[1] text-black tracking-tight transition-colors duration-300 group-hover:text-magenta">
-                  {value.title}
-                </h3>
-
-                {/* Description — right column */}
-                <p className="font-body text-sm text-black leading-relaxed lg:pt-4">
-                  {value.description}
-                </p>
-              </div>
-            </ScrollReveal>
-          ))}
+          <ValuesScroll values={values} />
         </div>
       </section>
 
@@ -138,20 +117,8 @@ export default function AboutPage() {
         <div className="max-w-[1440px] mx-auto">
           <ScrollReveal>
             <div className="relative">
-              {/* Scrolling marquee text behind */}
-              <div className="absolute inset-0 flex items-center overflow-hidden pointer-events-none select-none opacity-[0.04]">
-                <div className="flex whitespace-nowrap animate-[marquee_20s_linear_infinite]">
-                  <span className="font-display text-[clamp(100px,15vw,200px)] font-bold uppercase tracking-tight mx-8">
-                    Follow the ride · Follow the ride · Follow the ride · Follow the ride ·
-                  </span>
-                  <span className="font-display text-[clamp(100px,15vw,200px)] font-bold uppercase tracking-tight mx-8">
-                    Follow the ride · Follow the ride · Follow the ride · Follow the ride ·
-                  </span>
-                </div>
-              </div>
-
               {/* Content — two column with photo */}
-              <div className="relative z-10 py-10 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 items-center">
+              <div className="py-10 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 items-center">
                 <div>
                   <div className="flex items-baseline gap-4 flex-wrap mb-4">
                     <h2 className="font-display text-[clamp(36px,6vw,80px)] font-bold uppercase leading-[0.9] text-black tracking-tight">

@@ -1,4 +1,3 @@
-import Link from "next/link";
 import Image from "next/image";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { SectionHeading } from "@/components/SectionHeading";
@@ -185,7 +184,7 @@ export default function Home() {
       </StickySection>
 
       {/* ============ SPONSORS — swiss grid ============ */}
-      <section className="py-24 lg:py-32 px-6 border-t border-gray-200">
+      <section className="py-16 lg:py-24 px-6 border-t border-gray-200">
         <div className="max-w-[1440px] mx-auto">
           <ScrollReveal>
             <h2 className="font-display text-[clamp(48px,10vw,140px)] font-bold uppercase leading-[0.85] text-black tracking-tight mb-16">
@@ -202,7 +201,7 @@ export default function Home() {
 
       {/* ============ EQUIPMENT CTA ============ */}
       <section className="relative bg-white overflow-hidden">
-        <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16 pt-20 lg:pt-32">
+        <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16 pt-12 lg:pt-20">
           <ScrollReveal>
             <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 mb-10 lg:mb-12">
               <div>
@@ -213,12 +212,11 @@ export default function Home() {
                   Built to Win
                 </h2>
               </div>
-              <Link
-                href="/equipment"
-                className="inline-block font-body text-[11px] font-bold uppercase tracking-[0.15em] px-6 py-3 rounded-full border-2 border-black text-black hover:bg-magenta hover:border-magenta hover:text-white transition-all whitespace-nowrap self-start lg:self-end mb-2"
-              >
-                View Equipment
-              </Link>
+              <div className="self-start lg:self-end mb-2">
+                <Button href="/equipment" variant="outline">
+                  View Equipment
+                </Button>
+              </div>
             </div>
           </ScrollReveal>
         </div>

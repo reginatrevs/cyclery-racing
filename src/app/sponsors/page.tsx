@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { Button } from "@/components/Button";
@@ -44,13 +44,51 @@ const benefits = [
   {
     title: "Tailored Partnerships",
     description:
-      "Every partnership is different. Whether it's branded vehicles, in-store events, or custom activations — we build sponsorships that make sense for your industry and audience.",
+      "Every partnership is different. Whether it's branded vehicles, in-store events, or custom activations, we build sponsorships that make sense for your industry and audience.",
   },
 ];
 
 export default function SponsorsPage() {
   const [hoveredSponsor, setHoveredSponsor] = useState<number | null>(null);
   const [hoveredBenefit, setHoveredBenefit] = useState<number | null>(null);
+  const benefitRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const isMobile = useRef(false);
+
+  useEffect(() => {
+    const check = () => { isMobile.current = window.innerWidth < 1024; };
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  // Mobile: scroll-based benefit card activation
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    let raf = 0;
+    const onScroll = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        if (!isMobile.current) return;
+        const midY = window.innerHeight * 0.45;
+        let closest: number | null = null;
+        let closestDist = Infinity;
+        benefitRefs.current.forEach((el, i) => {
+          if (!el) return;
+          const rect = el.getBoundingClientRect();
+          const center = rect.top + rect.height / 2;
+          const dist = Math.abs(center - midY);
+          if (dist < closestDist && rect.top < window.innerHeight && rect.bottom > 0) {
+            closestDist = dist;
+            closest = i;
+          }
+        });
+        setHoveredBenefit(closest);
+      });
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    const timer = setTimeout(onScroll, 200);
+    return () => { clearTimeout(timer); cancelAnimationFrame(raf); window.removeEventListener("scroll", onScroll); };
+  }, []);
 
   return (
     <>
@@ -183,7 +221,7 @@ export default function SponsorsPage() {
               <p className="font-body text-base text-black leading-relaxed mb-10">
                 We love working with brands that believe in what we&apos;re building.
                 Whether it&apos;s race-day visibility, content collaboration, or something
-                completely custom — reach out and let&apos;s figure it out together.
+                completely custom, reach out and let&apos;s figure it out together.
               </p>
               <Button href="/contact" variant="primary">
                 Contact Us
@@ -209,8 +247,9 @@ export default function SponsorsPage() {
             {benefits.map((b, i) => (
               <ScrollReveal key={b.title} delay={i * 80}>
                 <div
-                  className="relative aspect-[3/4] flex flex-col justify-between p-7 lg:p-9 cursor-pointer group transition-all duration-500"
-                  onMouseEnter={() => setHoveredBenefit(i)}
+                  ref={(el) => { benefitRefs.current[i] = el; }}
+                  className="relative aspect-[5/4] lg:aspect-[3/4] flex flex-col justify-between p-6 lg:p-9 cursor-pointer group transition-all duration-500"
+                  onMouseEnter={() => { if (!isMobile.current) setHoveredBenefit(i); }}
                   style={{
                     backgroundColor: hoveredBenefit === i ? "#fff0f5" : "rgba(255,255,255,0.5)",
                     border: "1px solid",
