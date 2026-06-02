@@ -27,6 +27,7 @@ const upcomingRaces = [
   { date: "JUN", day: "06", name: "Ontario Cup 2", location: "Northumberland, ON", photo: "/course-race/ontario-cup.png" },
   { date: "JUL", day: "03", name: "Kingston Stage Race", location: "Kingston, ON", photo: "/course-race/kingston.png" },
   { date: "AUG", day: "30", name: "Philadelphia", location: "Philadelphia, PA", photo: "/course-race/philadelphia.png" },
+  { date: "SEP", day: "07", name: "Maryland Cycling Classic", location: "Baltimore, MD", photo: "/course-race/maryland.png" },
 ];
 
 const sponsors = [
