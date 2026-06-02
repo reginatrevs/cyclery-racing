@@ -24,8 +24,9 @@ const colors = [
 export function FluidStats({ stats }: FluidStatsProps) {
   const [hovered, setHovered] = useState<number | null>(null);
 
-  // Mobile scroll-triggered active state — cards activate one by one
-  const [mobileActivated, setMobileActivated] = useState<Set<number>>(new Set());
+  // Mobile: scroll triggers staggered flash, tap toggles image
+  const [mobilePressed, setMobilePressed] = useState<number | null>(null);
+  const [mobileFlash, setMobileFlash] = useState<Set<number>>(new Set());
   const mobileGridRef = useRef<HTMLDivElement>(null);
   const mobileTriggered = useRef(false);
 
@@ -37,16 +38,15 @@ export function FluidStats({ stats }: FluidStatsProps) {
         entries.forEach((entry) => {
           if (entry.isIntersecting && entry.intersectionRatio > 0.2 && !mobileTriggered.current) {
             mobileTriggered.current = true;
-            // Stagger activation: one card every 300ms
+            // Stagger flash: each card activates alone, then all deactivate
             stats.forEach((_, i) => {
               setTimeout(() => {
-                setMobileActivated((prev) => {
-                  const next = new Set(prev);
-                  next.add(i);
-                  return next;
-                });
-              }, i * 300);
+                setMobileFlash(new Set([i]));
+              }, i * 400);
             });
+            setTimeout(() => {
+              setMobileFlash(new Set());
+            }, stats.length * 400 + 500);
           }
         });
       },
@@ -131,47 +131,51 @@ export function FluidStats({ stats }: FluidStatsProps) {
         </div>
       </div>
 
-      {/* Mobile — bordered cards with scroll-activated images */}
+      {/* Mobile — single column, scroll activates one by one then deactivates, tap for image */}
       <div className="lg:hidden py-12">
-        <div ref={mobileGridRef} className="grid grid-cols-2 gap-3">
+        <div ref={mobileGridRef} className="flex flex-col gap-3">
           {stats.map((stat, i) => {
-            const isActive = mobileActivated.has(i);
+            const isFlashing = mobileFlash.has(i);
+            const isPressed = mobilePressed === i;
+            const showImage = isPressed;
+            const highlight = isFlashing || isPressed;
             return (
               <div
                 key={stat.label}
-                className="relative border border-gray-300 aspect-[3/4] flex flex-col justify-between p-5 overflow-hidden transition-all duration-500"
+                className="relative border border-gray-300 aspect-[5/3] flex flex-col justify-between p-5 overflow-hidden transition-all duration-500 cursor-pointer"
                 style={{
-                  backgroundColor: isActive ? "#fafafa" : "transparent",
+                  backgroundColor: highlight ? "#fafafa" : "transparent",
                 }}
+                onClick={() => setMobilePressed(isPressed ? null : i)}
               >
                 {/* Title at top */}
                 <div className="relative z-10">
                   <span
-                    className="font-display text-[clamp(22px,6vw,32px)] font-bold uppercase leading-none transition-colors duration-300"
-                    style={{ color: isActive ? (stat.image ? "#fff" : "#ff138c") : "#111" }}
+                    className="font-display text-[clamp(28px,8vw,40px)] font-bold uppercase leading-none transition-colors duration-300"
+                    style={{ color: highlight ? (stat.image ? "#fff" : "#ff138c") : "#111" }}
                   >
                     {stat.number}
                   </span>
                   <span
-                    className="block font-display text-[clamp(12px,3vw,16px)] font-bold uppercase leading-tight mt-1 transition-colors duration-300"
-                    style={{ color: isActive ? (stat.image ? "#fff" : "#ff138c") : "#111" }}
+                    className="block font-display text-[clamp(14px,3.5vw,18px)] font-bold uppercase leading-tight mt-1 transition-colors duration-300"
+                    style={{ color: highlight ? (stat.image ? "#fff" : "#ff138c") : "#111" }}
                   >
                     {stat.label}
                   </span>
                 </div>
 
-                {/* Card image — appears as background on scroll */}
+                {/* Card image — appears on tap */}
                 {stat.image && (
                   <div
                     className="absolute inset-0 overflow-hidden transition-all duration-500 pointer-events-none"
-                    style={{ opacity: isActive ? 1 : 0 }}
+                    style={{ opacity: showImage ? 1 : 0 }}
                   >
                     <Image
                       src={stat.image}
                       alt={stat.label}
                       fill
                       className="object-cover"
-                      sizes="50vw"
+                      sizes="100vw"
                     />
                   </div>
                 )}
@@ -179,10 +183,10 @@ export function FluidStats({ stats }: FluidStatsProps) {
                 {/* Description at bottom */}
                 {stat.description && (
                   <p
-                    className="relative z-10 font-body text-[11px] leading-relaxed transition-all duration-500"
+                    className="relative z-10 font-body text-xs leading-relaxed max-w-[280px] transition-all duration-500"
                     style={{
-                      opacity: isActive ? 1 : 0.7,
-                      color: isActive && stat.image ? "#fff" : "#111",
+                      opacity: highlight ? 1 : 0.7,
+                      color: showImage ? "#fff" : "#111",
                     }}
                   >
                     {stat.description}

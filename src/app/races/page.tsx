@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { SectionHeading } from "@/components/SectionHeading";
@@ -34,6 +34,45 @@ const upcomingRaces = [
 
 export default function RacesPage() {
   const [hovered, setHovered] = useState<number | null>(null);
+  const [mobileActive, setMobileActive] = useState<number | null>(null);
+  const rowRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const isMobile = useRef(false);
+
+  useEffect(() => {
+    const check = () => { isMobile.current = window.innerWidth < 1024; };
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  // Mobile: scroll-based highlighting
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    let raf = 0;
+    const onScroll = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        if (!isMobile.current) return;
+        const midY = window.innerHeight * 0.45;
+        let closest: number | null = null;
+        let closestDist = Infinity;
+        rowRefs.current.forEach((el, i) => {
+          if (!el) return;
+          const rect = el.getBoundingClientRect();
+          const center = rect.top + rect.height / 2;
+          const dist = Math.abs(center - midY);
+          if (dist < closestDist && rect.top < window.innerHeight && rect.bottom > 0) {
+            closestDist = dist;
+            closest = i;
+          }
+        });
+        setMobileActive(closest);
+      });
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    const timer = setTimeout(onScroll, 200);
+    return () => { clearTimeout(timer); cancelAnimationFrame(raf); window.removeEventListener("scroll", onScroll); };
+  }, []);
 
   return (
     <>
@@ -61,7 +100,7 @@ export default function RacesPage() {
       <section className="pt-12 pb-20 px-6">
         <div className="max-w-[1440px] mx-auto">
           <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-magenta mb-4">
-            2025 Season
+            2026 Season
           </p>
           <h1 className="font-display text-[clamp(48px,10vw,140px)] font-bold uppercase leading-[0.85] text-black">
             Race Calendar
@@ -73,51 +112,55 @@ export default function RacesPage() {
       <section className="pb-24 lg:pb-32 px-6">
         <div className="max-w-[1440px] mx-auto">
           <ScrollReveal>
-            <SectionHeading label="Upcoming" heading="2025 Races" className="mb-12" />
+            <SectionHeading label="Upcoming" heading="2026 Season" className="mb-12" />
           </ScrollReveal>
 
           <div onMouseLeave={() => setHovered(null)}>
-            {upcomingRaces.map((race, i) => (
-              <div
-                key={`${race.name}-${i}`}
-                className="cursor-pointer"
-                onMouseEnter={() => setHovered(i)}
-              >
+            {upcomingRaces.map((race, i) => {
+              const isActive = isMobile.current ? mobileActive === i : hovered === i;
+              return (
                 <div
-                  className="flex flex-col lg:flex-row lg:items-center gap-1 lg:gap-8 py-5 border-b border-gray-200 px-3 -mx-3 transition-all duration-300"
-                  style={{
-                    opacity: hovered !== null && hovered !== i ? 0.3 : 1,
-                    transform: hovered === i ? "scale(1.01)" : "scale(1)",
-                    transformOrigin: "left center",
-                  }}
+                  key={`${race.name}-${i}`}
+                  ref={(el) => { rowRefs.current[i] = el; }}
+                  className="cursor-pointer"
+                  onMouseEnter={() => { if (!isMobile.current) setHovered(i); }}
                 >
-                  <span
-                    className="uppercase w-32 shrink-0 text-gray-400"
-                    style={{ ...fontStyle, fontSize: "12px", fontWeight: 500 }}
-                  >
-                    {race.date}
-                  </span>
-                  <h3
-                    className="flex-1 uppercase leading-none"
+                  <div
+                    className="flex flex-col lg:flex-row lg:items-center gap-1 lg:gap-8 py-5 border-b border-gray-200 px-3 -mx-3 transition-all duration-300"
                     style={{
-                      ...fontStyle,
-                      fontWeight: 500,
-                      fontSize: "clamp(20px, 2.5vw, 34px)",
-                      color: hovered === i ? "#ff138c" : "#111",
-                      transition: "color 0.3s ease",
+                      opacity: hovered !== null && hovered !== i && !isMobile.current ? 0.3 : 1,
+                      transform: hovered === i && !isMobile.current ? "scale(1.01)" : "scale(1)",
+                      transformOrigin: "left center",
                     }}
                   >
-                    {race.name}
-                  </h3>
-                  <span
-                    className="uppercase text-gray-400 shrink-0"
-                    style={{ ...fontStyle, fontSize: "12px", fontWeight: 500 }}
-                  >
-                    {race.location}
-                  </span>
+                    <span
+                      className="uppercase w-32 shrink-0 text-gray-400"
+                      style={{ ...fontStyle, fontSize: "12px", fontWeight: 500 }}
+                    >
+                      {race.date}
+                    </span>
+                    <h3
+                      className="flex-1 uppercase leading-none"
+                      style={{
+                        ...fontStyle,
+                        fontWeight: 500,
+                        fontSize: "clamp(20px, 2.5vw, 34px)",
+                        color: isActive ? "#ff138c" : "#111",
+                        transition: "color 0.3s ease",
+                      }}
+                    >
+                      {race.name}
+                    </h3>
+                    <span
+                      className="uppercase text-gray-400 shrink-0"
+                      style={{ ...fontStyle, fontSize: "12px", fontWeight: 500 }}
+                    >
+                      {race.location}
+                    </span>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>

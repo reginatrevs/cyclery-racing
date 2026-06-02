@@ -18,7 +18,7 @@ function Highlight({ children, color = "lime" }: { children: React.ReactNode; co
         backgroundSize: "0% 100%",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "0 0",
-        transition: "background-size 0.5s cubic-bezier(0.16, 1, 0.3, 1)",
+        transition: "background-size 1.2s cubic-bezier(0.16, 1, 0.3, 1)",
       }}
       onMouseEnter={(e) => {
         (e.currentTarget as HTMLElement).style.backgroundSize = "100% 100%";
