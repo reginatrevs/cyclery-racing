@@ -160,7 +160,7 @@ export default function ContactPage() {
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                title="The Cyclery — Ottawa"
+                title="The Cyclery, Ottawa"
               />
             </div>
           </ScrollReveal>

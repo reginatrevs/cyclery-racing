@@ -80,6 +80,9 @@ const collagePhotos = [
   { src: "/about-gallery-2.webp", alt: "Cyclery Racing", w: 195, h: 240, top: "-4%", right: "4%", rotate: 5 },
   { src: "/about-gallery-3.jpeg", alt: "Cyclery Racing", w: 185, h: 230, bottom: "0%", left: "12%", rotate: 3 },
   { src: "/about-gallery-4.jpeg", alt: "Cyclery Racing", w: 200, h: 250, bottom: "-2%", right: "2%", rotate: -4 },
+  { src: "/about-gallery-5.jpg", alt: "Cyclery Racing", w: 175, h: 220, top: "-6%", left: "22%", rotate: 3 },
+  { src: "/about-gallery-6.jpg", alt: "Cyclery Racing", w: 170, h: 215, bottom: "-10%", right: "18%", rotate: -4 },
+  { src: "/about-gallery-7.jpg", alt: "Cyclery Racing", w: 180, h: 230, bottom: "-8%", left: "42%", rotate: 2 },
 ];
 
 function DraggablePhoto({ photo }: { photo: typeof collagePhotos[number] }) {
@@ -138,6 +141,7 @@ function DraggablePhoto({ photo }: { photo: typeof collagePhotos[number] }) {
         className="object-cover pointer-events-none grayscale"
         sizes="260px"
         draggable={false}
+        loading="eager"
       />
     </div>
   );
@@ -216,6 +220,9 @@ function MobilePhotoCollage({ photos }: { photos: typeof collagePhotos }) {
     { top: "0%", left: "52%", rotate: 6 },
     { top: "45%", left: "15%", rotate: 4 },
     { top: "42%", left: "48%", rotate: -5 },
+    { top: "22%", left: "32%", rotate: 3 },
+    { top: "60%", left: "5%", rotate: -6 },
+    { top: "58%", left: "45%", rotate: 5 },
   ];
 
   const zIndexes = useRef(photos.map((_, i) => i + 1));
@@ -228,7 +235,7 @@ function MobilePhotoCollage({ photos }: { photos: typeof collagePhotos }) {
   };
 
   return (
-    <div className="relative mx-auto mb-8" style={{ width: "280px", height: "320px" }}>
+    <div className="relative mx-auto mb-8" style={{ width: "280px", height: "420px" }}>
       {photos.map((photo, i) => (
         <MobileDraggablePhoto
           key={photo.src}
@@ -288,7 +295,7 @@ export function AboutText() {
               <Highlight color="lime">
                 <span data-auto-highlight>one of Canada&apos;s oldest continually running women&apos;s cycling programs</span>
               </Highlight>
-              {" "}&mdash; and one of its most successful.
+              {" "}and one of its most successful.
             </p>
 
             <p className="font-body text-base lg:text-lg text-black leading-[1.6] mb-6">
@@ -310,12 +317,8 @@ export function AboutText() {
             </p>
 
             <p className="font-body text-base lg:text-lg text-black leading-[1.6]">
-              No other women&apos;s program in Canada has a track record like ours.
-              We&apos;re a proud affiliate member of{" "}
-              <Highlight color="lime">
-                <span data-auto-highlight>Cycling Canada&apos;s 1882 Collective</span>
-              </Highlight>
-              {" "}national fundraising initiative, and we&apos;re just getting started.
+              No other women&apos;s program in Canada has a track record like ours,
+              and we&apos;re just getting started.
             </p>
           </div>
         </div>
@@ -382,7 +385,7 @@ export function AboutText() {
               className="uppercase mt-6 text-center"
               style={{ ...fontStyle, fontSize: "11px", fontWeight: 500, color: "rgba(255, 19, 140, 0.4)" }}
             >
-              Ottawa, ON — EST
+              Ottawa, ON
             </p>
           </div>
         </div>
@@ -445,7 +448,7 @@ export function AboutText() {
               className="uppercase mt-3 text-center"
               style={{ ...fontStyle, fontSize: "9px", fontWeight: 500, color: "rgba(255, 19, 140, 0.4)" }}
             >
-              Ottawa, ON — EST
+              Ottawa, ON
             </p>
           </div>
         </div>

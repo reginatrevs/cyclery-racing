@@ -120,7 +120,7 @@ export function Footer() {
           {/* Left on desktop — copyright */}
           <div className="hidden md:flex items-center gap-3">
             <p className="text-[13px] uppercase tracking-[0.12em] font-semibold text-white/70" style={fontNM}>
-              &copy;2026 Cyclery Racing — Abacus Data
+              &copy;2026 Cyclery Racing · Abacus Data
             </p>
           </div>
           {/* Right — web design credit + copyright below on mobile */}
@@ -150,7 +150,7 @@ export function Footer() {
             </span>
             {/* Copyright — below on mobile only */}
             <p className="md:hidden mt-3 text-[9px] text-white/40">
-              &copy;2026 Cyclery Racing — Abacus Data
+              &copy;2026 Cyclery Racing · Abacus Data
             </p>
           </div>
         </div>

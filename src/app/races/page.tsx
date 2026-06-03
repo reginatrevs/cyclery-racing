@@ -27,7 +27,6 @@ const upcomingRaces = [
   { date: "July 17", name: "Chicago Grit", location: "Chicago, IL" },
   { date: "August 7", name: "Road Provincials", location: "Ottawa, ON" },
   { date: "August 30", name: "Philadelphia", location: "Philadelphia, PA" },
-  { date: "September 7", name: "Maryland Cycling Classic", location: "Baltimore, MD" },
   { date: "September 8", name: "Buck's County Crit", location: "Buck's County, PA" },
   { date: "Sep 16", name: "Tour de Gatineau", location: "Gatineau, QC" },
 ];
@@ -112,7 +111,7 @@ export default function RacesPage() {
       <section className="pb-24 lg:pb-32 px-6">
         <div className="max-w-[1440px] mx-auto">
           <ScrollReveal>
-            <SectionHeading label="Upcoming" heading="2026 Season" className="mb-12" />
+            <SectionHeading heading="2026 Season" className="mb-12" />
           </ScrollReveal>
 
           <div onMouseLeave={() => setHovered(null)}>

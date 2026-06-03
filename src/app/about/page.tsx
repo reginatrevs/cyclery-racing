@@ -15,7 +15,7 @@ const values = [
   {
     title: "Competition First",
     description:
-      "We exist to race. Every training block, every team decision, every partnership — it all points toward the start line.",
+      "We exist to race. Every training block, every team decision, every partnership. It all points toward the start line.",
   },
   {
     title: "Develop Talent",
@@ -94,13 +94,13 @@ export default function AboutPage() {
             <div className="lg:pt-16">
               <p className="font-body text-base text-black leading-relaxed mb-6">
                 Women&apos;s cycling in Canada has incredible talent but faces real
-                challenges — underfunded teams, limited race calendars, and low
+                challenges: underfunded teams, limited race calendars, and low
                 visibility compared to men&apos;s programs. The North American
                 landscape is tough for ambitious riders chasing their dreams.
               </p>
               <p className="font-body text-base text-black leading-relaxed mb-10">
                 Cyclery Racing exists to challenge that reality. We&apos;re building
-                the program we wish had existed — one that competes at the highest
+                the program we wish had existed. One that competes at the highest
                 level, develops athletes from junior through elite, and proves that
                 investing in women&apos;s cycling pays off.
               </p>

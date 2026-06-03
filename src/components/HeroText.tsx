@@ -5,12 +5,18 @@ import { useState, useEffect, useRef } from "react";
 const fullText =
   "A pioneering force in Canadian women's cycling. One of the country's longest running teams, built on a legacy of performance and progression.";
 
+// Track globally whether the typing effect has already played this session
+let hasTyped = false;
+
 export function HeroText() {
-  const [displayed, setDisplayed] = useState("");
-  const [done, setDone] = useState(false);
+  const alreadyTyped = hasTyped;
+  const [displayed, setDisplayed] = useState(alreadyTyped ? fullText : "");
+  const [done, setDone] = useState(alreadyTyped);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
+    if (alreadyTyped) return;
+
     // Wait for loading screen to finish before typing
     const delay = setTimeout(() => {
       let i = 0;
@@ -20,6 +26,7 @@ export function HeroText() {
         if (i >= fullText.length) {
           if (timerRef.current) clearInterval(timerRef.current);
           setDone(true);
+          hasTyped = true;
         }
       }, 25);
     }, 1800);
@@ -28,7 +35,7 @@ export function HeroText() {
       clearTimeout(delay);
       if (timerRef.current) clearInterval(timerRef.current);
     };
-  }, []);
+  }, [alreadyTyped]);
 
   return (
     <p className="font-display text-[clamp(16px,2vw,26px)] font-bold leading-[1.3] text-black">
