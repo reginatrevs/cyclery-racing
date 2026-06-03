@@ -5,13 +5,15 @@ import { useEffect, useRef, useState } from "react";
 export function CustomCursor() {
   const cursorRef = useRef<HTMLDivElement>(null);
   const [mode, setMode] = useState<"default" | "expand" | "light">("default");
+  const [isTouch, setIsTouch] = useState(false);
   const pos = useRef({ x: -100, y: -100 });
   const target = useRef({ x: -100, y: -100 });
 
   useEffect(() => {
-    // Hide on touch devices
-    if (typeof window === "undefined") return;
-    if ("ontouchstart" in window) return;
+    if ("ontouchstart" in window) {
+      setIsTouch(true);
+      return;
+    }
 
     const handleMove = (e: MouseEvent) => {
       target.current = { x: e.clientX, y: e.clientY };
@@ -53,8 +55,7 @@ export function CustomCursor() {
     };
   }, []);
 
-  // Don't render on SSR or touch
-  if (typeof window !== "undefined" && "ontouchstart" in window) return null;
+  if (isTouch) return null;
 
   const isExpand = mode === "expand";
   const isLight = mode === "light";
