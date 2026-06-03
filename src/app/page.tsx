@@ -52,7 +52,7 @@ export default function Home() {
   return (
     <>
       {/* ============ HERO ============ */}
-      <section id="hero" className="relative min-h-screen flex flex-col justify-between lg:justify-center lg:gap-6 overflow-hidden">
+      <section id="hero" className="relative min-h-screen flex flex-col overflow-hidden">
         {/* Background image */}
         <Image
           src="/hero-bg.png"
@@ -63,29 +63,29 @@ export default function Home() {
           sizes="100vw"
         />
 
-        {/* Logo — top on mobile, centered on desktop */}
-        <div className="relative z-10 flex-1 lg:flex-none flex items-start lg:items-center px-6 md:px-12 lg:px-16 pt-24 lg:pt-0 max-w-[1440px] mx-auto w-full">
+        {/* Logo — top on mobile, vertically centered on desktop */}
+        <div className="relative z-10 flex-1 flex items-start lg:items-center px-6 md:px-12 lg:px-16 pt-24 lg:pt-0 max-w-[1440px] mx-auto w-full">
           <div className="animate-hero" style={{ animationDelay: "0ms" }}>
             <Image
               src="/logo-black.png"
               alt="Cyclery Racing Abacus Data"
               width={900}
               height={180}
-              className="w-[320px] md:w-[460px] lg:w-[650px] xl:w-[850px] 2xl:w-[1000px] h-auto"
+              className="w-[340px] md:w-[460px] lg:w-[650px] xl:w-[850px] 2xl:w-[1000px] h-auto"
               priority
             />
           </div>
         </div>
 
-        {/* Text — typing effect */}
-        <div className="relative z-10 px-6 md:px-12 lg:px-16 lg:mb-8 max-w-[1440px] mx-auto w-full">
-          <div className="w-[320px] md:w-[460px] lg:w-[650px] xl:w-[850px] 2xl:w-[1000px]">
+        {/* Text — typing effect, close to logo on desktop */}
+        <div className="relative z-10 px-6 md:px-12 lg:px-16 mb-auto lg:mb-0 lg:-mt-[18vh] max-w-[1440px] mx-auto w-full">
+          <div className="w-[340px] md:w-[460px] lg:w-[650px] xl:w-[850px] 2xl:w-[1000px]">
             <HeroText />
           </div>
         </div>
 
-        {/* Scroll hint — fades out on scroll, pinned to bottom on desktop */}
-        <div className="relative lg:absolute lg:bottom-0 lg:left-0 lg:right-0 z-10 px-6 md:px-12 lg:px-16 pb-10 lg:pb-12 pt-6 max-w-[1440px] lg:mx-auto w-full animate-hero" style={{ animationDelay: "800ms" }}>
+        {/* Scroll hint — bottom of section, fades on scroll */}
+        <div className="relative z-10 px-6 md:px-12 lg:px-16 pb-10 lg:pb-12 pt-6 max-w-[1440px] mx-auto w-full animate-hero" style={{ animationDelay: "800ms" }}>
           <ScrollHint />
         </div>
       </section>
