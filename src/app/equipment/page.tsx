@@ -15,7 +15,7 @@ const gear = [
     brand: "SRAM",
     product: "Force AXS w/ Powermeter",
     slug: "sram",
-    url: "https://sram.com",
+    url: "https://www.thecyclery.ca/search/SRAM+build+kit/",
     image: "/force-sram.png",
     imageBg: "bg-black",
     description:
@@ -26,7 +26,7 @@ const gear = [
     brand: "House Cyclery",
     product: "Custom Race Wheels",
     slug: "cyclery",
-    url: "https://thecyclery.ca",
+    url: "https://www.thecyclery.ca/service/store-hours/",
     image: "/house-wheelset.png",
     imageBg: "bg-white",
     description:
@@ -37,7 +37,7 @@ const gear = [
     brand: "Castelli",
     product: "Custom Team Kit",
     slug: "castelli",
-    url: "https://castelli-cycling.com",
+    url: "https://www.thecyclery.ca/search/Castelli/",
     image: "/jersey.png",
     imageBg: "bg-white",
     description:
@@ -48,7 +48,7 @@ const gear = [
     brand: "Smith",
     product: "Race Helmets & Sunglasses",
     slug: "smith",
-    url: "https://smithoptics.com",
+    url: "https://www.thecyclery.ca/search/SMITH/",
     image: "/helmet-smith.png",
     secondImage: "/sunglasses.png",
     imageBg: "bg-white",
@@ -60,7 +60,7 @@ const gear = [
     brand: "Skratch Labs",
     product: "Hydration & Fuel",
     slug: "skratch",
-    url: "https://skratchlabs.com",
+    url: "https://www.thecyclery.ca/search/SKRATCH/",
     image: "/skratch-drink.png",
     imageBg: "bg-white",
     description:

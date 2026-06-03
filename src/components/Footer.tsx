@@ -12,7 +12,7 @@ const menu = [
 
 const externalLinks = [
   { href: "https://thecyclery.ca", label: "The Cyclery Shop" },
-  { href: "/donations", label: "Support Us" },
+  { href: "https://www.zeffy.com/en-CA/donation-form/the-cyclery-racing", label: "Support Us" },
 ];
 
 const fontNM = {
@@ -87,7 +87,7 @@ export function Footer() {
               </a>
               {/* Facebook */}
               <a
-                href="https://facebook.com/cycleryracing"
+                href="https://www.facebook.com/TheCycleryRacing/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group"
@@ -104,14 +104,16 @@ export function Footer() {
 
       {/* TREVS logo — full width mobile, right on desktop */}
       <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16 mt-8 lg:mt-4 lg:flex lg:justify-end">
-        <Image
-          src="/trevs-logo.svg"
-          alt="TREVS"
-          width={1200}
-          height={300}
-          className="w-full lg:w-[35%] h-auto select-none opacity-35 transition-all duration-300 lg:hover:opacity-100 lg:hover:brightness-0 lg:hover:invert"
-          draggable={false}
-        />
+        <a href="https://trevs.ca" target="_blank" rel="noopener noreferrer">
+          <Image
+            src="/trevs-logo.svg"
+            alt="TREVS"
+            width={1200}
+            height={300}
+            className="w-full lg:w-[35%] h-auto select-none opacity-35 transition-all duration-300 lg:hover:opacity-100 lg:hover:brightness-0 lg:hover:invert"
+            draggable={false}
+          />
+        </a>
       </div>
 
       {/* Bottom bar — split layout */}

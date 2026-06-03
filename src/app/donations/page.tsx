@@ -61,6 +61,16 @@ export default function DonationsPage() {
       <section className="py-28 lg:py-40 px-6 md:px-12 lg:px-16" style={{ backgroundColor: "#ffe8f0" }}>
         <div className="max-w-[1440px] mx-auto">
           <ScrollReveal>
+            <a href="https://cyclingcanada.ca/1882collective/affiliates/" target="_blank" rel="noopener noreferrer">
+              <Image
+                src="/collective.png"
+                alt="1882 Collective"
+                width={400}
+                height={50}
+                className="h-5 lg:h-6 w-auto mb-6 dark:invert"
+                style={{ filter: "brightness(0)" }}
+              />
+            </a>
             <h2 className="font-display text-[clamp(52px,10vw,140px)] font-bold uppercase leading-[0.85] text-black tracking-tight mb-8">
               Make a<br />Donation
             </h2>
@@ -69,7 +79,7 @@ export default function DonationsPage() {
               Zeffy via the 1882 Collective. Zero platform fees. Every dollar
               supports our athletes directly. Tax receipts are issued automatically.
             </p>
-            <Button href="https://www.zeffy.com/en-CA/donation-form/1882-collective" variant="primary">
+            <Button href="https://www.zeffy.com/en-CA/donation-form/the-cyclery-racing" variant="primary">
               Donate via Zeffy
             </Button>
           </ScrollReveal>

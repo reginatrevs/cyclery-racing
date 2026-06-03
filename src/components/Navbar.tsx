@@ -82,6 +82,7 @@ export function Navbar() {
           {/* Logo — fades in when hero scrolls out */}
           <Link
             href="/"
+            onClick={() => { if (pathname === "/") window.scrollTo({ top: 0, behavior: "smooth" }); }}
             className="flex-shrink-0 transition-all duration-500 ease-out"
             style={{
               opacity: showLogo ? 1 : 0,
@@ -122,6 +123,7 @@ export function Navbar() {
         <div className="lg:hidden flex items-center justify-between px-5 md:px-8 py-3 md:py-4">
           <Link
             href="/"
+            onClick={() => { if (pathname === "/") window.scrollTo({ top: 0, behavior: "smooth" }); }}
             className="flex-shrink-0 transition-all duration-500 ease-out"
             style={{
               opacity: showLogo ? 1 : 0,
