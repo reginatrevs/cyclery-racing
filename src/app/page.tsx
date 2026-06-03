@@ -64,7 +64,7 @@ export default function Home() {
         />
 
         {/* Logo — top on mobile, vertically centered on desktop */}
-        <div className="relative z-10 flex-1 flex items-start lg:items-center px-6 md:px-12 lg:px-16 pt-24 lg:pt-0 max-w-[1440px] mx-auto w-full">
+        <div className="relative z-10 lg:flex-1 flex items-start lg:items-center px-6 md:px-12 lg:px-16 pt-24 lg:pt-0 max-w-[1440px] mx-auto w-full">
           <div className="animate-hero" style={{ animationDelay: "0ms" }}>
             <Image
               src="/logo-black.png"
@@ -78,7 +78,7 @@ export default function Home() {
         </div>
 
         {/* Text — typing effect, close to logo on desktop */}
-        <div className="relative z-10 px-6 md:px-12 lg:px-16 mb-auto lg:mb-0 lg:-mt-[18vh] max-w-[1440px] mx-auto w-full">
+        <div className="relative z-10 px-6 md:px-12 lg:px-16 mt-6 lg:mt-0 lg:-mt-[18vh] max-w-[1440px] mx-auto w-full">
           <div className="w-[340px] md:w-[460px] lg:w-[650px] xl:w-[850px] 2xl:w-[1000px]">
             <HeroText />
           </div>
