@@ -3,12 +3,12 @@ import { SectionHeading } from "@/components/SectionHeading";
 import { Button } from "@/components/Button";
 
 const products = [
-  { name: "Team Jersey — Race Cut", category: "Cycling Kit", price: "$120" },
+  { name: "Team Jersey, Race Cut", category: "Cycling Kit", price: "$120" },
   { name: "Team Bib Shorts", category: "Cycling Kit", price: "$140" },
   { name: "Cyclery Racing Cap", category: "Accessories", price: "$35" },
   { name: "Training Tee", category: "Casual Wear", price: "$45" },
-  { name: "Team Socks — 3 Pack", category: "Accessories", price: "$30" },
-  { name: "Hoodie — Bold Type", category: "Casual Wear", price: "$75" },
+  { name: "Team Socks, 3 Pack", category: "Accessories", price: "$30" },
+  { name: "Hoodie, Bold Type", category: "Casual Wear", price: "$75" },
   { name: "Team Water Bottle", category: "Accessories", price: "$15" },
   { name: "Musette Bag", category: "Accessories", price: "$25" },
 ];

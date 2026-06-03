@@ -25,11 +25,29 @@ export function Button({
   className = "",
 }: ButtonProps) {
   const isSwiss = variant === "swiss";
+  const isExternal = href.startsWith("http");
+  const classes = `inline-flex items-center gap-2 font-body text-[11px] font-bold uppercase tracking-[0.05em] transition-all ${variants[variant]} ${className}`;
+
+  if (isExternal) {
+    return (
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={classes}
+      >
+        {children}
+        {isSwiss && (
+          <span className="inline-block transition-transform group-hover:translate-x-1">→</span>
+        )}
+      </a>
+    );
+  }
 
   return (
     <Link
       href={href}
-      className={`inline-flex items-center gap-2 font-body text-[11px] font-bold uppercase tracking-[0.05em] transition-all ${variants[variant]} ${className}`}
+      className={classes}
     >
       {children}
       {isSwiss && (

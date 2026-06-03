@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect, useCallback } from "react";
+import { usePathname } from "next/navigation";
 
 const navLinks = [
   { href: "/about", label: "About Us" },
@@ -26,6 +27,7 @@ const allLinks = [
 export function Navbar() {
   const [open, setOpen] = useState(false);
   const [showLogo, setShowLogo] = useState(false);
+  const pathname = usePathname();
 
   const handleScroll = useCallback(() => {
     // Check for any hero section (homepage or subpage heroes)
@@ -49,6 +51,13 @@ export function Navbar() {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, [handleScroll]);
+
+  // Re-check on route change (hero element changes between pages)
+  useEffect(() => {
+    // Small delay to let the new page DOM render
+    const timer = setTimeout(handleScroll, 50);
+    return () => clearTimeout(timer);
+  }, [pathname, handleScroll]);
 
   useEffect(() => {
     if (open) {

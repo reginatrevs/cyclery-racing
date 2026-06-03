@@ -7,16 +7,17 @@ import { SectionHeading } from "@/components/SectionHeading";
 import { Button } from "@/components/Button";
 
 const riders = [
-  { name: "Emily Driedger", category: "Elite", disciplines: ["Road", "Track"], photo: "emily" },
-  { name: "Sara Everson", category: "Elite", disciplines: ["Road", "Track", "Cyclocross"], photo: "sara" },
-  { name: "Skyler Goudswaard", category: "Elite", disciplines: ["Road", "Track"], photo: "skyler" },
-  { name: "Annie Scott", category: "Elite", disciplines: ["Road", "Track", "Cyclocross"], photo: "annie" },
-  { name: "Raylan Stroud", category: "Elite", disciplines: ["Road", "Cyclocross"], photo: "raylan" },
-  { name: "Dylan Baker", category: "U23", disciplines: ["Road", "Track"], photo: "dylan" },
-  { name: "Cadie Geertsma", category: "U23", disciplines: ["Road"], photo: "cadie" },
-  { name: "Kristen Taylor", category: "U23", disciplines: ["Road", "Track", "Cyclocross"], photo: "kristen" },
-  { name: "Alexandra Fangeat", category: "Junior", disciplines: ["Road", "Track"], photo: "alex" },
-  { name: "Elly Moore", category: "Junior", disciplines: ["Road", "Track", "Cyclocross"], photo: "elly" },
+  { name: "Emily Driedger", category: "Elite", disciplines: ["Road", "Track"], photo: "emily", colorExt: "jpg", hasBw: true },
+  { name: "Sara Everson", category: "Elite", disciplines: ["Road", "Track", "Cyclocross"], photo: "sara", colorExt: "jpeg", hasBw: true },
+  { name: "Skyler Goudswaard", category: "Elite", disciplines: ["Road", "Track"], photo: "skyler", colorExt: "png", hasBw: true },
+  { name: "Kaitlyn Rauwerda", category: "Elite", disciplines: ["Road", "Track", "Cyclocross"], photo: "kaitlyn", colorExt: "jpg", hasBw: false },
+  { name: "Annie Scott", category: "Elite", disciplines: ["Road", "Track", "Cyclocross"], photo: "annie", colorExt: "jpg", hasBw: true },
+  { name: "Raylan Stroud", category: "Elite", disciplines: ["Road", "Cyclocross"], photo: "raylan", colorExt: "jpeg", hasBw: true },
+  { name: "Dylan Baker", category: "U23", disciplines: ["Road", "Track"], photo: "dylan", colorExt: "jpg", hasBw: true },
+  { name: "Cadie Geertsma", category: "U23", disciplines: ["Road"], photo: "cadie", colorExt: "jpg", hasBw: true },
+  { name: "Kristen Taylor", category: "U23", disciplines: ["Road", "Track", "Cyclocross"], photo: "kristen", colorExt: "jpg", hasBw: false },
+  { name: "Alexandra Fangeat", category: "Junior", disciplines: ["Road", "Track"], photo: "alex", colorExt: "jpg", hasBw: true },
+  { name: "Elly Moore", category: "Junior", disciplines: ["Road", "Track", "Cyclocross"], photo: "elly", colorExt: "jpg", hasBw: true },
 ];
 
 const filterItems = ["All", "Elite", "U23", "Junior", "Road", "Track", "Cyclocross"];
@@ -235,6 +236,7 @@ export default function TeamPage() {
                         "ml-[48%] -mt-4",
                         "ml-[15%] mt-6",
                         "ml-[40%] mt-4",
+                        "ml-[8%] mt-6",
                       ];
                       const position = positions[i % positions.length];
 
@@ -243,22 +245,35 @@ export default function TeamPage() {
                           <div className="group">
                             <div className="border border-gray-200 overflow-hidden transition-colors hover:border-magenta">
                               <div className="relative aspect-[3/4] bg-gray-100 overflow-hidden">
-                                {/* BW photo — default */}
-                                <Image
-                                  src={`/team-bw/${rider.photo}-bw.jpg`}
-                                  alt={rider.name}
-                                  fill
-                                  className="object-cover transition-opacity duration-500 group-hover:opacity-0"
-                                  sizes="(max-width: 1024px) 45vw, 35vw"
-                                />
-                                {/* Color photo — on hover */}
-                                <Image
-                                  src={`/team-color/${rider.photo}-color.jpg`}
-                                  alt={rider.name}
-                                  fill
-                                  className="object-cover opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-                                  sizes="(max-width: 1024px) 45vw, 35vw"
-                                />
+                                {rider.hasBw ? (
+                                  <>
+                                    {/* BW photo — default */}
+                                    <Image
+                                      src={`/team-2026-bw/${rider.photo}-bw.jpg`}
+                                      alt={rider.name}
+                                      fill
+                                      className="object-cover transition-opacity duration-500 group-hover:opacity-0"
+                                      sizes="(max-width: 1024px) 45vw, 35vw"
+                                    />
+                                    {/* Color photo — on hover */}
+                                    <Image
+                                      src={`/team-2026-color/${rider.photo}.${rider.colorExt}`}
+                                      alt={rider.name}
+                                      fill
+                                      className="object-cover opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                                      sizes="(max-width: 1024px) 45vw, 35vw"
+                                    />
+                                  </>
+                                ) : (
+                                  /* No BW photo — use CSS grayscale on color photo */
+                                  <Image
+                                    src={`/team-2026-color/${rider.photo}.${rider.colorExt}`}
+                                    alt={rider.name}
+                                    fill
+                                    className="object-cover transition-all duration-500 grayscale group-hover:grayscale-0"
+                                    sizes="(max-width: 1024px) 45vw, 35vw"
+                                  />
+                                )}
                               </div>
                             </div>
                             <div className="pt-2 pb-4">

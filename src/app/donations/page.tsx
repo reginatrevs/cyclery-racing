@@ -21,17 +21,16 @@ export default function DonationsPage() {
                   most women&apos;s programs operate on minimal budgets with little institutional backing.
                 </p>
                 <p className="font-body text-base lg:text-lg text-gray-600 leading-[1.6] mb-6">
-                  Race entry fees, travel to out-of-province events, equipment, coaching, and team
-                  wear — it all comes from the dedication of riders and the generosity of supporters
-                  like you. Every contribution, no matter the size, goes directly toward keeping
-                  our athletes on the road and competing at the highest level.
+                  Race entry fees, travel, equipment, coaching, team wear. It all comes from
+                  the riders themselves and supporters like you. Every contribution, no matter the size,
+                  goes directly toward keeping our athletes on the road and competing at the highest level.
                 </p>
                 <p className="font-body text-base lg:text-lg text-gray-600 leading-[1.6]">
-                  We&apos;re proud to be an approved affiliate of{" "}
-                  <span className="font-semibold text-black">Cycling Canada&apos;s 1882 Collective</span>,
-                  a national fundraising initiative that channels support directly to Canadian cycling
-                  programs. When you donate through our link, you&apos;re investing in the future of
-                  women&apos;s cycling in Canada.
+                  There are many ways to support us, big and small. From buying merch to
+                  spreading the word, it all makes a difference. For those looking to make a
+                  direct financial contribution, donations through the{" "}
+                  <span className="font-semibold text-black">1882 Collective</span>{" "}
+                  are tax-receiptable and go straight to the team.
                 </p>
               </ScrollReveal>
           </div>
@@ -43,16 +42,16 @@ export default function DonationsPage() {
         <div className="max-w-[1440px] mx-auto">
           <div className="flex gap-3 lg:gap-4 items-end">
             <div className="relative w-[200px] lg:w-[300px] h-[260px] lg:h-[400px] overflow-hidden flex-shrink-0">
-              <Image src="/race/race-1.png" alt="" fill className="object-cover" sizes="300px" />
+              <Image src="/support-us.png" alt="" fill className="object-cover" sizes="300px" />
             </div>
             <div className="relative w-[180px] lg:w-[260px] h-[320px] lg:h-[480px] overflow-hidden flex-shrink-0">
-              <Image src="/support.png" alt="" fill className="object-cover" sizes="260px" />
+              <Image src="/contact-us.jpg" alt="" fill className="object-cover" sizes="260px" />
             </div>
             <div className="relative w-[220px] lg:w-[340px] h-[240px] lg:h-[360px] overflow-hidden flex-shrink-0">
-              <Image src="/race/race-3.png" alt="" fill className="object-cover" sizes="340px" />
+              <Image src="/support-us-2.jpg" alt="" fill className="object-cover" sizes="340px" />
             </div>
             <div className="relative w-[190px] lg:w-[280px] h-[300px] lg:h-[440px] overflow-hidden flex-shrink-0">
-              <Image src="/race/race4.png" alt="" fill className="object-cover" sizes="280px" />
+              <Image src="/support.png" alt="" fill className="object-cover" sizes="280px" />
             </div>
           </div>
         </div>
@@ -67,8 +66,8 @@ export default function DonationsPage() {
             </h2>
             <p className="font-body text-lg lg:text-xl text-black leading-relaxed max-w-2xl mb-12">
               100% of your donation goes directly to the team. All donations go through
-              Zeffy via Cycling Canada&apos;s 1882 Collective. Zero platform fees. Every dollar
-              supports our athletes directly. Tax receipts are issued through Cycling Canada.
+              Zeffy via the 1882 Collective. Zero platform fees. Every dollar
+              supports our athletes directly. Tax receipts are issued automatically.
             </p>
             <Button href="https://www.zeffy.com/en-CA/donation-form/1882-collective" variant="primary">
               Donate via Zeffy
@@ -87,10 +86,10 @@ export default function DonationsPage() {
                 <div className="border border-gray-200 overflow-hidden transition-colors hover:border-magenta">
                   <div className="relative aspect-[4/3] bg-gray-100 overflow-hidden">
                     <Image
-                      src="/race/race-2.png"
+                      src="/merch.jpg"
                       alt="Rep the Team"
                       fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      className="object-cover transition-all duration-500 grayscale group-hover:grayscale-0 group-hover:scale-105"
                       sizes="(min-width: 1024px) 50vw, 100vw"
                     />
                   </div>
@@ -106,7 +105,7 @@ export default function DonationsPage() {
                     Grab a Cyclery Racing hat and show your support wherever you go.
                     Available through The Cyclery shop.
                   </p>
-                  <Button href="https://thecyclery.ca" variant="outline">
+                  <Button href="https://www.thecyclery.ca/cyclery-racing-5-panel-hat.html" variant="outline">
                     Shop at The Cyclery
                   </Button>
                 </div>
@@ -119,10 +118,10 @@ export default function DonationsPage() {
                 <div className="border border-gray-200 overflow-hidden transition-colors hover:border-magenta">
                   <div className="relative aspect-[4/3] bg-gray-100 overflow-hidden">
                     <Image
-                      src="/support.png"
+                      src="/sponsorship.jpg"
                       alt="Become a Sponsor"
                       fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      className="object-cover transition-all duration-500 grayscale group-hover:grayscale-0 group-hover:scale-105"
                       sizes="(min-width: 1024px) 50vw, 100vw"
                     />
                   </div>

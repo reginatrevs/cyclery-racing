@@ -29,7 +29,7 @@ const upcomingRaces = [
   { date: "JUN", day: "06", name: "Ontario Cup 2", location: "Northumberland, ON", photo: "/course-race/ontario-cup.png" },
   { date: "JUL", day: "03", name: "Kingston Stage Race", location: "Kingston, ON", photo: "/course-race/kingston.png" },
   { date: "AUG", day: "30", name: "Philadelphia", location: "Philadelphia, PA", photo: "/course-race/philadelphia.png" },
-  { date: "SEP", day: "07", name: "Maryland Cycling Classic", location: "Baltimore, MD", photo: "/course-race/maryland.png" },
+  { date: "SEP", day: "16", name: "Tour de Gatineau", location: "Gatineau, QC", photo: "/course-race/gatineau.png" },
 ];
 
 const sponsors = [
@@ -63,30 +63,46 @@ export default function Home() {
           sizes="100vw"
         />
 
-        {/* Logo — top on mobile, vertically centered on desktop */}
-        <div className="relative z-10 lg:flex-1 flex items-start lg:items-center px-6 md:px-12 lg:px-16 pt-24 lg:pt-0 max-w-[1440px] mx-auto w-full">
+        {/* Desktop: logo + text grouped and centered */}
+        <div className="relative z-10 hidden lg:flex flex-1 flex-col justify-center px-6 md:px-12 lg:px-16 max-w-[1440px] mx-auto w-full">
           <div className="animate-hero" style={{ animationDelay: "0ms" }}>
             <Image
               src="/logo-black.png"
               alt="Cyclery Racing Abacus Data"
               width={900}
               height={180}
-              className="w-[340px] md:w-[460px] lg:w-[650px] xl:w-[850px] 2xl:w-[1000px] h-auto"
+              className="w-[650px] xl:w-[850px] 2xl:w-[1000px] h-auto"
+              priority
+            />
+          </div>
+          <div className="w-[650px] xl:w-[850px] 2xl:w-[1000px] mt-6">
+            <HeroText />
+          </div>
+          <div className="mt-4 animate-hero" style={{ animationDelay: "800ms" }}>
+            <ScrollHint />
+          </div>
+        </div>
+
+        {/* Mobile: logo at top, text lower */}
+        <div className="relative z-10 lg:hidden px-6 md:px-12 pt-24">
+          <div className="animate-hero" style={{ animationDelay: "0ms" }}>
+            <Image
+              src="/logo-black.png"
+              alt="Cyclery Racing Abacus Data"
+              width={900}
+              height={180}
+              className="w-[340px] md:w-[460px] h-auto"
               priority
             />
           </div>
         </div>
-
-        {/* Text — typing effect, close to logo on desktop */}
-        <div className="relative z-10 px-6 md:px-12 lg:px-16 mt-6 lg:mt-0 lg:-mt-[18vh] max-w-[1440px] mx-auto w-full">
-          <div className="w-[340px] md:w-[460px] lg:w-[650px] xl:w-[850px] 2xl:w-[1000px]">
+        <div className="relative z-10 lg:hidden px-6 md:px-12 mt-auto pb-8">
+          <div className="w-[340px] md:w-[460px]">
             <HeroText />
+            <div className="mt-3 animate-hero" style={{ animationDelay: "800ms" }}>
+              <ScrollHint />
+            </div>
           </div>
-        </div>
-
-        {/* Scroll hint — bottom of section, fades on scroll */}
-        <div className="relative z-10 px-6 md:px-12 lg:px-16 pb-10 lg:pb-12 pt-6 max-w-[1440px] mx-auto w-full animate-hero" style={{ animationDelay: "800ms" }}>
-          <ScrollHint />
         </div>
       </section>
 
@@ -229,7 +245,7 @@ export default function Home() {
             loop
             muted
             playsInline
-            className="w-[95%] lg:w-[90%] mx-auto h-auto object-contain"
+            className="w-[95%] lg:w-[75%] mx-auto h-auto object-contain"
           >
             <source src="/factor-bike.mp4" type="video/mp4" />
           </video>
