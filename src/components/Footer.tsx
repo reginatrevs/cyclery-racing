@@ -120,13 +120,13 @@ export function Footer() {
 
       {/* TREVS logo — full width mobile, right on desktop */}
       <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16 mt-8 lg:mt-4 lg:flex lg:justify-end">
-        <a href="https://trevs.ca" target="_blank" rel="noopener noreferrer">
+        <a href="https://trevs.ca" target="_blank" rel="noopener noreferrer" className="block w-full lg:w-[50%]">
           <Image
             src="/trevs-logo.svg"
             alt="TREVS"
             width={1200}
             height={300}
-            className={`w-full lg:w-[35%] h-auto select-none transition-all duration-500 lg:hover:opacity-100 lg:hover:brightness-0 lg:hover:invert ${atBottom ? "opacity-100 brightness-0 invert" : "opacity-35"}`}
+            className={`w-full h-auto select-none transition-all duration-500 lg:hover:opacity-100 lg:hover:brightness-0 lg:hover:invert ${atBottom ? "opacity-100 brightness-0 invert" : "opacity-35"}`}
             draggable={false}
           />
         </a>

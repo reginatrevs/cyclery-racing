@@ -245,7 +245,7 @@ export default function Home() {
             loop
             muted
             playsInline
-            className="w-[95%] lg:w-[75%] mx-auto h-auto object-contain"
+            className="w-full lg:w-[75%] mx-auto h-auto object-contain"
           >
             <source src="/factor-bike.mp4" type="video/mp4" />
           </video>
