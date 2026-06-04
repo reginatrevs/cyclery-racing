@@ -1,36 +1,34 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Cyclery Racing — cycleryracing.ca
 
-## Getting Started
+The official digital platform for Cyclery Racing, one of Canada's longest-running women's competitive cycling teams. Built with Next.js, Tailwind CSS, and deployed on Vercel.
 
-First, run the development server:
+## About This Project
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Women's cycling has long been underrepresented — not just on the road, but online. Most teams lack a cohesive digital presence that communicates who they are, what they stand for, and how people can get involved.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+This website was designed to change that for Cyclery Racing. The approach was to build a platform that treats a women's cycling team with the same level of craft and intentionality as any major sports brand — clear messaging, accessible information, and a visual identity that matches the caliber of the athletes.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Key priorities:
+- **Clear messaging** — Who the team is, what they race, and how to support them, communicated immediately
+- **Race calendar with links** — Every race linked to its official page so riders, fans, and media can find details fast
+- **Sponsor visibility** — Partners displayed prominently with direct links, reinforcing the value of supporting women's sport
+- **Donation pathway** — A frictionless route to financial support through the 1882 Collective (tax-receiptable)
+- **Team roster** — Riders presented with the same production quality as any professional team
+- **Mobile-first** — Most fans and followers engage on their phones; the experience had to be seamless at every breakpoint
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Tech stack:
+- Next.js 15 (App Router)
+- Tailwind CSS v4
+- Vercel (deployment)
+- Responsive, accessible, performance-optimized
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+**Developed by Regina Trevs**
+Creative Technologist. Digital Experience Designer & Developer.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+*Web, identity, content, and creative systems for brands that need more than just design.*
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Currently available for select projects and collaborations.
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+[trevs.ca](https://trevs.ca)

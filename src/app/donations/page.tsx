@@ -45,7 +45,7 @@ export default function DonationsPage() {
               <Image src="/support-us.png" alt="" fill className="object-cover" sizes="300px" />
             </div>
             <div className="relative w-[180px] lg:w-[260px] h-[320px] lg:h-[480px] overflow-hidden flex-shrink-0">
-              <Image src="/contact-us.jpg" alt="" fill className="object-cover" sizes="260px" />
+              <Image src="/contact-us.jpeg" alt="" fill className="object-cover" sizes="260px" />
             </div>
             <div className="relative w-[220px] lg:w-[340px] h-[240px] lg:h-[360px] overflow-hidden flex-shrink-0">
               <Image src="/support-us-2.jpg" alt="" fill className="object-cover" sizes="340px" />

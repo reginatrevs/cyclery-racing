@@ -11,24 +11,23 @@ const fontStyle = {
 };
 
 const upcomingRaces = [
-  { date: "April 19", name: "Clarence Rockland", location: "Clarence, ON" },
-  { date: "April 26", name: "Almonte Roubaix", location: "Almonte, ON" },
-  { date: "April 26", name: "Paris 2 Ancaster", location: "Paris, ON" },
-  { date: "May 9", name: "Tour of the Battenkill", location: "Batenkill, NY" },
-  { date: "May 15", name: "Tour de Bloom", location: "Wenatchee, WA" },
-  { date: "May 24", name: "Tour de Somerville Weekend", location: "Somerville, NJ" },
-  { date: "May 31", name: "Via d'Italia", location: "Windsor, ON" },
-  { date: "May 29", name: "Charlevoix", location: "Charlevoix, QC" },
-  { date: "June 6", name: "Ontario Cup 2", location: "Northumberland, ON" },
-  { date: "June 13", name: "British Pub Crit", location: "Aylmer, QC" },
-  { date: "June 14", name: "Preston Street", location: "Ottawa, ON" },
-  { date: "June 26", name: "Canadian Nationals", location: "Beauce, QC" },
-  { date: "July 3", name: "Kingston Stage Race (O Cups 5-7)", location: "Kingston, ON" },
-  { date: "July 17", name: "Chicago Grit", location: "Chicago, IL" },
-  { date: "August 7", name: "Road Provincials", location: "Ottawa, ON" },
-  { date: "August 30", name: "Philadelphia", location: "Philadelphia, PA" },
-  { date: "September 8", name: "Buck's County Crit", location: "Buck's County, PA" },
-  { date: "Sep 16", name: "Tour de Gatineau", location: "Gatineau, QC" },
+  { date: "April 19", name: "Clarence Rockland", location: "Clarence, ON", url: "https://ontariocycling.org/event/road-ocup-1-clarence-rockland-classic-gravel/" },
+  { date: "April 26", name: "Almonte Roubaix", location: "Almonte, ON", url: "https://ottawabicycleclub.ca/almonte-paris-roubaix/" },
+  { date: "April 26", name: "Paris 2 Ancaster", location: "Paris, ON", url: "https://www.parisancaster.com/" },
+  { date: "May 9", name: "Tour of the Battenkill", location: "Batenkill, NY", url: "https://anthemsportstours.com/battenkill" },
+  { date: "May 15", name: "Tour de Bloom", location: "Wenatchee, WA", url: "https://www.tourdebloom.com/" },
+  { date: "May 24", name: "Tour de Somerville Weekend", location: "Somerville, NJ", url: "https://tourofsomerville.com/" },
+  { date: "May 31", name: "Via d'Italia", location: "Windsor, ON", url: "https://tourdiviaitalia.org/" },
+  { date: "May 29", name: "Charlevoix", location: "Charlevoix, QC", url: "https://www.velocharlevoix.ca/evenement-cycliste/grand-prix-cycliste/" },
+  { date: "June 6", name: "Ontario Cup 3", location: "Northumberland, ON", url: "https://ontariocycling.org/event/road-ocup-3-northumberland-crit/" },
+  { date: "June 14", name: "Preston Street", location: "Ottawa, ON", url: "https://www.bikeraceottawa.com/" },
+  { date: "June 26", name: "Canadian Nationals", location: "Beauce, QC", url: "https://cyclingcanada.ca/event/2026-canadian-road-championships-elite-jr-u17-para/" },
+  { date: "July 3", name: "Kingston Stage Race (O Cups 5-7)", location: "Kingston, ON", url: "https://www.limestonecitycycling.ca/kingston-stage-race" },
+  { date: "July 17", name: "Chicago Grit", location: "Chicago, IL", url: "https://chicago-grit.com/" },
+  { date: "August 7", name: "Road Provincials", location: "Ottawa, ON", url: "https://ontariocycling.org/event/2026-road-race-provincial-championships/" },
+  { date: "August 30", name: "Philadelphia Cycling Classic", location: "Philadelphia, PA", url: "https://www.philadelphiacyclingclassic.com/" },
+  { date: "September 8", name: "Buck's County Crit", location: "Buck's County, PA", url: "https://buckscountyclassic.com/" },
+  { date: "Sep 16", name: "Tour de Gatineau", location: "Gatineau, QC", url: "https://www.tourdegatineau.ca/en" },
 ];
 
 export default function RacesPage() {
@@ -118,10 +117,13 @@ export default function RacesPage() {
             {upcomingRaces.map((race, i) => {
               const isActive = isMobile.current ? mobileActive === i : hovered === i;
               return (
-                <div
+                <a
                   key={`${race.name}-${i}`}
-                  ref={(el) => { rowRefs.current[i] = el; }}
-                  className="cursor-pointer"
+                  href={race.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  ref={(el) => { rowRefs.current[i] = el as HTMLDivElement | null; }}
+                  className="block cursor-pointer"
                   onMouseEnter={() => { if (!isMobile.current) setHovered(i); }}
                 >
                   <div
@@ -157,7 +159,7 @@ export default function RacesPage() {
                       {race.location}
                     </span>
                   </div>
-                </div>
+                </a>
               );
             })}
           </div>
