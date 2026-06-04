@@ -52,7 +52,7 @@ export default function Home() {
   return (
     <>
       {/* ============ HERO ============ */}
-      <section id="hero" className="relative min-h-screen flex flex-col overflow-hidden">
+      <section id="hero" className="relative min-h-[85vh] lg:min-h-screen flex flex-col overflow-hidden">
         {/* Background image */}
         <Image
           src="/hero-bg.png"

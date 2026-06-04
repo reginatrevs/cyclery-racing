@@ -9,6 +9,11 @@ export const metadata: Metadata = {
   title: "Cyclery Racing | Women's Professional Cycling Team",
   description:
     "Bold. Fast. Unstoppable. Cyclery Racing is a Canadian women's professional cycling team pushing boundaries on and off the road.",
+  other: {
+    "author": "Regina Trevs, trevs.ca",
+    "designer": "Regina Trevs, trevs.ca",
+    "generator": "Hand coded with Next.js",
+  },
 };
 
 export default function RootLayout({
