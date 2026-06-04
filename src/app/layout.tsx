@@ -9,6 +9,13 @@ export const metadata: Metadata = {
   title: "Cyclery Racing | Women's Professional Cycling Team",
   description:
     "Bold. Fast. Unstoppable. Cyclery Racing is a Canadian women's professional cycling team pushing boundaries on and off the road.",
+  openGraph: {
+    title: "Cyclery Racing | Women's Professional Cycling Team",
+    description:
+      "Bold. Fast. Unstoppable. Cyclery Racing is a Canadian women's professional cycling team pushing boundaries on and off the road.",
+    siteName: "Cyclery Racing",
+    type: "website",
+  },
   other: {
     "author": "Regina Trevs, trevs.ca",
     "designer": "Regina Trevs, trevs.ca",
