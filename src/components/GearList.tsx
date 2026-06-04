@@ -248,12 +248,12 @@ export function GearList({ gear }: { gear: GearItem[] }) {
                 mobileRowRefs.current[i] = el;
               }}
               style={{
-                opacity: mobileActive !== null && mobileActive !== i ? 0.35 : 1,
-                transition: "opacity 0.4s ease",
+                opacity: mobileActive !== null && mobileActive !== i ? 0.3 : 1,
+                transition: "opacity 0.5s ease",
               }}
             >
               {/* Image */}
-              <div className="bg-gray-50 rounded-sm aspect-[4/3] relative overflow-hidden mb-4">
+              <div className="bg-white rounded-sm aspect-[4/3] relative overflow-hidden mb-4">
                 {item.secondImage ? (
                   <div className="flex items-center justify-center gap-3 w-full h-full px-6">
                     <div className="relative w-1/2 h-3/4">
@@ -327,7 +327,7 @@ export function GearList({ gear }: { gear: GearItem[] }) {
                 {item.product}
               </p>
               <p
-                className="font-body text-sm text-gray-400 leading-relaxed"
+                className="font-body text-sm text-black/70 leading-relaxed"
                 style={{ marginLeft: "1.25rem" }}
               >
                 {item.description}

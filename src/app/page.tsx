@@ -96,7 +96,7 @@ export default function Home() {
             />
           </div>
         </div>
-        <div className="relative z-10 lg:hidden px-6 md:px-12 mt-auto pb-8">
+        <div className="relative z-10 lg:hidden px-6 md:px-12 mt-auto pb-16">
           <div className="w-[340px] md:w-[460px]">
             <HeroText />
             <div className="mt-3 animate-hero" style={{ animationDelay: "800ms" }}>
