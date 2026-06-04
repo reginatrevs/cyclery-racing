@@ -120,7 +120,7 @@ export function Footer() {
 
       {/* TREVS logo — full width mobile, right on desktop */}
       <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16 mt-8 lg:mt-4 lg:flex lg:justify-end">
-        <a href="https://trevs.ca" target="_blank" rel="noopener noreferrer" className="block w-full lg:w-[50%]">
+        <a href="https://trevs.ca" target="_blank" rel="noopener noreferrer" className="block w-[75%] lg:w-[50%]">
           <Image
             src="/trevs-logo.svg"
             alt="TREVS"
