@@ -24,12 +24,12 @@ const riders = [
 ];
 
 const upcomingRaces = [
-  { date: "MAY", day: "15", name: "Tour de Bloom", location: "Wenatchee, WA", photo: "/course-race/bloom.png" },
-  { date: "JUN", day: "14", name: "Preston Street", location: "Ottawa, ON", photo: "/course-race/preston.png" },
-  { date: "JUN", day: "06", name: "Ontario Cup 2", location: "Northumberland, ON", photo: "/course-race/ontario-cup.png" },
-  { date: "JUL", day: "03", name: "Kingston Stage Race", location: "Kingston, ON", photo: "/course-race/kingston.png" },
-  { date: "AUG", day: "30", name: "Philadelphia", location: "Philadelphia, PA", photo: "/course-race/philadelphia.png" },
-  { date: "SEP", day: "16", name: "Tour de Gatineau", location: "Gatineau, QC", photo: "/course-race/gatineau.png" },
+  { date: "MAY", day: "15", name: "Tour de Bloom", location: "Wenatchee, WA", photo: "/course-race/bloom.png", url: "https://www.tourdebloom.com/" },
+  { date: "JUN", day: "14", name: "Preston Street", location: "Ottawa, ON", photo: "/course-race/preston.png", url: "https://www.bikeraceottawa.com/" },
+  { date: "JUN", day: "06", name: "Ontario Cup 3", location: "Northumberland, ON", photo: "/course-race/ontario-cup.png", url: "https://ontariocycling.org/event/road-ocup-3-northumberland-crit/" },
+  { date: "JUL", day: "03", name: "Kingston Stage Race", location: "Kingston, ON", photo: "/course-race/kingston.png", url: "https://www.limestonecitycycling.ca/kingston-stage-race" },
+  { date: "AUG", day: "30", name: "Philadelphia Cycling Classic", location: "Philadelphia, PA", photo: "/course-race/philadelphia.png", url: "https://www.philadelphiacyclingclassic.com/" },
+  { date: "SEP", day: "16", name: "Tour de Gatineau", location: "Gatineau, QC", photo: "/course-race/gatineau.png", url: "https://www.tourdegatineau.ca/en" },
 ];
 
 const sponsors = [
@@ -160,7 +160,7 @@ export default function Home() {
         <div className="hidden lg:grid grid-cols-2 gap-3">
           {upcomingRaces.map((race, i) => (
             <ScrollReveal key={race.name} direction="layer" delay={i * 100}>
-              <div className="group relative aspect-[3/4] overflow-hidden cursor-pointer border border-gray-200 hover:border-magenta transition-colors flex flex-col justify-end p-5">
+              <a href={race.url} target="_blank" rel="noopener noreferrer" className="group relative aspect-[3/4] overflow-hidden cursor-pointer border border-gray-200 hover:border-magenta transition-colors flex flex-col justify-end p-5">
                 <Image
                   src={race.photo}
                   alt={race.name}
@@ -185,7 +185,7 @@ export default function Home() {
                     {race.location}
                   </span>
                 </div>
-              </div>
+              </a>
             </ScrollReveal>
           ))}
         </div>

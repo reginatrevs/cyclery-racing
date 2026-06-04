@@ -15,8 +15,8 @@ export function AboutHero() {
       setTimeout(() => {
         setIndex((prev) => (prev + 1) % words.length);
         setAnimating(false);
-      }, 400);
-    }, 2800);
+      }, 250);
+    }, 1800);
 
     return () => clearInterval(interval);
   }, []);
@@ -60,7 +60,7 @@ export function AboutHero() {
           {/* Flipping word — bleeds right */}
           <span className="block relative overflow-hidden" style={{ height: "0.85em" }}>
             <span
-              className="inline-block transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
+              className="inline-block transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)]"
               style={{
                 opacity: animating ? 0 : 1,
                 transform: animating ? "translateY(30px)" : "translateY(0)",

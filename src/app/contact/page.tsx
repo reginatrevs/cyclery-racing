@@ -15,10 +15,10 @@ export default function ContactPage() {
           {/* Left — Photo */}
           <div className="relative h-[50vh] lg:h-auto">
             <Image
-              src="/contact-us.jpg"
+              src="/contact-us.jpeg"
               alt="Cyclery Racing team"
               fill
-              className="object-cover"
+              className="object-cover object-top"
               priority
               sizes="(max-width: 1024px) 100vw, 50vw"
             />
@@ -27,7 +27,7 @@ export default function ContactPage() {
           {/* Right — Contact title + all info */}
           <div className="flex flex-col justify-between p-8 lg:p-16 lg:pl-20">
             {/* Top — big title */}
-            <div className="pt-24 lg:pt-32">
+            <div className="pt-8 lg:pt-32">
               <ScrollReveal>
                 <h1 className="font-display text-[clamp(48px,8vw,120px)] font-bold uppercase leading-[0.85] text-black tracking-tight">
                   Contact

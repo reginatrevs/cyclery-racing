@@ -10,6 +10,7 @@ interface Race {
   location: string;
   distance?: string;
   photo?: string;
+  url?: string;
 }
 
 function RaceCard({ race, index }: { race: Race; index: number }) {
@@ -45,7 +46,7 @@ function RaceCard({ race, index }: { race: Race; index: number }) {
     };
   }, [index]);
 
-  return (
+  const content = (
     <div
       ref={ref}
       className="group relative aspect-[3/4] overflow-hidden cursor-pointer border border-gray-200 hover:border-magenta transition-all flex flex-col justify-end p-4"
@@ -86,6 +87,11 @@ function RaceCard({ race, index }: { race: Race; index: number }) {
       </div>
     </div>
   );
+
+  if (race.url) {
+    return <a href={race.url} target="_blank" rel="noopener noreferrer">{content}</a>;
+  }
+  return content;
 }
 
 export function MobileRaceCards({ races }: { races: Race[] }) {

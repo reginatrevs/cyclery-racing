@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -20,6 +23,19 @@ const fontNM = {
 };
 
 export function Footer() {
+  const [atBottom, setAtBottom] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => {
+      const scrollBottom = window.innerHeight + window.scrollY;
+      const docHeight = document.documentElement.scrollHeight;
+      setAtBottom(scrollBottom >= docHeight - 10);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
     <footer className="bg-magenta text-white overflow-hidden" data-cursor-light>
       {/* Top info grid */}
@@ -110,7 +126,7 @@ export function Footer() {
             alt="TREVS"
             width={1200}
             height={300}
-            className="w-full lg:w-[35%] h-auto select-none opacity-35 transition-all duration-300 lg:hover:opacity-100 lg:hover:brightness-0 lg:hover:invert"
+            className={`w-full lg:w-[35%] h-auto select-none transition-all duration-500 lg:hover:opacity-100 lg:hover:brightness-0 lg:hover:invert ${atBottom ? "opacity-100 brightness-0 invert" : "opacity-35"}`}
             draggable={false}
           />
         </a>
