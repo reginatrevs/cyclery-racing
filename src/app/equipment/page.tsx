@@ -66,6 +66,17 @@ const gear = [
     description:
       "Real ingredients, no shortcuts. Skratch fuels our training and racing with hydration and nutrition made for endurance athletes.",
   },
+  {
+    category: "Tires",
+    brand: "Pirelli",
+    product: "Race Tires",
+    slug: "pirelli",
+    url: "https://www.thecyclery.ca/pirelli-pzero-race-tlr-4s-road-tire-tubeless-ready.html",
+    image: "/pirelli-tires.png",
+    imageBg: "bg-white",
+    description:
+      "Pirelli brings Formula 1 tire technology to the peloton. Lightweight, grippy, and built for speed — our go-to rubber for race day.",
+  },
 ];
 
 const staggerPositions = [
@@ -128,7 +139,7 @@ export default function EquipmentPage() {
             loop
             muted
             playsInline
-            className="w-[85%] lg:w-[70%] mx-auto h-auto object-contain"
+            className="w-full lg:w-[70%] mx-auto h-auto object-contain"
           >
             <source src="/factor-bike.mp4" type="video/mp4" />
           </video>
