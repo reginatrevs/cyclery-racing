@@ -14,15 +14,15 @@ const sponsors = [
   { name: "The Cyclery", slug: "cyclery", url: "https://thecyclery.ca" },
   { name: "Factor", slug: "factor", url: "https://factorbikes.com" },
   { name: "SRAM", slug: "sram", url: "https://sram.com" },
-  { name: "Mark Motors", slug: "mark-motors", url: "https://markmotorsofottawa.com" },
+  { name: "Mark Motors", slug: "mark-motors", url: "https://www.markmotorsgroup.com/" },
   { name: "Castelli", slug: "castelli", url: "https://castelli-cycling.com" },
   { name: "Smith", slug: "smith", url: "https://smithoptics.com" },
   { name: "Look", slug: "look", url: "https://lookcycle.com" },
-  { name: "Pirelli", slug: "pirelli", url: "https://pirelli.com/cycling" },
-  { name: "HLC", slug: "hlc", url: "https://hlc.com" },
-  { name: "Bont", slug: "bont", url: "https://bfrdsrl.com" },
+  { name: "Pirelli", slug: "pirelli", url: "https://www.pirelli.com/tyres/en-ww/bike" },
+  { name: "HLC", slug: "hlc", url: "https://www.hlc.bike/ca/" },
+  { name: "Bont", slug: "bont", url: "https://bontcycling.com/" },
   { name: "Skratch Labs", slug: "skratch", url: "https://skratchlabs.com" },
-  { name: "Physio Bike Fitter", slug: "physio", url: "#" },
+  { name: "Physio Bike Fitter", slug: "physio", url: "https://physiobikefitter.com/" },
 ];
 
 const benefits = [

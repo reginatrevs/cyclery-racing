@@ -204,7 +204,19 @@ export default function TeamPage() {
                   <div ref={galleryRef} className="relative">
                     {/* Sticky back-to-top — stays within gallery area */}
                     <button
-                      onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                      onClick={() => {
+                        const start = window.scrollY;
+                        const startTime = performance.now();
+                        const duration = Math.min(1200, 400 + start * 0.3);
+                        const ease = (t: number) => 1 - Math.pow(1 - t, 4);
+                        const step = (now: number) => {
+                          const elapsed = now - startTime;
+                          const progress = Math.min(elapsed / duration, 1);
+                          window.scrollTo(0, start * (1 - ease(progress)));
+                          if (progress < 1) requestAnimationFrame(step);
+                        };
+                        requestAnimationFrame(step);
+                      }}
                       className="sticky top-[90vh] float-right z-30 mr-1 group flex items-center justify-center w-8 h-8 rounded-full border border-magenta bg-magenta hover:bg-black hover:border-black transition-all duration-300 cursor-pointer shadow-sm"
                       aria-label="Back to top"
                       style={{
