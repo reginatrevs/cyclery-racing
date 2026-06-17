@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   other: {
     "author": "Regina Trevs, trevs.ca",
     "designer": "Regina Trevs, trevs.ca",
-    "generator": "Hand coded with Next.js",
+    "generator": "Built with Next.js",
   },
 };
 

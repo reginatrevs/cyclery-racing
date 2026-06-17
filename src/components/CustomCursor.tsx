@@ -6,12 +6,18 @@ export function CustomCursor() {
   const cursorRef = useRef<HTMLDivElement>(null);
   const [mode, setMode] = useState<"default" | "expand" | "light">("default");
   const [isTouch, setIsTouch] = useState(false);
+  const [isReducedMotion, setIsReducedMotion] = useState(false);
   const pos = useRef({ x: -100, y: -100 });
   const target = useRef({ x: -100, y: -100 });
 
   useEffect(() => {
     if ("ontouchstart" in window) {
       setIsTouch(true);
+      return;
+    }
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setIsReducedMotion(true);
       return;
     }
 
@@ -55,7 +61,7 @@ export function CustomCursor() {
     };
   }, []);
 
-  if (isTouch) return null;
+  if (isTouch || isReducedMotion) return null;
 
   const isExpand = mode === "expand";
   const isLight = mode === "light";
