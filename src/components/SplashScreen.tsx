@@ -9,6 +9,13 @@ export function SplashScreen() {
   const [hidden, setHidden] = useState(false);
 
   const animate = useCallback(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setCount(100);
+      setTimeout(() => setDone(true), 100);
+      setTimeout(() => setHidden(true), 300);
+      return;
+    }
+
     const duration = 2200;
     const start = performance.now();
 
