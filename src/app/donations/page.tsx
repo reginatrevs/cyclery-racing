@@ -5,13 +5,74 @@ import { Button } from "@/components/Button";
 export default function DonationsPage() {
   return (
     <>
-      {/* Hero — The Reality */}
-      <section className="pt-32 lg:pt-40 pb-20 lg:pb-28 px-6 md:px-12 lg:px-16">
+      {/* Fundraiser — Support Dylan at Worlds (remove once the fundraiser wraps up) */}
+      <section id="dylan" className="pt-36 lg:pt-44 pb-20 lg:pb-28 px-6 md:px-12 lg:px-16 scroll-mt-24">
+        <div className="max-w-[1440px] mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+            {/* Copy */}
+            <div className="lg:col-span-7">
+              <ScrollReveal>
+                <h1 className="font-display text-[clamp(44px,8vw,112px)] font-bold uppercase leading-[0.85] text-black tracking-tight mb-4">
+                  Support Dylan<br />at Worlds
+                </h1>
+                <p className="font-display text-xl lg:text-2xl font-bold uppercase leading-tight text-magenta">
+                  UCI Gravel World Championships
+                </p>
+                <p className="font-body text-base lg:text-lg text-magenta mt-1 mb-8 lg:mb-10">
+                  Nannup, Australia · October 10–11, 2026
+                </p>
+              </ScrollReveal>
+              <ScrollReveal delay={100}>
+                <p className="font-body text-lg lg:text-xl text-black leading-[1.6] mb-6">
+                  Dylan Baker is heading to Nannup, Australia to represent Canada in the Elite
+                  field at the 2026 UCI Gravel World Championships!
+                </p>
+                <p className="font-body text-base lg:text-lg text-gray-600 leading-[1.6] mb-6">
+                  After placing 18th at her first Gravel World Championships last year, Dylan
+                  made it her goal to qualify for the Elite field in 2026. A 3rd-place finish
+                  at her qualifier in Arkansas earned her that spot.
+                </p>
+                <p className="font-body text-base lg:text-lg text-gray-600 leading-[1.6] mb-10">
+                  Competing internationally comes with significant self-funded costs, and Dylan
+                  is raising <span className="font-semibold text-black">$3,000</span> to help
+                  offset the expenses of her trip to Australia.
+                </p>
+                <Button href="https://www.gofundme.com/f/gravel-world-championships-australia" variant="primary">
+                  Support Dylan →
+                </Button>
+              </ScrollReveal>
+            </div>
+
+            {/* Photo */}
+            <div className="lg:col-span-5">
+              <ScrollReveal direction="scale" delay={150}>
+                <div className="relative aspect-[3/4] overflow-hidden">
+                  <Image
+                    src="/dylan-gofundme.png"
+                    alt="Dylan Baker racing gravel, heading to the 2026 UCI Gravel World Championships in Australia"
+                    fill
+                    className="object-cover"
+                    sizes="(min-width: 1024px) 40vw, 100vw"
+                    priority
+                  />
+                </div>
+              </ScrollReveal>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16">
+        <div className="h-px bg-gray-200" />
+      </div>
+
+      {/* The Reality */}
+      <section className="pt-20 lg:pt-28 pb-20 lg:pb-28 px-6 md:px-12 lg:px-16">
         <div className="max-w-[1440px] mx-auto">
           <ScrollReveal>
-            <h1 className="font-display text-[clamp(48px,10vw,140px)] font-bold uppercase leading-[0.85] text-black tracking-tight mb-12 lg:mb-16">
+            <h2 className="font-display text-[clamp(48px,10vw,140px)] font-bold uppercase leading-[0.85] text-black tracking-tight mb-12 lg:mb-16">
               The Reality
-            </h1>
+            </h2>
           </ScrollReveal>
 
           <div className="lg:max-w-3xl">
@@ -79,9 +140,14 @@ export default function DonationsPage() {
               Zeffy via the 1882 Collective. Zero platform fees. Every dollar
               supports our athletes directly. Tax receipts are issued automatically.
             </p>
-            <Button href="https://www.zeffy.com/en-CA/donation-form/the-cyclery-racing" variant="primary">
+            {/* Zeffy donations deactivated. To re-enable, swap the span below for:
+                <Button href="https://www.zeffy.com/en-CA/donation-form/the-cyclery-racing" variant="primary">Donate via Zeffy</Button> */}
+            <span
+              aria-disabled="true"
+              className="inline-flex items-center gap-2 font-body text-[11px] font-bold uppercase tracking-[0.05em] bg-gray-400 text-white border border-gray-400 px-5 py-2 rounded-full cursor-not-allowed select-none"
+            >
               Donate via Zeffy
-            </Button>
+            </span>
           </ScrollReveal>
         </div>
       </section>
