@@ -15,7 +15,7 @@ const menu = [
 
 const externalLinks = [
   { href: "https://thecyclery.ca", label: "The Cyclery Shop" },
-  { href: "https://www.zeffy.com/en-CA/donation-form/the-cyclery-racing", label: "Support Us" },
+  { href: "/donations", label: "Support Us" },
 ];
 
 const fontNM = {

@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect, useCallback } from "react";
 import { usePathname } from "next/navigation";
+import { AnnouncementBar } from "@/components/AnnouncementBar";
 
 const navLinks = [
   { href: "/about", label: "About Us" },
@@ -77,6 +78,7 @@ export function Navbar() {
           ? "bg-white/80 backdrop-blur-xl backdrop-saturate-150 border-b border-gray-200/50"
           : "bg-transparent border-b border-transparent"
       }`}>
+        <AnnouncementBar />
         {/* Desktop nav — logo left, links right */}
         <div className="hidden lg:flex max-w-[1440px] mx-auto items-center justify-between px-8 py-3">
           {/* Logo — fades in when hero scrolls out */}
